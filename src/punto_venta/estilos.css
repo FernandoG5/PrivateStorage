@@ -1,0 +1,155 @@
+        :root {
+            --primario: #2563eb;
+            --fondo: #f3f4f6;
+            --barra-lateral: #1f2937;
+            --texto-claro: #f9fafb;
+            --texto-oscuro: #111827;
+            --tarjeta-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--fondo);
+            color: var(--texto-oscuro);
+        }
+
+        .barra_lateral {
+            width: 260px;
+            background-color: var(--barra-lateral);
+            color: var(--texto-claro);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .perfil {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #374151;
+        }
+
+        .perfil .avatar {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .perfil h2 { font-size: 1.2rem; }
+        .perfil p { font-size: 0.9rem; color: #9ca3af; }
+
+        nav a {
+            display: block;
+            color: var(--texto-claro);
+            text-decoration: none;
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        nav a:hover { background-color: #374151; }
+
+        .boton-salir {
+            margin-top: auto;
+            padding: 12px;
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .boton-salir:hover { background-color: #dc2626; }
+
+        .contenido {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .encabezado {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .etiqueta {
+            background-color: var(--primario);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .seccion {
+            background-color: var(--tarjeta-bg);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .seccion h2 { margin-bottom: 20px; color: var(--primario); }
+
+        .tarjetas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tarjeta {
+            background-color: var(--fondo);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primario);
+        }
+
+        .tarjeta h3 { font-size: 1rem; color: #4b5563; margin-bottom: 10px; }
+        .tarjeta .numero { font-size: 1.8rem; font-weight: bold; }
+
+        .datos-sucursal {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 15px;
+            font-size: 1.1rem;
+        }
+        .datos-sucursal dt { font-weight: bold; color: #4b5563; }
+
+        .formulario .campo {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .formulario label { margin-bottom: 5px; font-weight: bold; }
+        .formulario input {
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .boton-guardar {
+            background-color: var(--primario);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        .boton-guardar:hover { background-color: #1d4ed8; }

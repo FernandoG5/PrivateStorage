@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del gerente</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+    <aside class="barra_lateral">
+        <div class="perfil">
+            <div class="avatar" aria-hidden="true">PANEL DE GERENTE</div>
+            <h2>Nombre del Gerente</h2>
+            <p>Gerente de la sucursal</p>
+        </div>
+
+        <nav aria-label="Menu del gerente">
+            <a href="#inicio">Inicio</a>
+            <a href="#sucursal">Sucursal</a>
+            <a href="#productos">Productos</a>
+            <a href="#inventario">Inventario</a>
+            <a href="#cajas">Cajas</a>
+            <a href="#ventas">Ventas</a>
+        </nav>
+        <button type="button" class="boton-salir">
+             Cerrar sesión
+        </button>
+    </aside>
+
+    <main class="contenido">
+        <header class="encabezado">
+            <div>
+                <h1>Panel de gerente</h1>
+                <p>Sucursal Centro</p>
+            </div>
+            <span class="etiqueta">Gerente</span>
+        </header>
+        <section id="inicio" class="seccion">
+            <h2>Resumen de la sucursal</h2>
+            <p class="nota">Vista rápida del estado actual</p>
+            <div class="tarjetas">
+                <article class="tarjeta">
+                    <h3>Productos con bajo inventario</h3>
+                    <p class="numero">1</p>
+                </article>
+
+                <article class="tarjeta">
+                    <h3>Cajas activas</h3>
+                    <p class="numero">2</p>
+                </article>
+
+                <article class="tarjeta">
+                    <h3>Ventas del día</h3>
+                    <p class="numero">$0.00</p>
+                </article>
+            </div>
+        </section>
+        <section id="sucursal" class="seccion">
+            <h2>Datos de la sucursal</h2>
+            <d1 class="datos-sucursal">
+                <dt>Nombre</dt>
+                <dd>Sucursal Centro</dd>
+                <dt>Dirección</dt>
+                <dd>Calle Ejemplo #123</dd>
+                <dt>Teléfono</dt>
+                <dd>3141234567</dd>
+                <dt>Estado</dt>
+                <dd>Activa</dd>
+            </d1>
+        </section>
+        <section id="productos" class="seccion">
+            <h2>Productos</h2>
+            <h3>Registrar producto</h3>
+            <form id="form-producto" class="formulario" action="#" method=" POST">
+                <div class="campo">
+                    <label for="codigo">Codigo de Barras/SKU</label>
+                    <input type="text" id="codigo" name="codigo" maxlength="50" placeholder="Ejemplo: 750123456" required>
+                </div>
+                <div class="campo">
+                    <label for="nombre">Nombre del producto</label>
+                    <input type="text" id="nombre" name="nombre" maxlength="120" placeholder="Ejemplo: Cuaderno profesional" required>
+                </div>
+
+                <div class="campo">
+                    <label for="precio">Precio de venta ($)</label>
+                    <input type="number" id="precio" name="precio" min="0" step="0.01" placeholder="0.00" required>
+                </div>
+
+                <button type="submit" class="boton-guardar">Guardar producto</button>
+            </form>
+        </section>
+
+        <section id="inventario" class="seccion">
+            <h2>Inventario Actual</h2>
+            <p>Aqui irá la tabla dinámica con el stock de productos</p>
+        </section>
+        <section id="cajas" class="seccion">
+            <h2>Cajas activas</h2>
+            <p>Aqui irán los cortes de caja y asignación de cajeros</p>
+        </section>
+        <section id="ventas" class="seccion">
+            <h2>Ventas del día</h2>
+            <p>Aqui irá el registro de tickets y facturas</p>
+    </main>
+</body>
+</html>
