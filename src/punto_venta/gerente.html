@@ -3,105 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel del gerente</title>
+    <title>PrivateStorage - Panel</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="estilos.css">
 </head>
 
-<body>
-    <aside class="barra_lateral">
+<aside class="sidebar">
         <div class="perfil">
-            <div class="avatar" aria-hidden="true">PANEL DE GERENTE</div>
-            <h2>Nombre del Gerente</h2>
-            <p>Gerente de la sucursal</p>
+            <div class="avatar"></div>
+            <p class="nombre">Gerente</p>
         </div>
-
-        <nav aria-label="Menu del gerente">
-            <a href="#inicio">Inicio</a>
-            <a href="#sucursal">Sucursal</a>
-            <a href="#productos">Productos</a>
-            <a href="#inventario">Inventario</a>
-            <a href="#cajas">Cajas</a>
-            <a href="#ventas">Ventas</a>
+        <nav id="menu-navegacion">
+            <a class="nav-item activo" data-destino="sec-dashboard">Dashboard</a>
+            <a class="nav-item" data-destino="sec-productos">Productos</a>
+            <a class="nav-item" data-destino="sec-inventario">Inventario</a>
+            <a class="nav-item" data-destino="sec-sucursal">Sucursal</a>
+            <a class="nav-item" data-destino="sec-cajeros">Cajeros</a>
         </nav>
-        <button type="button" class="boton-salir">
-             Cerrar sesión
-        </button>
     </aside>
 
-    <main class="contenido">
-        <header class="encabezado">
-            <div>
-                <h1>Panel de gerente</h1>
-                <p>Sucursal Centro</p>
+    <main class="main-content">
+        <header class="header">
+            <h1>Bienvenido: Gerente</h1>
+            
+            <div class="header-controles">
+                <div class="busqueda">
+                    <input type="text" placeholder="Buscar...">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <div class="ajustes-tema">
+                    <i class="fa-solid fa-sun"></i>
+                    <i class="fa-solid fa-moon"></i>
+                </div>
+                <i class="fa-solid fa-bell campana"></i>
             </div>
-            <span class="etiqueta">Gerente</span>
         </header>
-        <section id="inicio" class="seccion">
-            <h2>Resumen de la sucursal</h2>
-            <p class="nota">Vista rápida del estado actual</p>
-            <div class="tarjetas">
-                <article class="tarjeta">
-                    <h3>Productos con bajo inventario</h3>
-                    <p class="numero">1</p>
-                </article>
 
-                <article class="tarjeta">
-                    <h3>Cajas activas</h3>
-                    <p class="numero">2</p>
-                </article>
+        <section id="sec-dashboard" class="seccion-panel activa">
+            <div class="tarjetas-grid">
+                <div class="tarjeta-borde" data-destino="sec-productos">
+                    <div class="tarjeta-interior">
+                        <i class="fa-solid fa-cube"></i>
+                        <div class="tarjeta-info">
+                            <span class="numero">9573</span>
+                            <span class="texto">Total de<br>productos</span>
+                        </div>
+                    </div>
+                </div>
 
-                <article class="tarjeta">
-                    <h3>Ventas del día</h3>
-                    <p class="numero">$0.00</p>
-                </article>
+                <div class="tarjeta-borde" data-destino="sec-sucursal">
+                    <div class="tarjeta-interior">
+                        <i class="fa-solid fa-store"></i>
+                        <div class="tarjeta-info">
+                            <span class="numero">12</span>
+                            <span class="texto">Total de<br>sucursales</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tarjeta-borde" data-destino="sec-cajeros">
+                    <div class="tarjeta-interior">
+                        <i class="fa-solid fa-wallet"></i>
+                        <div class="tarjeta-info">
+                            <span class="numero">40</span>
+                            <span class="texto">Total de<br>cajeros</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
-        <section id="sucursal" class="seccion">
-            <h2>Datos de la sucursal</h2>
-            <d1 class="datos-sucursal">
-                <dt>Nombre</dt>
-                <dd>Sucursal Centro</dd>
-                <dt>Dirección</dt>
-                <dd>Calle Ejemplo #123</dd>
-                <dt>Teléfono</dt>
-                <dd>3141234567</dd>
-                <dt>Estado</dt>
-                <dd>Activa</dd>
-            </d1>
-        </section>
-        <section id="productos" class="seccion">
-            <h2>Productos</h2>
-            <h3>Registrar producto</h3>
-            <form id="form-producto" class="formulario" action="#" method=" POST">
-                <div class="campo">
-                    <label for="codigo">Codigo de Barras/SKU</label>
-                    <input type="text" id="codigo" name="codigo" maxlength="50" placeholder="Ejemplo: 750123456" required>
-                </div>
-                <div class="campo">
-                    <label for="nombre">Nombre del producto</label>
-                    <input type="text" id="nombre" name="nombre" maxlength="120" placeholder="Ejemplo: Cuaderno profesional" required>
-                </div>
 
-                <div class="campo">
-                    <label for="precio">Precio de venta ($)</label>
-                    <input type="number" id="precio" name="precio" min="0" step="0.01" placeholder="0.00" required>
-                </div>
-
-                <button type="submit" class="boton-guardar">Guardar producto</button>
-            </form>
+        <section id="sec-productos" class="seccion-panel">
+            <div class="contenedor-modulo">
+                <h2>Registrar producto</h2>
+                <p class="subtitulo">Ingresa los detalles para dar de alta el producto en el catálogo.</p>
+                <form class="formulario">
+                    <div class="campo">
+                        <label for="codigo">Código</label>
+                        <input type="text" id="codigo" placeholder="Ejemplo: 7501000123" required>
+                    </div>
+                    <div class="campo">
+                        <label for="nombre">Nombre del producto</label>
+                        <input type="text" id="nombre" placeholder="Ejemplo: Cuaderno profesional" required>
+                    </div>
+                    <div class="campo">
+                        <label for="precio">Precio de venta</label>
+                        <input type="number" id="precio" min="0" step="0.01" placeholder="0.00" required>
+                    </div>
+                    <button type="submit" class="boton-guardar">Guardar Producto</button>
+                </form>
+            </div>
         </section>
 
-        <section id="inventario" class="seccion">
-            <h2>Inventario Actual</h2>
-            <p>Aqui irá la tabla dinámica con el stock de productos</p>
+        <section id="sec-inventario" class="seccion-panel">
+            <div class="contenedor-modulo">
+                <h2>Control de Inventario</h2>
+                <p class="subtitulo">Existencias disponibles por sucursal y almacén.</p>
+            </div>
         </section>
-        <section id="cajas" class="seccion">
-            <h2>Cajas activas</h2>
-            <p>Aqui irán los cortes de caja y asignación de cajeros</p>
+
+        <section id="sec-sucursal" class="seccion-panel">
+            <div class="contenedor-modulo">
+                <h2>Información de Sucursal</h2>
+                <p class="subtitulo">Detalles operativos de la sede asignada.</p>
+                <dl class="datos-sucursal">
+                    <dt>Nombre:</dt>
+                    <dd>Sucursal Centro</dd>
+                    <dt>Dirección:</dt>
+                    <dd>Calle Ejemplo #123</dd>
+                    <dt>Teléfono:</dt>
+                    <dd>3141234567</dd>
+                    <dt>Estado:</dt>
+                    <dd>Activa</dd>
+                </dl>
+            </div>
         </section>
-        <section id="ventas" class="seccion">
-            <h2>Ventas del día</h2>
-            <p>Aqui irá el registro de tickets y facturas</p>
+
+        <section id="sec-cajeros" class="seccion-panel">
+            <div class="contenedor-modulo">
+                <h2>Gestión de Cajeros</h2>
+                <p class="subtitulo">Listado y asignación de personal en cajas.</p>
+            </div>
+        </section>
     </main>
+
+    <script>
+        const elementosClicables = document.querySelectorAll('[data-destino]');
+        const secciones = document.querySelectorAll('.seccion-panel');
+        const navLinks = document.querySelectorAll('.nav-item');
+
+        elementosClicables.forEach(elemento => {
+            elemento.addEventListener('click', () => {
+                const idDestino = elemento.getAttribute('data-destino');
+
+                secciones.forEach(sec => sec.classList.remove('activa'));
+                document.getElementById(idDestino).classList.add('activa');
+
+                navLinks.forEach(link => {
+                    if (link.getAttribute('data-destino') === idDestino) {
+                        link.classList.add('activo');
+                    } else {
+                        link.classList.remove('activo');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
