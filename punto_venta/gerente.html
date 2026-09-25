@@ -1,114 +1,664 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Panel del gerente</title>
+
+    <link rel="stylesheet" href="estilos.css">
+
+    <script src="tema.js" defer></script>
+    <script src="gerente.js" defer></script>
 </head>
 
 <body>
+
     <aside class="barra_lateral">
+
         <div class="perfil">
-            <div class="avatar" aria-hidden="true">PANEL DE GERENTE</div>
-            <h2>Nombre del Gerente</h2>
-            <p>Gerente de la sucursal</p>
+            <div class="avatar" aria-hidden="true">G</div>
+            <h2>Panel del gerente</h2>
+            <p id="sucursal-lateral">Cargando sucursal...</p>
         </div>
 
-        <nav aria-label="Menu del gerente">
-            <a href="#Inicio">Inicio</a>
-            <a href="#Sucursal">Sucursal</a>
-            <a href="#Productos">Productos</a>
-            <a href="#Inventario">Inventario</a>
-            <a href="#Cajas">Cajas</a>
-            <a href="#Ventas">Ventas</a>
+        <nav aria-label="Menú del gerente">
+
+            <button
+                type="button"
+                class="enlace-menu activo"
+                data-navegacion="inicio"
+                aria-current="page"
+            >
+                Inicio
+            </button>
+
+            <button
+                type="button"
+                class="enlace-menu"
+                data-navegacion="productos"
+            >
+                Productos
+            </button>
+
+            <button
+                type="button"
+                class="enlace-menu"
+                data-navegacion="sucursal"
+            >
+                Sucursal
+            </button>
+
         </nav>
-        <button type="button" class="boton-salir">
-             Cerrar sesion
+
+        <button type="button" class="boton-salir" disabled>
+            Cerrar sesión
         </button>
+
     </aside>
 
     <main class="contenido">
+
         <header class="encabezado">
+
             <div>
-                <h1>Panel de gerente</h1>
-                <p>Sucursal Centro</p>
+                <h1>Panel del gerente</h1>
+                <p id="nombre-sucursal">Cargando...</p>
             </div>
-            <span class="etiqueta">Gerente</span>
+
+            <div class="controles-encabezado">
+
+                <button
+                    type="button"
+                    id="actualizar-datos"
+                    class="boton-tema"
+                >
+                    Actualizar datos
+                </button>
+
+                <button
+                    type="button"
+                    id="boton-tema"
+                    class="boton-tema"
+                    aria-pressed="false"
+                >
+                    Modo oscuro
+                </button>
+
+            </div>
+
         </header>
-        <section id="inicio" class="seccion">
-            <h2>Resumen de la sucursal</h2>
-            <p class="nota">Resumen de sucursal</p>
-            <div class="tarjetas">
-                <article class="tarjeta">
-                    <h3>Productos con bajo inventario</h3>
-                    <p class="numero">1</p>
-                </article>
 
-                <article class="tarjeta">
-                    <h3>Cajas activas</h3>
-                    <p class="numero">2</p>
-                </article>
+        <div class="cuadros-principales">
 
-                <article class="tarjeta">
-                    <h3>Ventas del día</h3>
-                    <p class="numero">$0.00</p>
-                </article>
-            </div>
-        </section>
-        <section id="sucursal" class="seccion">
-            <h2>Sucursal</h2>
-            <d1 class="datos-sucursal">
-                <dt>Nombre</dt>
-                <dd>Sucursal Centro</dd>
-                <dt>Direccion</dt>
-                <dd>Ejemplo</dd>
-                <dt>Telefono</dt>
-                <dd>3141234567</dd>
-                <dt>Estado</dt>
-                <dd>Activa</dd>
-            </d1>
-        </section>
-        <section id="productos" class="seccion">
-            <h2>Productos</h2>
-            <h3>Registrar producto</h3>
-            <form id="form-producto" class="formulario">
-                <div class="campo">
-                    <label for="codigo">Codigo</label>
-                    <input
-                    type="text"
-                    id="codigo"
-                    name="codigo"
-                    maxlength="50"
-                    placeholder="Ejemplo"
-                    required
-                    >
-                </div>
-                <div class="campo">
-                    <label for="nombre">Nombre del producto</label>
-                    <input
-                    type="text"
-                    id="nombre"
-                    name="nombre"
-                    maxlength="120"
-                    placeholder="Ejemplo: Cuaderno profesional"
-                    required
+            <button
+                type="button"
+                class="cuadro"
+                data-navegacion="productos"
+                aria-controls="panel-productos"
+                aria-expanded="false"
+            >
+                <svg
+                    class="icono"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
                 >
+                    <path d="M12 3 3 7.5v9L12 21l9-4.5v-9L12 3Z"/>
+                    <path d="m3 7.5 9 4.5 9-4.5M12 12v9"/>
+                </svg>
+
+                <span class="texto-cuadro">
+                    <strong>Productos</strong>
+                    <span id="resumen-productos">
+                        Productos e inventario
+                    </span>
+                </span>
+            </button>
+
+            <button
+                type="button"
+                class="cuadro"
+                data-navegacion="sucursal"
+                aria-controls="panel-sucursal"
+                aria-expanded="false"
+            >
+                <svg
+                    class="icono"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M4 10v11h16V10M3 10l2-7h14l2 7"/>
+                    <path d="M3 10h18M9 21v-7h6v7M9 3l-1 7M15 3l1 7"/>
+                </svg>
+
+                <span class="texto-cuadro">
+                    <strong>Sucursal</strong>
+                    <span id="resumen-cajas">
+                        Información, cajas y ventas
+                    </span>
+                </span>
+            </button>
+
+        </div>
+
+        <div class="area-inferior">
+
+            <p
+                id="estado-app"
+                class="mensaje"
+                role="status"
+                aria-live="polite"
+            >
+                Conectando con la base de datos...
+            </p>
+
+            <p id="mensaje-inicio" class="mensaje-inicio">
+                Selecciona Productos o Sucursal.
+            </p>
+
+            <section id="panel-productos" class="panel" hidden>
+
+                <h2>Productos e inventario</h2>
+
+                <div class="opciones">
+
+                    <button type="button" data-vista="agregar-producto">
+                        Agregar producto
+                    </button>
+
+                    <button type="button" data-vista="consultar-productos">
+                        Consultar productos
+                    </button>
+
+                    <button type="button" data-vista="modificar-producto">
+                        Modificar producto
+                    </button>
+
+                    <button type="button" data-vista="eliminar-producto">
+                        Eliminar producto
+                    </button>
+
+                    <button type="button" data-vista="inventario">
+                        Inventario actual
+                    </button>
+
+                    <button type="button" data-vista="actualizar-stock">
+                        Actualizar existencias
+                    </button>
+
+                    <button type="button" data-vista="stock-bajo">
+                        Stock bajo
+                    </button>
+
                 </div>
 
-                <div class="campo">
-                    <label for="precio">Precio de venta</label>
-                    <input
-                    type="number"
-                    id="precio"
-                    name="precio"
-                    min="0"
-                    step="0.01"
-                    required
-                >
-            </div>
-            </form>
-        </section>
+                <section id="agregar-producto" class="vista" hidden>
+
+                    <h3>Agregar producto</h3>
+
+                    <form class="formulario" data-accion="agregar_producto">
+
+                        <div class="campo">
+                            <label for="codigo">Código</label>
+                            <input
+                                id="codigo"
+                                name="codigo"
+                                maxlength="50"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="nombre">Nombre</label>
+                            <input
+                                id="nombre"
+                                name="nombre"
+                                maxlength="120"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="precio">Precio de venta</label>
+                            <input
+                                type="number"
+                                id="precio"
+                                name="precio"
+                                min="0"
+                                max="99999999.99"
+                                step="0.01"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="cantidad">Existencias iniciales</label>
+                            <input
+                                type="number"
+                                id="cantidad"
+                                name="existencias"
+                                min="0"
+                                max="1000000"
+                                step="1"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="minimo">Stock mínimo</label>
+                            <input
+                                type="number"
+                                id="minimo"
+                                name="stock_minimo"
+                                min="0"
+                                max="1000000"
+                                step="1"
+                                value="5"
+                                required
+                            >
+                        </div>
+
+                        <div class="acciones">
+                            <button type="submit" disabled>
+                                Guardar producto
+                            </button>
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <section id="consultar-productos" class="vista" hidden>
+
+                    <h3>Consultar productos</h3>
+
+                    <div class="tabla-contenedor">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Código</th>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Precio</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tabla-productos"></tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+                <section id="modificar-producto" class="vista" hidden>
+
+                    <h3>Modificar producto</h3>
+
+                    <form class="formulario" data-accion="modificar_producto">
+
+                        <div class="campo">
+                            <label for="editar-producto">Producto</label>
+                            <select
+                                id="editar-producto"
+                                name="id_producto"
+                                required
+                            >
+                                <option value="">Selecciona un producto</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="editar-nombre">Nombre</label>
+                            <input
+                                id="editar-nombre"
+                                name="nombre"
+                                maxlength="120"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="editar-precio">Precio</label>
+                            <input
+                                type="number"
+                                id="editar-precio"
+                                name="precio"
+                                min="0"
+                                max="99999999.99"
+                                step="0.01"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="editar-minimo">Stock mínimo</label>
+                            <input
+                                type="number"
+                                id="editar-minimo"
+                                name="stock_minimo"
+                                min="0"
+                                max="1000000"
+                                step="1"
+                                required
+                            >
+                        </div>
+
+                        <div class="acciones">
+                            <button type="submit" disabled>
+                                Guardar cambios
+                            </button>
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <section id="eliminar-producto" class="vista" hidden>
+
+                    <h3>Eliminar producto del catálogo</h3>
+
+                    <p class="nota">
+                        Se desactivará para conservar sus registros de ventas.
+                    </p>
+
+                    <form class="formulario" data-accion="eliminar_producto">
+
+                        <div class="campo">
+                            <label for="producto-eliminar">Producto</label>
+                            <select
+                                id="producto-eliminar"
+                                name="id_producto"
+                                required
+                            >
+                                <option value="">Selecciona un producto</option>
+                            </select>
+                        </div>
+
+                        <div class="acciones">
+                            <button type="submit" disabled>
+                                Eliminar del catálogo
+                            </button>
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <section id="inventario" class="vista" hidden>
+
+                    <h3>Inventario actual</h3>
+
+                    <div class="tabla-contenedor">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Código</th>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Existencias</th>
+                                    <th scope="col">Mínimo</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tabla-inventario"></tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+                <section id="actualizar-stock" class="vista" hidden>
+
+                    <h3>Actualizar existencias</h3>
+
+                    <p class="nota">
+                        La nueva cantidad reemplaza el total actual.
+                    </p>
+
+                    <form class="formulario" data-accion="actualizar_stock">
+
+                        <div class="campo">
+                            <label for="producto-stock">Producto</label>
+                            <select
+                                id="producto-stock"
+                                name="id_producto"
+                                required
+                            >
+                                <option value="">Selecciona un producto</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="nuevo-stock">Nueva existencia total</label>
+                            <input
+                                type="number"
+                                id="nuevo-stock"
+                                name="existencias"
+                                min="0"
+                                max="1000000"
+                                step="1"
+                                required
+                            >
+                        </div>
+
+                        <input
+                            type="hidden"
+                            id="stock-anterior"
+                            name="existencias_anteriores"
+                        >
+
+                        <p
+                            id="stock-observado"
+                            class="nota campo-completo"
+                        ></p>
+
+                        <div class="acciones">
+                            <button type="submit" disabled>
+                                Actualizar existencias
+                            </button>
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <section id="stock-bajo" class="vista" hidden>
+
+                    <h3>Productos con stock bajo</h3>
+
+                    <div class="tabla-contenedor">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Existencias</th>
+                                    <th scope="col">Mínimo</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tabla-stock-bajo"></tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+            </section>
+
+            <section id="panel-sucursal" class="panel" hidden>
+
+                <h2>Mi sucursal</h2>
+
+                <div class="opciones">
+
+                    <button type="button" data-vista="datos-sucursal">
+                        Datos de la sucursal
+                    </button>
+
+                    <button type="button" data-vista="consultar-cajas">
+                        Consultar cajas
+                    </button>
+
+                    <button type="button" data-vista="agregar-caja">
+                        Registrar caja
+                    </button>
+
+                    <button type="button" data-vista="eliminar-caja">
+                        Desactivar caja
+                    </button>
+
+                    <button type="button" data-vista="ventas">
+                        Historial de ventas
+                    </button>
+
+                </div>
+
+                <section id="datos-sucursal" class="vista" hidden>
+
+                    <h3>Datos de la sucursal</h3>
+
+                    <dl
+                        id="datos-sucursal-lista"
+                        class="datos-sucursal"
+                    ></dl>
+
+                </section>
+
+                <section id="consultar-cajas" class="vista" hidden>
+
+                    <h3>Cajas de la sucursal</h3>
+
+                    <div class="tabla-contenedor">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Caja</th>
+                                    <th scope="col">Estado</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tabla-cajas"></tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+                <section id="agregar-caja" class="vista" hidden>
+
+                    <h3>Registrar caja</h3>
+
+                    <form class="formulario" data-accion="agregar_caja">
+
+                        <div class="campo">
+                            <label for="nombre-caja">Nombre de la caja</label>
+                            <input
+                                id="nombre-caja"
+                                name="nombre"
+                                maxlength="50"
+                                required
+                            >
+                        </div>
+
+                        <div class="acciones">
+                            <button type="submit" disabled>
+                                Guardar caja
+                            </button>
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <section id="eliminar-caja" class="vista" hidden>
+
+                    <h3>Desactivar caja</h3>
+
+                    <p class="nota">
+                        Sus ventas anteriores se conservarán.
+                    </p>
+
+                    <form class="formulario" data-accion="eliminar_caja">
+
+                        <div class="campo">
+                            <label for="caja-eliminar">Caja</label>
+                            <select
+                                id="caja-eliminar"
+                                name="id_caja"
+                                required
+                            >
+                                <option value="">Selecciona una caja</option>
+                            </select>
+                        </div>
+
+                        <div class="acciones">
+                            <button type="submit" disabled>
+                                Desactivar caja
+                            </button>
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <section id="ventas" class="vista" hidden>
+
+                    <h3>Historial de ventas</h3>
+
+                    <div class="tabla-contenedor">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Folio</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Caja</th>
+                                    <th scope="col">Cajero</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Detalle</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tabla-ventas"></tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+            </section>
+
+        </div>
+
     </main>
+
+    <dialog id="dialogo-venta" aria-labelledby="titulo-detalle">
+
+        <button type="button" id="cerrar-detalle">
+            Cerrar
+        </button>
+
+        <h2 id="titulo-detalle">Detalle de venta</h2>
+
+        <p id="resumen-venta"></p>
+
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio vendido</th>
+                        <th scope="col">Importe</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabla-detalle"></tbody>
+            </table>
+        </div>
+
+    </dialog>
 
 </body>
 </html>
