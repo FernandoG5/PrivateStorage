@@ -1,0 +1,2 @@
+.vista-vacia{min-height:calc(100vh - 86px);background:var(--fondo)}
+@media(max-width:700px){.vista-vacia{min-height:calc(100vh - 135px)}}

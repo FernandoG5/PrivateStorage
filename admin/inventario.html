@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#41688d">
+  <title>Inventario | Punto de venta</title>
+  <link rel="stylesheet" href="css/estilos-compartidos.css">
+  <link rel="stylesheet" href="css/inventario.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body data-page="inventory">
+  <div class="contenedor-app">
+    <aside class="barra-lateral" aria-label="Navegación principal">
+      <div class="perfil"><div class="avatar" aria-hidden="true"></div><span class="nombre-perfil">Administrador</span></div>
+      <nav class="lista-navegacion" aria-label="Secciones">
+        <a class="enlace-navegacion" href="dashboard.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/></svg><span>Dashboard</span></a>
+        <a class="enlace-navegacion" href="inventario.html" aria-current="page"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 7 9-4 9 4v10l-9 4-9-4z"/><path d="m3.5 7.2 8.5 4 8.5-4M12 11.5V21"/></svg><span>Inventario</span></a>
+        <a class="enlace-navegacion" href="ventas.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16l-1.5 15h-13zM8 9V6a4 4 0 0 1 8 0v3"/><path d="M9 13h6"/></svg><span>Ventas</span></a>
+        <a class="enlace-navegacion" href="sucursales.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10h18l-2-6H5zM5 10v10h14V10M9 20v-6h6v6"/><path d="M3 10a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/></svg><span>Sucursales</span></a>
+      </nav>
+      <div class="pie-lateral">Sesión activa<br>Administrador general</div>
+    </aside>
+    <main class="area-principal">
+      <header class="barra-superior">
+        <h1 class="bienvenida">Bienvenido <span>Admin</span></h1>
+        <div class="acciones-superiores">
+          <form class="caja-busqueda" role="search" id="search-form"><input type="search" id="search-input" placeholder="Buscar producto..." aria-label="Buscar productos"><button type="submit" aria-label="Buscar"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></button></form>
+          <div class="selector-tema" aria-label="Tema"><button type="button" aria-label="Tema claro" aria-pressed="true" data-theme="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button><button type="button" aria-label="Tema oscuro" aria-pressed="false" data-theme="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 14A8.5 8.5 0 0 1 10 3.2 8.5 8.5 0 1 0 20.8 14Z"/></svg></button></div>
+          <button class="boton-icono" id="notifications" type="button" aria-label="Notificaciones"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/><path d="M19 3v4m-2-2h4"/></svg><span class="punto-notificacion"></span></button>
+        </div>
+      </header>
+      <section class="vista-inventario" aria-label="Inventario">
+        <div class="barra-herramientas-inventario">
+          <div class="filtros-inventario"><input class="filtro-inventario" id="branch-filter" type="search" placeholder="Filtrar por sucursal" aria-label="Filtrar por sucursal"><select class="filtro-inventario" id="category-filter" aria-label="Filtrar por categoría"><option value="">Todas las categorías</option><option>Teclados</option><option>Mouse</option><option>Audio</option><option>Monitores</option><option>Almacenamiento</option></select><input class="filtro-inventario" id="inventory-search" type="search" placeholder="Buscar producto" aria-label="Buscar producto en inventario"></div>
+          <button class="boton-agregar-inventario" id="add-product" type="button"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>Agregar producto</button>
+        </div>
+        <div class="panel-tabla-inventario"><div class="envoltura-tabla-inventario"><table class="tabla-inventario"><thead><tr><th scope="col">No. Sucursal</th><th scope="col">Nom. Producto</th><th scope="col">Categoría</th><th scope="col">Cantidad</th><th scope="col">Valor stock</th><th scope="col">Acciones</th></tr></thead><tbody id="inventory-rows"></tbody></table></div></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#41688d">
+  <title>Dashboard | Punto de venta</title>
+  <link rel="stylesheet" href="css/estilos-compartidos.css">
+  <link rel="stylesheet" href="css/tablero.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body data-page="dashboard">
+  <div class="contenedor-app">
+    <aside class="barra-lateral" aria-label="Navegación principal">
+      <div class="perfil"><div class="avatar" aria-hidden="true"></div><span class="nombre-perfil">Administrador</span></div>
+      <nav class="lista-navegacion" aria-label="Secciones">
+        <a class="enlace-navegacion" href="dashboard.html" aria-current="page"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/></svg><span>Dashboard</span></a>
+        <a class="enlace-navegacion" href="inventario.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 7 9-4 9 4v10l-9 4-9-4z"/><path d="m3.5 7.2 8.5 4 8.5-4M12 11.5V21"/></svg><span>Inventario</span></a>
+        <a class="enlace-navegacion" href="ventas.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16l-1.5 15h-13zM8 9V6a4 4 0 0 1 8 0v3"/><path d="M9 13h6"/></svg><span>Ventas</span></a>
+        <a class="enlace-navegacion" href="sucursales.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10h18l-2-6H5zM5 10v10h14V10M9 20v-6h6v6"/><path d="M3 10a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/></svg><span>Sucursales</span></a>
+      </nav>
+      <div class="pie-lateral">Sesión activa<br>Administrador general</div>
+    </aside>
+    <main class="area-principal">
+      <header class="barra-superior">
+        <h1 class="bienvenida">Bienvenido <span>Admin</span></h1>
+        <div class="acciones-superiores">
+          <form class="caja-busqueda" role="search" id="search-form"><input type="search" id="search-input" placeholder="Buscar producto..." aria-label="Buscar productos"><button type="submit" aria-label="Buscar"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></button></form>
+          <div class="selector-tema" aria-label="Tema"><button type="button" aria-label="Tema claro" aria-pressed="true" data-theme="light"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button><button type="button" aria-label="Tema oscuro" aria-pressed="false" data-theme="dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 14A8.5 8.5 0 0 1 10 3.2 8.5 8.5 0 1 0 20.8 14Z"/></svg></button></div>
+          <button class="boton-icono" id="notifications" type="button" aria-label="Notificaciones"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/><path d="M19 3v4m-2-2h4"/></svg><span class="punto-notificacion"></span></button>
+        </div>
+      </header>
+      <div class="tablero">
+        <section class="panel resumen" aria-labelledby="overview-title"><h2 class="titulo-seccion" id="overview-title">Vistazo general</h2><div class="metricas">
+          <article class="metrica"><span class="icono-metrica azul" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 7 9-4 9 4v10l-9 4-9-4z"/><path d="m3.5 7.2 8.5 4 8.5-4M12 11.5V21"/></svg></span><span><strong class="valor-metrica">9,573</strong><span class="etiqueta-metrica">Total de productos</span></span></article>
+          <article class="metrica"><span class="icono-metrica verde" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h18l-2-6H5zM5 10v10h14V10M9 20v-6h6v6"/><path d="M3 10a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/></svg></span><span><strong class="valor-metrica">12</strong><span class="etiqueta-metrica">Total de sucursales</span></span></article>
+          <article class="metrica"><span class="icono-metrica rojo" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="7" width="16" height="14" rx="2"/><path d="M8 7V4h8v3m-4 4v3"/><circle cx="12" cy="16.5" r=".6" fill="currentColor"/></svg></span><span><strong class="valor-metrica">40</strong><span class="etiqueta-metrica">Total de cajeros</span></span></article>
+        </div></section>
+        <div class="columna-izquierda">
+          <section class="panel panel-stock" aria-labelledby="stock-title"><div class="encabezado-panel"><div><h2 class="titulo-seccion" id="stock-title">Productos con poco stock</h2><p class="subtitulo-seccion">Revisa los productos que necesitan reposición.</p></div><a class="accion-texto" id="all-stock" href="inventario.html">Ver inventario</a></div><div class="contenedor-tabla"><table><thead><tr><th scope="col">Producto</th><th scope="col">Sucursal</th><th scope="col" class="cantidad">Restante</th></tr></thead><tbody id="stock-rows"></tbody></table><div class="estado-vacio" id="empty-state">No se encontraron productos.</div></div></section>
+          <section class="panel panel-ventas" aria-labelledby="latest-sales-title"><div class="encabezado-panel"><div><h2 class="titulo-seccion" id="latest-sales-title">Últimas ventas</h2><p class="subtitulo-seccion">Actividad reciente en tus sucursales.</p></div><a class="accion-texto" id="sales-history" href="ventas.html">Historial</a></div><div class="lista-ventas" id="latest-sales"></div></section>
+        </div>
+        <div class="columna-derecha">
+          <section class="panel panel-ranking"><h2 class="titulo-seccion">Sucursales por ventas</h2><p class="subtitulo-seccion">Rendimiento de este mes</p><ol class="lista-ranking"><li class="elemento-ranking"><span class="nombre-sucursal">1. Sucursal 1</span><span class="pista-barra"><span class="relleno-barra" style="width:88%"></span></span><span class="importe">865K</span></li><li class="elemento-ranking"><span class="nombre-sucursal">2. Sucursal 4</span><span class="pista-barra"><span class="relleno-barra" style="width:78%"></span></span><span class="importe">723K</span></li><li class="elemento-ranking"><span class="nombre-sucursal">3. Sucursal 2</span><span class="pista-barra"><span class="relleno-barra" style="width:67%"></span></span><span class="importe">662K</span></li><li class="elemento-ranking"><span class="nombre-sucursal">4. Sucursal 7</span><span class="pista-barra"><span class="relleno-barra" style="width:44%"></span></span><span class="importe">473K</span></li><li class="elemento-ranking"><span class="nombre-sucursal">5. Sucursal 9</span><span class="pista-barra"><span class="relleno-barra" style="width:22%"></span></span><span class="importe">242K</span></li></ol></section>
+          <section class="panel panel-accesos"><h2 class="titulo-seccion">Accesos rápidos</h2><div class="acciones-rapidas"><button class="acceso-rapido" id="add-product" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 5v14M5 12h14"/></svg>Agregar nuevo producto</button><button class="acceso-rapido" type="button" data-quick-action="Registrar cajero">Registrar cajero</button><button class="acceso-rapido" type="button" data-quick-action="Agregar nueva caja">Agregar nueva caja</button><button class="acceso-rapido" type="button" data-quick-action="Registrar sucursal">Registrar sucursal</button></div></section>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
