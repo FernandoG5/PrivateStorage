@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrivateStorage - Panel</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<aside class="sidebar">
+        <div class="perfil">
+            <div class="avatar"></div>
+            <p class="nombre">Administrador</p>
+        </div>
+        <nav id="menu-navegacion">
+            <a class="nav-item activo" data-destino="sec-dashboard">Dashboard</a>
+            <a class="nav-item" data-destino="sec-inventario">Inventario</a>
+            <a class="nav-item" data-destino="sec-sucursal">Sucursales</a>
+            <a class="nav-item" data-destino="sec-gerentes">Gerentes</a>
+        </nav>
+        <button class="boton-cerrar-sesion" type="button">
+            <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+        </button>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>Bienvenido: Administrador</h1>
+            
+            <div class="header-controles">
+                <div class="busqueda">
+                    <input type="text" placeholder="Buscar...">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <div class="ajustes-tema">
+                    <i class="fa-solid fa-sun"></i>
+                    <i class="fa-solid fa-moon"></i>
+                </div>
+                <i class="fa-solid fa-bell campana"></i>
+            </div>
+        </header>
+
+        <section id="sec-dashboard" class="seccion-panel activa">
+            <div class="tarjetas-grid">
+                <div class="tarjeta-borde" data-destino="sec-inventario">
+                    <div class="tarjeta-interior">
+                        <i class="fa-solid fa-cube"></i>
+                        <div class="tarjeta-info">
+                            <span class="texto">Inventario General</span>
+                            <span class="resumen-card" id="resumen-inventario">Sin productos registrados<br>Control por sucursal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tarjeta-borde" data-destino="sec-sucursal">
+                    <div class="tarjeta-interior">
+                        <i class="fa-solid fa-store"></i>
+                        <div class="tarjeta-info">
+                            <span class="numero" id="total-sucursales">1</span>
+                            <span class="texto">Total de<br>sucursales</span>
+                            <span class="resumen-card" id="resumen-sucursales">1 activa</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tarjeta-borde" data-destino="sec-gerentes">
+                    <div class="tarjeta-interior">
+                        <i class="fa-solid fa-wallet"></i>
+                        <div class="tarjeta-info">
+                            <span class="numero" id="total-gerentes">1</span>
+                            <span class="texto">Total de<br>gerentes</span>
+                            <span class="resumen-card" id="resumen-gerentes">1 asignado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-inventario" class="seccion-panel">
+            <div class="contenedor-modulo">
+                <h2>Control de Inventario</h2>
+                <p class="subtitulo">Existencias disponibles por sucursal y almacén.</p>
+            </div>
+        </section>
+
+        <section id="sec-sucursal" class="seccion-panel">
+            <div class="contenedor-modulo">
+                <h2>Gestión de Sucursales</h2>
+                <p class="subtitulo">Administra las sedes y su información de contacto.</p>
+                <button class="boton-guardar boton-nuevo" id="boton-nueva-sucursal" type="button">
+                    <i class="fa-solid fa-plus"></i> Agregar sucursal
+                </button>
+
+                <form class="formulario formulario-sucursal oculto" id="formulario-sucursal">
+                    <input id="sucursal-id" type="hidden">
+                    <div class="campos-sucursal">
+                        <div class="campo">
+                            <label for="sucursal-nombre">Nombre de sucursal</label>
+                            <input id="sucursal-nombre" type="text" required>
+                        </div>
+                        <div class="campo">
+                            <label for="sucursal-direccion">Dirección</label>
+                            <input id="sucursal-direccion" type="text" required>
+                        </div>
+                        <div class="campo">
+                            <label for="sucursal-telefono">Teléfono</label>
+                            <input id="sucursal-telefono" type="tel" required>
+                        </div>
+                        <div class="campo">
+                            <label for="sucursal-contacto">Persona de contacto</label>
+                            <input id="sucursal-contacto" type="text" required>
+                        </div>
+                        <div class="campo">
+                            <label for="sucursal-clave">Clave de sucursal</label>
+                            <input id="sucursal-clave" type="text" required>
+                        </div>
+                        <div class="campo">
+                            <label for="sucursal-estado">Estado</label>
+                            <select id="sucursal-estado">
+                                <option value="Activa">Activa</option>
+                                <option value="Inactiva">Inactiva</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="acciones-formulario">
+                        <button class="boton-guardar" type="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar sucursal</button>
+                        <button class="boton-secundario" id="boton-cancelar-sucursal" type="button">Cancelar</button>
+                    </div>
+                </form>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-gerentes tabla-sucursales">
+                        <thead>
+                            <tr>
+                                <th>Sucursal</th>
+                                <th>Dirección</th>
+                                <th>Contacto</th>
+                                <th>Teléfono</th>
+                                <th>Clave</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-sucursales"></tbody>
+                    </table>
+                    <p class="tabla-vacia oculto" id="tabla-sucursales-vacia">No hay sucursales registradas.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-gerentes" class="seccion-panel">
+            <div class="contenedor-modulo">
+                <h2>Gestión de Gerentes</h2>
+                <p class="subtitulo">Listado y asignación de gerentes por tienda.</p>
+                <button class="boton-guardar boton-nuevo" id="boton-nuevo-gerente" type="button">
+                    <i class="fa-solid fa-plus"></i> Crear gerente
+                </button>
+
+                <form class="formulario formulario-gerente oculto" id="formulario-gerente">
+                    <input id="gerente-id" type="hidden">
+                    <div class="campos-gerente">
+                        <div class="campo">
+                            <label for="gerente-nombre">Nombre completo</label>
+                            <input id="gerente-nombre" type="text" required>
+                        </div>
+                        <div class="campo">
+                            <label for="gerente-correo">Correo electrónico</label>
+                            <input id="gerente-correo" type="email" required>
+                        </div>
+                        <div class="campo">
+                            <label for="gerente-sucursal">Sucursal asignada</label>
+                            <input id="gerente-sucursal" type="text" required>
+                        </div>
+                        <div class="campo">
+                            <label for="gerente-telefono">Teléfono</label>
+                            <input id="gerente-telefono" type="tel" required>
+                        </div>
+                        <div class="campo">
+                            <label for="gerente-clave">Clave de gerente</label>
+                            <input id="gerente-clave" type="text" required>
+                        </div>
+                    </div>
+                    <div class="acciones-formulario">
+                        <button class="boton-guardar" type="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar gerente</button>
+                        <button class="boton-secundario" id="boton-cancelar-gerente" type="button">Cancelar</button>
+                    </div>
+                </form>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-gerentes">
+                        <thead>
+                            <tr>
+                                <th>Gerente</th>
+                                <th>Sucursal</th>
+                                <th>Teléfono</th>
+                                <th>Clave</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-gerentes"></tbody>
+                    </table>
+                    <p class="tabla-vacia oculto" id="tabla-vacia">No hay gerentes registrados.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const elementosClicables = document.querySelectorAll('[data-destino]');
+        const secciones = document.querySelectorAll('.seccion-panel');
+        const navLinks = document.querySelectorAll('.nav-item');
+        const formularioGerente = document.getElementById('formulario-gerente');
+        const listaGerentes = document.getElementById('lista-gerentes');
+        const tablaVacia = document.getElementById('tabla-vacia');
+        const totalGerentes = document.getElementById('total-gerentes');
+        const resumenGerentes = document.getElementById('resumen-gerentes');
+        const gerentes = [{
+            id: 1,
+            nombre: 'Pedro Suarez Lopez',
+            correo: 'pedro.suarez@privatestorage.com',
+            sucursal: 'Sucursal Centro',
+            telefono: '3141234567',
+            clave: 'gerente2026'
+        }];
+        const formularioSucursal = document.getElementById('formulario-sucursal');
+        const listaSucursales = document.getElementById('lista-sucursales');
+        const tablaSucursalesVacia = document.getElementById('tabla-sucursales-vacia');
+        const totalSucursales = document.getElementById('total-sucursales');
+        const resumenSucursales = document.getElementById('resumen-sucursales');
+        const sucursales = [{
+            id: 1,
+            nombre: 'Sucursal Centro',
+            direccion: 'Calle Ejemplo #123',
+            telefono: '3141234567',
+            contacto: 'Pedro Suarez Lopez',
+            clave: 'centro2026',
+            estado: 'Activa'
+        }];
+
+        elementosClicables.forEach(elemento => {
+            elemento.addEventListener('click', () => {
+                const idDestino = elemento.getAttribute('data-destino');
+
+                secciones.forEach(sec => sec.classList.remove('activa'));
+                document.getElementById(idDestino).classList.add('activa');
+
+                navLinks.forEach(link => {
+                    if (link.getAttribute('data-destino') === idDestino) {
+                        link.classList.add('activo');
+                    } else {
+                        link.classList.remove('activo');
+                    }
+                });
+            });
+        });
+
+        const limpiarFormulario = () => {
+            formularioGerente.reset();
+            document.getElementById('gerente-id').value = '';
+            formularioGerente.classList.add('oculto');
+        };
+
+        const mostrarFormulario = (gerente = null) => {
+            formularioGerente.classList.remove('oculto');
+            document.getElementById('gerente-id').value = gerente ? gerente.id : '';
+            document.getElementById('gerente-nombre').value = gerente ? gerente.nombre : '';
+            document.getElementById('gerente-correo').value = gerente ? gerente.correo : '';
+            document.getElementById('gerente-sucursal').value = gerente ? gerente.sucursal : '';
+            document.getElementById('gerente-telefono').value = gerente ? gerente.telefono : '';
+            document.getElementById('gerente-clave').value = gerente ? gerente.clave : '';
+            document.getElementById('gerente-nombre').focus();
+        };
+
+        const renderizarGerentes = () => {
+            listaGerentes.innerHTML = gerentes.map(gerente => `
+                <tr>
+                    <td><strong>${gerente.nombre}</strong><small>${gerente.correo}</small></td>
+                    <td>${gerente.sucursal}</td>
+                    <td>${gerente.telefono}</td>
+                    <td><span class="clave-visible">${gerente.clave}</span></td>
+                    <td><span class="estado-activo">Activo</span></td>
+                    <td class="acciones-tabla">
+                        <button class="boton-icono" type="button" data-accion="editar" data-id="${gerente.id}" title="Editar gerente" aria-label="Editar gerente"><i class="fa-solid fa-pen"></i></button>
+                        <button class="boton-icono boton-eliminar" type="button" data-accion="eliminar" data-id="${gerente.id}" title="Eliminar gerente" aria-label="Eliminar gerente"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+            tablaVacia.classList.toggle('oculto', gerentes.length > 0);
+            totalGerentes.textContent = gerentes.length;
+            resumenGerentes.textContent = `${gerentes.length} ${gerentes.length === 1 ? 'asignado' : 'asignados'}`;
+        };
+
+        document.getElementById('boton-nuevo-gerente').addEventListener('click', () => mostrarFormulario());
+        document.getElementById('boton-cancelar-gerente').addEventListener('click', limpiarFormulario);
+
+        formularioGerente.addEventListener('submit', evento => {
+            evento.preventDefault();
+            const id = document.getElementById('gerente-id').value;
+            const datos = {
+                id: id ? Number(id) : Date.now(),
+                nombre: document.getElementById('gerente-nombre').value.trim(),
+                correo: document.getElementById('gerente-correo').value.trim(),
+                sucursal: document.getElementById('gerente-sucursal').value.trim(),
+                telefono: document.getElementById('gerente-telefono').value.trim(),
+                clave: document.getElementById('gerente-clave').value.trim()
+            };
+            const indice = gerentes.findIndex(gerente => gerente.id === datos.id);
+            if (indice === -1) gerentes.push(datos);
+            else gerentes[indice] = datos;
+            limpiarFormulario();
+            renderizarGerentes();
+        });
+
+        listaGerentes.addEventListener('click', evento => {
+            const boton = evento.target.closest('button[data-accion]');
+            if (!boton) return;
+            const id = Number(boton.dataset.id);
+            const gerente = gerentes.find(item => item.id === id);
+            if (boton.dataset.accion === 'editar') mostrarFormulario(gerente);
+            if (boton.dataset.accion === 'eliminar' && gerente && confirm(`¿Eliminar a ${gerente.nombre}?`)) {
+                gerentes.splice(gerentes.indexOf(gerente), 1);
+                renderizarGerentes();
+            }
+        });
+
+        const limpiarFormularioSucursal = () => {
+            formularioSucursal.reset();
+            document.getElementById('sucursal-id').value = '';
+            formularioSucursal.classList.add('oculto');
+        };
+
+        const mostrarFormularioSucursal = (sucursal = null) => {
+            formularioSucursal.classList.remove('oculto');
+            document.getElementById('sucursal-id').value = sucursal ? sucursal.id : '';
+            document.getElementById('sucursal-nombre').value = sucursal ? sucursal.nombre : '';
+            document.getElementById('sucursal-direccion').value = sucursal ? sucursal.direccion : '';
+            document.getElementById('sucursal-telefono').value = sucursal ? sucursal.telefono : '';
+            document.getElementById('sucursal-contacto').value = sucursal ? sucursal.contacto : '';
+            document.getElementById('sucursal-clave').value = sucursal ? sucursal.clave : '';
+            document.getElementById('sucursal-estado').value = sucursal ? sucursal.estado : 'Activa';
+            document.getElementById('sucursal-nombre').focus();
+        };
+
+        const renderizarSucursales = () => {
+            listaSucursales.innerHTML = sucursales.map(sucursal => `
+                <tr>
+                    <td><strong>${sucursal.nombre}</strong></td>
+                    <td>${sucursal.direccion}</td>
+                    <td>${sucursal.contacto}</td>
+                    <td>${sucursal.telefono}</td>
+                    <td><span class="clave-sucursal">${sucursal.clave}</span></td>
+                    <td><span class="${sucursal.estado === 'Activa' ? 'estado-activo' : 'estado-inactivo'}">${sucursal.estado}</span></td>
+                    <td class="acciones-tabla">
+                        <button class="boton-icono" type="button" data-accion-sucursal="editar" data-id="${sucursal.id}" title="Editar sucursal" aria-label="Editar sucursal"><i class="fa-solid fa-pen"></i></button>
+                        <button class="boton-icono boton-eliminar" type="button" data-accion-sucursal="eliminar" data-id="${sucursal.id}" title="Eliminar sucursal" aria-label="Eliminar sucursal"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+            tablaSucursalesVacia.classList.toggle('oculto', sucursales.length > 0);
+            totalSucursales.textContent = sucursales.length;
+            const sucursalesActivas = sucursales.filter(sucursal => sucursal.estado === 'Activa').length;
+            resumenSucursales.textContent = `${sucursalesActivas} ${sucursalesActivas === 1 ? 'activa' : 'activas'}`;
+        };
+
+        document.getElementById('boton-nueva-sucursal').addEventListener('click', () => mostrarFormularioSucursal());
+        document.getElementById('boton-cancelar-sucursal').addEventListener('click', limpiarFormularioSucursal);
+
+        formularioSucursal.addEventListener('submit', evento => {
+            evento.preventDefault();
+            const id = document.getElementById('sucursal-id').value;
+            const datos = {
+                id: id ? Number(id) : Date.now(),
+                nombre: document.getElementById('sucursal-nombre').value.trim(),
+                direccion: document.getElementById('sucursal-direccion').value.trim(),
+                telefono: document.getElementById('sucursal-telefono').value.trim(),
+                contacto: document.getElementById('sucursal-contacto').value.trim(),
+                clave: document.getElementById('sucursal-clave').value,
+                estado: document.getElementById('sucursal-estado').value
+            };
+            const indice = sucursales.findIndex(sucursal => sucursal.id === datos.id);
+            if (indice === -1) sucursales.push(datos);
+            else sucursales[indice] = datos;
+            limpiarFormularioSucursal();
+            renderizarSucursales();
+        });
+
+        listaSucursales.addEventListener('click', evento => {
+            const boton = evento.target.closest('button[data-accion-sucursal]');
+            if (!boton) return;
+            const id = Number(boton.dataset.id);
+            const sucursal = sucursales.find(item => item.id === id);
+            if (boton.dataset.accionSucursal === 'editar') mostrarFormularioSucursal(sucursal);
+            if (boton.dataset.accionSucursal === 'eliminar' && sucursal && confirm(`¿Eliminar ${sucursal.nombre}?`)) {
+                sucursales.splice(sucursales.indexOf(sucursal), 1);
+                renderizarSucursales();
+            }
+        });
+
+        renderizarGerentes();
+        renderizarSucursales();
+    </script>
+</body>
+</html>

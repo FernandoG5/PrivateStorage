@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrivateStorage - Panel</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="cajero_estilos.css">
+</head>
+
+<aside class="sidebar">
+        <div class="perfil">
+            <div class="avatar"></div>
+            <p class="nombre">Cajero</p>
+        </div>
+        <nav id="menu-navegacion">
+            <a class="nav-item activo" data-destino="sec-ventas">Ventas</a>
+            <a class="nav-item" data-destino="sec-inventario">Inventario</a>
+        </nav>
+        <button class="boton-cerrar-sesion" type="button">
+            <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+        </button>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>Bienvenido: Cajero</h1>
+            
+            <div class="header-controles">
+                <div class="busqueda">
+                    <input type="text" placeholder="Buscar...">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <div class="ajustes-tema">
+                    <i class="fa-solid fa-sun"></i>
+                    <i class="fa-solid fa-moon"></i>
+                </div>
+                <i class="fa-solid fa-bell campana"></i>
+            </div>
+        </header>
+
+        <section id="sec-ventas" class="seccion-panel activa">
+            <div class="pos-contenedor">
+                <div class="pos-catalogo">
+                    <div class="pos-titulo">
+                        <div>
+                            <h2>Punto de Venta</h2>
+                            <p class="subtitulo">Registra una compra y actualiza las existencias.</p>
+                        </div>
+                        <span class="pos-sucursal"><i class="fa-solid fa-store"></i> Sucursal Centro</span>
+                    </div>
+                    <div class="pos-busqueda">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input id="busqueda-productos" type="search" placeholder="Buscar productos por nombre o código...">
+                    </div>
+                    <div class="productos-grid" id="lista-productos"></div>
+                </div>
+
+                <aside class="pos-carrito">
+                    <div class="carrito-cabecera">
+                        <div>
+                            <span class="eyebrow">Venta actual</span>
+                            <h2>Carrito</h2>
+                        </div>
+                        <span class="contador-carrito" id="contador-carrito">0</span>
+                    </div>
+                    <div class="carrito-items" id="carrito-items">
+                        <p class="carrito-vacio">Agrega productos para comenzar la venta.</p>
+                    </div>
+                    <div class="carrito-resumen">
+                        <div><span>Subtotal</span><strong id="subtotal-venta">$0.00</strong></div>
+                        <div class="total-venta"><span>Total</span><strong id="total-venta">$0.00</strong></div>
+                        <label for="metodo-pago">Método de pago</label>
+                        <select id="metodo-pago">
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Tarjeta">Tarjeta</option>
+                            <option value="Transferencia">Transferencia</option>
+                        </select>
+                        <button class="boton-confirmar" id="confirmar-venta" type="button" disabled>
+                            <i class="fa-solid fa-check"></i> Confirmar venta
+                        </button>
+                    </div>
+                </aside>
+            </div>
+            <div class="ticket-resultado oculto" id="ticket-resultado"></div>
+        </section>
+
+        <section id="sec-inventario" class="seccion-panel">
+            <div class="contenedor-modulo">
+                <h2>Inventario</h2>
+                <p class="subtitulo">Existencias disponibles. Vista de solo lectura para el cajero.</p>
+                <div class="tabla-contenedor">
+                    <table class="tabla-inventario">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Código</th>
+                                <th>Precio</th>
+                                <th>Existencias</th>
+                                <th>Disponibilidad</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-inventario"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const elementosClicables = document.querySelectorAll('[data-destino]');
+        const secciones = document.querySelectorAll('.seccion-panel');
+        const navLinks = document.querySelectorAll('.nav-item');
+        elementosClicables.forEach(elemento => {
+            elemento.addEventListener('click', () => {
+                const idDestino = elemento.getAttribute('data-destino');
+
+                secciones.forEach(sec => sec.classList.remove('activa'));
+                document.getElementById(idDestino).classList.add('activa');
+
+                navLinks.forEach(link => {
+                    if (link.getAttribute('data-destino') === idDestino) {
+                        link.classList.add('activo');
+                    } else {
+                        link.classList.remove('activo');
+                    }
+                });
+            });
+        });
+
+        const productos = [
+            { id: 1, codigo: 'XSX-001', nombre: 'Xbox Series X, 1TB', precio: 16000, stock: 12 },
+            { id: 2, codigo: 'P5P-002', nombre: 'Playstation 5 Pro 2TB', precio: 15000, stock: 10 },
+            { id: 3, codigo: 'R7X-003', nombre: 'RX 9070 XT 16GB', precio: 17000, stock: 5 },
+            { id: 4, codigo: 'TX9-004', nombre: 'Nvidia RTX 5090', precio: 95000, stock: 3 },
+            { id: 5, codigo: 'LP2-005', nombre: 'Logitech G Pro X Superlight 2 ', precio: 4000, stock: 20 },
+            { id: 6, codigo: 'HXO-006', nombre: 'HyperX Alloy Origins Core PBT ', precio: 7600, stock: 0 }
+        ];
+        const carrito = [];
+        const listaProductos = document.getElementById('lista-productos');
+        const carritoItems = document.getElementById('carrito-items');
+        const busquedaProductos = document.getElementById('busqueda-productos');
+        const subtotalVenta = document.getElementById('subtotal-venta');
+        const totalVenta = document.getElementById('total-venta');
+        const contadorCarrito = document.getElementById('contador-carrito');
+        const confirmarVenta = document.getElementById('confirmar-venta');
+        const ticketResultado = document.getElementById('ticket-resultado');
+        const listaInventario = document.getElementById('lista-inventario');
+
+        const moneda = cantidad => `$${cantidad.toFixed(2)}`;
+
+        const cantidadEnCarrito = productoId => {
+            const item = carrito.find(elemento => elemento.id === productoId);
+            return item ? item.cantidad : 0;
+        };
+
+        const renderizarProductos = (filtro = '') => {
+            const texto = filtro.toLowerCase().trim();
+            const productosFiltrados = productos.filter(producto =>
+                producto.nombre.toLowerCase().includes(texto) || producto.codigo.toLowerCase().includes(texto)
+            );
+            listaProductos.innerHTML = productosFiltrados.map(producto => {
+                const disponible = producto.stock - cantidadEnCarrito(producto.id);
+                return `
+                    <article class="producto-item">
+                        <div class="producto-icono"><i class="fa-solid fa-box"></i></div>
+                        <div class="producto-datos">
+                            <span class="producto-codigo">${producto.codigo}</span>
+                            <h3>${producto.nombre}</h3>
+                            <strong>${moneda(producto.precio)}</strong>
+                            <small class="${disponible === 0 ? 'sin-stock' : ''}">${disponible} disponibles</small>
+                        </div>
+                        <button class="boton-agregar" type="button" data-producto-id="${producto.id}" ${disponible === 0 ? 'disabled' : ''} aria-label="Agregar ${producto.nombre}" title="Agregar producto"><i class="fa-solid fa-plus"></i></button>
+                    </article>
+                `;
+            }).join('');
+        };
+
+        const renderizarInventario = () => {
+            listaInventario.innerHTML = productos.map(producto => `
+                <tr>
+                    <td><strong>${producto.nombre}</strong></td>
+                    <td>${producto.codigo}</td>
+                    <td>${moneda(producto.precio)}</td>
+                    <td>${producto.stock}</td>
+                    <td><span class="${producto.stock > 0 ? 'estado-disponible' : 'estado-agotado'}">${producto.stock > 0 ? 'Disponible' : 'Agotado'}</span></td>
+                </tr>
+            `).join('');
+        };
+
+        const renderizarCarrito = () => {
+            if (carrito.length === 0) {
+                carritoItems.innerHTML = '<p class="carrito-vacio">Agrega productos para comenzar la venta.</p>';
+            } else {
+                carritoItems.innerHTML = carrito.map(item => `
+                    <div class="carrito-item">
+                        <div>
+                            <strong>${item.nombre}</strong>
+                            <small>${moneda(item.precio)} c/u</small>
+                        </div>
+                        <div class="cantidad-control">
+                            <button type="button" data-carrito-accion="restar" data-producto-id="${item.id}" aria-label="Disminuir cantidad"><i class="fa-solid fa-minus"></i></button>
+                            <span>${item.cantidad}</span>
+                            <button type="button" data-carrito-accion="sumar" data-producto-id="${item.id}" aria-label="Aumentar cantidad"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                        <strong>${moneda(item.precio * item.cantidad)}</strong>
+                    </div>
+                `).join('');
+            }
+            const subtotal = carrito.reduce((total, item) => total + item.precio * item.cantidad, 0);
+            const unidades = carrito.reduce((total, item) => total + item.cantidad, 0);
+            subtotalVenta.textContent = moneda(subtotal);
+            totalVenta.textContent = moneda(subtotal);
+            contadorCarrito.textContent = unidades;
+            confirmarVenta.disabled = carrito.length === 0;
+            renderizarProductos(busquedaProductos.value);
+        };
+
+        listaProductos.addEventListener('click', evento => {
+            const boton = evento.target.closest('[data-producto-id]');
+            if (!boton || boton.disabled) return;
+            const producto = productos.find(item => item.id === Number(boton.dataset.productoId));
+            const item = carrito.find(elemento => elemento.id === producto.id);
+            if (item) item.cantidad += 1;
+            else carrito.push({ ...producto, cantidad: 1 });
+            renderizarCarrito();
+        });
+
+        carritoItems.addEventListener('click', evento => {
+            const boton = evento.target.closest('[data-carrito-accion]');
+            if (!boton) return;
+            const id = Number(boton.dataset.productoId);
+            const item = carrito.find(elemento => elemento.id === id);
+            const producto = productos.find(elemento => elemento.id === id);
+            if (boton.dataset.carritoAccion === 'sumar' && item.cantidad < producto.stock) item.cantidad += 1;
+            if (boton.dataset.carritoAccion === 'restar') {
+                item.cantidad -= 1;
+                if (item.cantidad === 0) carrito.splice(carrito.indexOf(item), 1);
+            }
+            renderizarCarrito();
+        });
+
+        busquedaProductos.addEventListener('input', evento => renderizarProductos(evento.target.value));
+
+        confirmarVenta.addEventListener('click', () => {
+            if (carrito.length === 0) return;
+            carrito.forEach(item => {
+                const producto = productos.find(elemento => elemento.id === item.id);
+                producto.stock -= item.cantidad;
+            });
+            const total = carrito.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+            const numeroTicket = `T-${Date.now().toString().slice(-6)}`;
+            const fecha = new Date().toLocaleString('es-MX');
+            ticketResultado.innerHTML = `
+                <div class="ticket-cabecera"><strong>Venta confirmada</strong><span>${numeroTicket}</span></div>
+                <p>${fecha} · Pago: ${document.getElementById('metodo-pago').value}</p>
+                <div class="ticket-lineas">${carrito.map(item => `<span>${item.cantidad} x ${item.nombre} <strong>${moneda(item.precio * item.cantidad)}</strong></span>`).join('')}</div>
+                <div class="ticket-total">Total pagado <strong>${moneda(total)}</strong></div>
+                <button class="boton-secundario" type="button" onclick="window.print()"><i class="fa-solid fa-print"></i> Imprimir ticket</button>
+            `;
+            ticketResultado.classList.remove('oculto');
+            carrito.length = 0;
+            renderizarCarrito();
+            renderizarInventario();
+        });
+
+        renderizarProductos();
+        renderizarCarrito();
+        renderizarInventario();
+    </script>
+</body>
+</html>
