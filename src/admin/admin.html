@@ -12,9 +12,11 @@
     <link rel="stylesheet" href="admin_estilos.css">
 </head>
 
-<aside class="sidebar">
+<body>
+
+    <aside class="sidebar">
         <div class="perfil">
-            <div class="avatar"></div>
+            <div class="avatar" aria-hidden="true">A</div>
             <p class="nombre">Administrador</p>
         </div>
         <nav id="menu-navegacion">
@@ -23,7 +25,7 @@
             <a class="nav-item" data-destino="sec-sucursal">Sucursales</a>
             <a class="nav-item" data-destino="sec-gerentes">Gerentes</a>
         </nav>
-        <button class="boton-cerrar-sesion" type="button">
+        <button class="boton-cerrar-sesion" id="boton-cerrar-sesion" type="button">
             <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
         </button>
     </aside>
@@ -37,10 +39,16 @@
                     <input type="text" placeholder="Buscar...">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
-                <div class="ajustes-tema">
+                <button
+                    type="button"
+                    id="boton-tema"
+                    class="ajustes-tema"
+                    aria-label="Cambiar tema"
+                    aria-pressed="false"
+                >
                     <i class="fa-solid fa-sun"></i>
                     <i class="fa-solid fa-moon"></i>
-                </div>
+                </button>
                 <i class="fa-solid fa-bell campana"></i>
             </div>
         </header>
@@ -61,9 +69,9 @@
                     <div class="tarjeta-interior">
                         <i class="fa-solid fa-store"></i>
                         <div class="tarjeta-info">
-                            <span class="numero" id="total-sucursales">1</span>
+                            <span class="numero" id="total-sucursales">0</span>
                             <span class="texto">Total de<br>sucursales</span>
-                            <span class="resumen-card" id="resumen-sucursales">1 activa</span>
+                            <span class="resumen-card" id="resumen-sucursales">0 activas</span>
                         </div>
                     </div>
                 </div>
@@ -72,9 +80,9 @@
                     <div class="tarjeta-interior">
                         <i class="fa-solid fa-wallet"></i>
                         <div class="tarjeta-info">
-                            <span class="numero" id="total-gerentes">1</span>
+                            <span class="numero" id="total-gerentes">0</span>
                             <span class="texto">Total de<br>gerentes</span>
-                            <span class="resumen-card" id="resumen-gerentes">1 asignado</span>
+                            <span class="resumen-card" id="resumen-gerentes">0 activos</span>
                         </div>
                     </div>
                 </div>
@@ -112,18 +120,10 @@
                             <input id="sucursal-telefono" type="tel" required>
                         </div>
                         <div class="campo">
-                            <label for="sucursal-contacto">Persona de contacto</label>
-                            <input id="sucursal-contacto" type="text" required>
-                        </div>
-                        <div class="campo">
-                            <label for="sucursal-clave">Clave de sucursal</label>
-                            <input id="sucursal-clave" type="text" required>
-                        </div>
-                        <div class="campo">
                             <label for="sucursal-estado">Estado</label>
                             <select id="sucursal-estado">
-                                <option value="Activa">Activa</option>
-                                <option value="Inactiva">Inactiva</option>
+                                <option value="activa">Activa</option>
+                                <option value="inactiva">Inactiva</option>
                             </select>
                         </div>
                     </div>
@@ -139,9 +139,7 @@
                             <tr>
                                 <th>Sucursal</th>
                                 <th>Dirección</th>
-                                <th>Contacto</th>
                                 <th>Teléfono</th>
-                                <th>Clave</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -169,20 +167,23 @@
                             <input id="gerente-nombre" type="text" required>
                         </div>
                         <div class="campo">
-                            <label for="gerente-correo">Correo electrónico</label>
-                            <input id="gerente-correo" type="email" required>
+                            <label for="gerente-usuario">Usuario</label>
+                            <input id="gerente-usuario" type="text" required>
+                        </div>
+                        <div class="campo">
+                            <label for="gerente-password">Contraseña</label>
+                            <input id="gerente-password" type="password" autocomplete="new-password" required>
                         </div>
                         <div class="campo">
                             <label for="gerente-sucursal">Sucursal asignada</label>
-                            <input id="gerente-sucursal" type="text" required>
+                            <select id="gerente-sucursal" required></select>
                         </div>
                         <div class="campo">
-                            <label for="gerente-telefono">Teléfono</label>
-                            <input id="gerente-telefono" type="tel" required>
-                        </div>
-                        <div class="campo">
-                            <label for="gerente-clave">Clave de gerente</label>
-                            <input id="gerente-clave" type="text" required>
+                            <label for="gerente-activo">Estado</label>
+                            <select id="gerente-activo">
+                                <option value="1">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
                         </div>
                     </div>
                     <div class="acciones-formulario">
@@ -196,9 +197,8 @@
                         <thead>
                             <tr>
                                 <th>Gerente</th>
+                                <th>Usuario</th>
                                 <th>Sucursal</th>
-                                <th>Teléfono</th>
-                                <th>Clave</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -220,28 +220,51 @@
         const tablaVacia = document.getElementById('tabla-vacia');
         const totalGerentes = document.getElementById('total-gerentes');
         const resumenGerentes = document.getElementById('resumen-gerentes');
-        const gerentes = [{
-            id: 1,
-            nombre: 'Pedro Suarez Lopez',
-            correo: 'pedro.suarez@privatestorage.com',
-            sucursal: 'Sucursal Centro',
-            telefono: '3141234567',
-            clave: 'gerente2026'
-        }];
+        let gerentes = [];
         const formularioSucursal = document.getElementById('formulario-sucursal');
         const listaSucursales = document.getElementById('lista-sucursales');
         const tablaSucursalesVacia = document.getElementById('tabla-sucursales-vacia');
         const totalSucursales = document.getElementById('total-sucursales');
         const resumenSucursales = document.getElementById('resumen-sucursales');
-        const sucursales = [{
-            id: 1,
-            nombre: 'Sucursal Centro',
-            direccion: 'Calle Ejemplo #123',
-            telefono: '3141234567',
-            contacto: 'Pedro Suarez Lopez',
-            clave: 'centro2026',
-            estado: 'Activa'
-        }];
+        const botonTema = document.getElementById('boton-tema');
+        const botonCerrarSesion = document.getElementById('boton-cerrar-sesion');
+        let sucursales = [];
+
+        const establecerTema = temaOscuro => {
+            document.documentElement.dataset.tema = temaOscuro ? 'oscuro' : '';
+            botonTema.setAttribute('aria-pressed', String(temaOscuro));
+            botonTema.setAttribute('aria-label', temaOscuro ? 'Activar modo claro' : 'Activar modo oscuro');
+        };
+
+        establecerTema(localStorage.getItem('private-storage-tema') === 'oscuro');
+
+        botonTema.addEventListener('click', () => {
+            const temaOscuro = document.documentElement.dataset.tema !== 'oscuro';
+            establecerTema(temaOscuro);
+            localStorage.setItem('private-storage-tema', temaOscuro ? 'oscuro' : 'claro');
+        });
+
+        botonCerrarSesion.addEventListener('click', async () => {
+            botonCerrarSesion.disabled = true;
+
+            try {
+                const respuesta = await fetch('../../auth/logout.php', {
+                    method: 'POST'
+                });
+                const datos = await respuesta.json();
+
+                if (datos.success === true && datos.redirect) {
+                    window.location.href = datos.redirect;
+                    return;
+                }
+
+                alert(datos.message || 'No se pudo cerrar la sesión. Intenta nuevamente.');
+            } catch (error) {
+                alert('No se pudo cerrar la sesión. Intenta nuevamente.');
+            } finally {
+                botonCerrarSesion.disabled = false;
+            }
+        });
 
         elementosClicables.forEach(elemento => {
             elemento.addEventListener('click', () => {
@@ -260,9 +283,41 @@
             });
         });
 
+        const actualizarSelectSucursales = (sucursalIdSeleccionada = '') => {
+            const opciones = sucursales
+                .filter(sucursal => sucursal.estado === 'activa' || String(sucursal.id) === String(sucursalIdSeleccionada))
+                .map(sucursal => `
+                    <option value="${Number(sucursal.id)}">
+                        ${escaparHtml(sucursal.nombre)}${sucursal.estado === 'inactiva' ? ' (Inactiva)' : ''}
+                    </option>
+                `)
+                .join('');
+            document.getElementById('gerente-sucursal').innerHTML = opciones;
+        };
+
+        const cargarGerentes = async () => {
+            try {
+                const respuesta = await fetch('../../api/gerentes/listar.php');
+                const datos = await respuesta.json();
+
+                if (datos.success === true) {
+                    gerentes = Array.isArray(datos.gerentes) ? datos.gerentes : [];
+                    renderizarGerentes();
+                    return;
+                }
+
+                alert(datos.message || 'No se pudieron cargar los gerentes.');
+            } catch (error) {
+                alert('No se pudo comunicar con el servidor. Intenta nuevamente.');
+            }
+        };
+
         const limpiarFormulario = () => {
             formularioGerente.reset();
             document.getElementById('gerente-id').value = '';
+            document.getElementById('gerente-password').required = true;
+            document.getElementById('gerente-password').placeholder = '';
+            document.getElementById('gerente-activo').value = '1';
             formularioGerente.classList.add('oculto');
         };
 
@@ -270,68 +325,139 @@
             formularioGerente.classList.remove('oculto');
             document.getElementById('gerente-id').value = gerente ? gerente.id : '';
             document.getElementById('gerente-nombre').value = gerente ? gerente.nombre : '';
-            document.getElementById('gerente-correo').value = gerente ? gerente.correo : '';
-            document.getElementById('gerente-sucursal').value = gerente ? gerente.sucursal : '';
-            document.getElementById('gerente-telefono').value = gerente ? gerente.telefono : '';
-            document.getElementById('gerente-clave').value = gerente ? gerente.clave : '';
+            document.getElementById('gerente-usuario').value = gerente ? gerente.usuario : '';
+            document.getElementById('gerente-password').value = '';
+            document.getElementById('gerente-password').required = !gerente;
+            document.getElementById('gerente-password').placeholder = gerente
+                ? 'Dejar vacío para conservar la contraseña actual'
+                : '';
+            actualizarSelectSucursales(gerente ? gerente.sucursal_id : '');
+            document.getElementById('gerente-sucursal').value = gerente ? String(gerente.sucursal_id) : '';
+            document.getElementById('gerente-activo').value = gerente ? String(gerente.activo) : '1';
             document.getElementById('gerente-nombre').focus();
         };
 
         const renderizarGerentes = () => {
             listaGerentes.innerHTML = gerentes.map(gerente => `
                 <tr>
-                    <td><strong>${gerente.nombre}</strong><small>${gerente.correo}</small></td>
-                    <td>${gerente.sucursal}</td>
-                    <td>${gerente.telefono}</td>
-                    <td><span class="clave-visible">${gerente.clave}</span></td>
-                    <td><span class="estado-activo">Activo</span></td>
+                    <td><strong>${escaparHtml(gerente.nombre)}</strong></td>
+                    <td>${escaparHtml(gerente.usuario)}</td>
+                    <td>${escaparHtml(gerente.sucursal || 'Sin sucursal')}</td>
+                    <td><span class="${Number(gerente.activo) === 1 ? 'estado-activo' : 'estado-inactivo'}">${Number(gerente.activo) === 1 ? 'Activo' : 'Inactivo'}</span></td>
                     <td class="acciones-tabla">
                         <button class="boton-icono" type="button" data-accion="editar" data-id="${gerente.id}" title="Editar gerente" aria-label="Editar gerente"><i class="fa-solid fa-pen"></i></button>
-                        <button class="boton-icono boton-eliminar" type="button" data-accion="eliminar" data-id="${gerente.id}" title="Eliminar gerente" aria-label="Eliminar gerente"><i class="fa-solid fa-trash"></i></button>
+                        <button class="boton-icono boton-eliminar" type="button" data-accion="desactivar" data-id="${gerente.id}" title="Desactivar gerente" aria-label="Desactivar gerente"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             `).join('');
             tablaVacia.classList.toggle('oculto', gerentes.length > 0);
             totalGerentes.textContent = gerentes.length;
-            resumenGerentes.textContent = `${gerentes.length} ${gerentes.length === 1 ? 'asignado' : 'asignados'}`;
+            const gerentesActivos = gerentes.filter(gerente => Number(gerente.activo) === 1).length;
+            resumenGerentes.textContent = `${gerentesActivos} ${gerentesActivos === 1 ? 'activo' : 'activos'}`;
         };
 
         document.getElementById('boton-nuevo-gerente').addEventListener('click', () => mostrarFormulario());
         document.getElementById('boton-cancelar-gerente').addEventListener('click', limpiarFormulario);
 
-        formularioGerente.addEventListener('submit', evento => {
+        formularioGerente.addEventListener('submit', async evento => {
             evento.preventDefault();
             const id = document.getElementById('gerente-id').value;
-            const datos = {
-                id: id ? Number(id) : Date.now(),
-                nombre: document.getElementById('gerente-nombre').value.trim(),
-                correo: document.getElementById('gerente-correo').value.trim(),
-                sucursal: document.getElementById('gerente-sucursal').value.trim(),
-                telefono: document.getElementById('gerente-telefono').value.trim(),
-                clave: document.getElementById('gerente-clave').value.trim()
-            };
-            const indice = gerentes.findIndex(gerente => gerente.id === datos.id);
-            if (indice === -1) gerentes.push(datos);
-            else gerentes[indice] = datos;
-            limpiarFormulario();
-            renderizarGerentes();
+            const datosFormulario = new URLSearchParams({
+                id,
+                nombre: document.getElementById('gerente-nombre').value,
+                usuario: document.getElementById('gerente-usuario').value,
+                password: document.getElementById('gerente-password').value,
+                sucursal_id: document.getElementById('gerente-sucursal').value,
+                activo: document.getElementById('gerente-activo').value
+            });
+
+            try {
+                const respuesta = await fetch('../../api/gerentes/guardar.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: datosFormulario
+                });
+                const datos = await respuesta.json();
+
+                if (datos.success === true) {
+                    limpiarFormulario();
+                    await cargarGerentes();
+                    return;
+                }
+
+                alert(datos.message || 'No se pudo guardar el gerente.');
+            } catch (error) {
+                alert('No se pudo comunicar con el servidor. Intenta nuevamente.');
+            }
         });
 
-        listaGerentes.addEventListener('click', evento => {
+        listaGerentes.addEventListener('click', async evento => {
             const boton = evento.target.closest('button[data-accion]');
             if (!boton) return;
             const id = Number(boton.dataset.id);
             const gerente = gerentes.find(item => item.id === id);
-            if (boton.dataset.accion === 'editar') mostrarFormulario(gerente);
-            if (boton.dataset.accion === 'eliminar' && gerente && confirm(`¿Eliminar a ${gerente.nombre}?`)) {
-                gerentes.splice(gerentes.indexOf(gerente), 1);
-                renderizarGerentes();
+            if (boton.dataset.accion === 'editar') {
+                mostrarFormulario(gerente);
+                return;
+            }
+
+            if (boton.dataset.accion !== 'desactivar' || !gerente || !confirm(`¿Desactivar a ${gerente.nombre}?`)) {
+                return;
+            }
+
+            try {
+                const respuesta = await fetch('../../api/gerentes/eliminar.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({ id: String(id) })
+                });
+                const datos = await respuesta.json();
+
+                if (datos.success === true) {
+                    await cargarGerentes();
+                    return;
+                }
+
+                alert(datos.message || 'No se pudo desactivar el gerente.');
+            } catch (error) {
+                alert('No se pudo comunicar con el servidor. Intenta nuevamente.');
             }
         });
+
+        const escaparHtml = valor => String(valor ?? '').replace(/[&<>"']/g, caracter => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        }[caracter]));
+
+        const cargarSucursales = async () => {
+            try {
+                const respuesta = await fetch('../../api/sucursales/listar.php');
+                const datos = await respuesta.json();
+
+                if (datos.success === true) {
+                    sucursales = Array.isArray(datos.sucursales) ? datos.sucursales : [];
+                    renderizarSucursales();
+                    actualizarSelectSucursales();
+                    return;
+                }
+
+                alert(datos.message || 'No se pudieron cargar las sucursales.');
+            } catch (error) {
+                alert('No se pudo comunicar con el servidor. Intenta nuevamente.');
+            }
+        };
 
         const limpiarFormularioSucursal = () => {
             formularioSucursal.reset();
             document.getElementById('sucursal-id').value = '';
+            document.getElementById('sucursal-estado').value = 'activa';
             formularioSucursal.classList.add('oculto');
         };
 
@@ -341,69 +467,111 @@
             document.getElementById('sucursal-nombre').value = sucursal ? sucursal.nombre : '';
             document.getElementById('sucursal-direccion').value = sucursal ? sucursal.direccion : '';
             document.getElementById('sucursal-telefono').value = sucursal ? sucursal.telefono : '';
-            document.getElementById('sucursal-contacto').value = sucursal ? sucursal.contacto : '';
-            document.getElementById('sucursal-clave').value = sucursal ? sucursal.clave : '';
-            document.getElementById('sucursal-estado').value = sucursal ? sucursal.estado : 'Activa';
+            document.getElementById('sucursal-estado').value = sucursal ? sucursal.estado : 'activa';
             document.getElementById('sucursal-nombre').focus();
         };
 
         const renderizarSucursales = () => {
-            listaSucursales.innerHTML = sucursales.map(sucursal => `
-                <tr>
-                    <td><strong>${sucursal.nombre}</strong></td>
-                    <td>${sucursal.direccion}</td>
-                    <td>${sucursal.contacto}</td>
-                    <td>${sucursal.telefono}</td>
-                    <td><span class="clave-sucursal">${sucursal.clave}</span></td>
-                    <td><span class="${sucursal.estado === 'Activa' ? 'estado-activo' : 'estado-inactivo'}">${sucursal.estado}</span></td>
-                    <td class="acciones-tabla">
-                        <button class="boton-icono" type="button" data-accion-sucursal="editar" data-id="${sucursal.id}" title="Editar sucursal" aria-label="Editar sucursal"><i class="fa-solid fa-pen"></i></button>
-                        <button class="boton-icono boton-eliminar" type="button" data-accion-sucursal="eliminar" data-id="${sucursal.id}" title="Eliminar sucursal" aria-label="Eliminar sucursal"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
+            listaSucursales.innerHTML = sucursales.map(sucursal => {
+                const id = Number(sucursal.id);
+                const estadoActiva = sucursal.estado === 'activa';
+                return `
+                    <tr>
+                        <td><strong>${escaparHtml(sucursal.nombre)}</strong></td>
+                        <td>${escaparHtml(sucursal.direccion)}</td>
+                        <td>${escaparHtml(sucursal.telefono)}</td>
+                        <td><span class="${estadoActiva ? 'estado-activo' : 'estado-inactivo'}">${estadoActiva ? 'Activa' : 'Inactiva'}</span></td>
+                        <td class="acciones-tabla">
+                            <button class="boton-icono" type="button" data-accion-sucursal="editar" data-id="${id}" title="Editar sucursal" aria-label="Editar sucursal"><i class="fa-solid fa-pen"></i></button>
+                            <button class="boton-icono boton-eliminar" type="button" data-accion-sucursal="eliminar" data-id="${id}" title="Eliminar sucursal" aria-label="Eliminar sucursal"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
             tablaSucursalesVacia.classList.toggle('oculto', sucursales.length > 0);
             totalSucursales.textContent = sucursales.length;
-            const sucursalesActivas = sucursales.filter(sucursal => sucursal.estado === 'Activa').length;
+            const sucursalesActivas = sucursales.filter(sucursal => sucursal.estado === 'activa').length;
             resumenSucursales.textContent = `${sucursalesActivas} ${sucursalesActivas === 1 ? 'activa' : 'activas'}`;
         };
 
         document.getElementById('boton-nueva-sucursal').addEventListener('click', () => mostrarFormularioSucursal());
         document.getElementById('boton-cancelar-sucursal').addEventListener('click', limpiarFormularioSucursal);
 
-        formularioSucursal.addEventListener('submit', evento => {
+        formularioSucursal.addEventListener('submit', async evento => {
             evento.preventDefault();
-            const id = document.getElementById('sucursal-id').value;
-            const datos = {
-                id: id ? Number(id) : Date.now(),
-                nombre: document.getElementById('sucursal-nombre').value.trim(),
-                direccion: document.getElementById('sucursal-direccion').value.trim(),
-                telefono: document.getElementById('sucursal-telefono').value.trim(),
-                contacto: document.getElementById('sucursal-contacto').value.trim(),
-                clave: document.getElementById('sucursal-clave').value,
+            const datosFormulario = new URLSearchParams({
+                id: document.getElementById('sucursal-id').value,
+                nombre: document.getElementById('sucursal-nombre').value,
+                direccion: document.getElementById('sucursal-direccion').value,
+                telefono: document.getElementById('sucursal-telefono').value,
                 estado: document.getElementById('sucursal-estado').value
-            };
-            const indice = sucursales.findIndex(sucursal => sucursal.id === datos.id);
-            if (indice === -1) sucursales.push(datos);
-            else sucursales[indice] = datos;
-            limpiarFormularioSucursal();
-            renderizarSucursales();
-        });
+            });
 
-        listaSucursales.addEventListener('click', evento => {
-            const boton = evento.target.closest('button[data-accion-sucursal]');
-            if (!boton) return;
-            const id = Number(boton.dataset.id);
-            const sucursal = sucursales.find(item => item.id === id);
-            if (boton.dataset.accionSucursal === 'editar') mostrarFormularioSucursal(sucursal);
-            if (boton.dataset.accionSucursal === 'eliminar' && sucursal && confirm(`¿Eliminar ${sucursal.nombre}?`)) {
-                sucursales.splice(sucursales.indexOf(sucursal), 1);
-                renderizarSucursales();
+            try {
+                const respuesta = await fetch('../../api/sucursales/guardar.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: datosFormulario
+                });
+                const datos = await respuesta.json();
+
+                if (datos.success === true) {
+                    limpiarFormularioSucursal();
+                    await cargarSucursales();
+                    return;
+                }
+
+                alert(datos.message || 'No se pudo guardar la sucursal.');
+            } catch (error) {
+                alert('No se pudo comunicar con el servidor. Intenta nuevamente.');
             }
         });
 
-        renderizarGerentes();
-        renderizarSucursales();
+        listaSucursales.addEventListener('click', async evento => {
+            const boton = evento.target.closest('button[data-accion-sucursal]');
+            if (!boton) return;
+            const id = Number(boton.dataset.id);
+            const sucursal = sucursales.find(item => Number(item.id) === id);
+
+            if (boton.dataset.accionSucursal === 'editar' && sucursal) {
+                mostrarFormularioSucursal(sucursal);
+                return;
+            }
+
+            if (boton.dataset.accionSucursal !== 'eliminar' || !sucursal || !confirm(`¿Eliminar ${sucursal.nombre}?`)) {
+                return;
+            }
+
+            try {
+                const respuesta = await fetch('../../api/sucursales/eliminar.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({ id: String(id) })
+                });
+                const datos = await respuesta.json();
+
+                if (datos.success === true) {
+                    await cargarSucursales();
+                    return;
+                }
+
+                alert(datos.message || 'No se pudo eliminar la sucursal.');
+            } catch (error) {
+                alert('No se pudo comunicar con el servidor. Intenta nuevamente.');
+            }
+        });
+
+        const inicializarDatos = async () => {
+            await cargarSucursales();
+            actualizarSelectSucursales();
+            await cargarGerentes();
+        };
+
+        inicializarDatos();
     </script>
 </body>
 </html>
