@@ -1,157 +1,1254 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrivateStorage - Panel</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>Panel del gerente</title>
+
     <link rel="stylesheet" href="estilos.css">
+
 </head>
 
-<aside class="sidebar">
+<body>
+
+    <aside class="barra_lateral">
+
         <div class="perfil">
-            <div class="avatar"></div>
-            <p class="nombre">Gerente</p>
+            <div class="avatar" aria-hidden="true">G</div>
+            <h2>Panel del gerente</h2>
+            <p id="sucursal-lateral">Cargando sucursal...</p>
         </div>
-        <nav id="menu-navegacion">
-            <a class="nav-item activo" data-destino="sec-dashboard">Dashboard</a>
-            <a class="nav-item" data-destino="sec-productos">Productos</a>
-            <a class="nav-item" data-destino="sec-inventario">Inventario</a>
-            <a class="nav-item" data-destino="sec-sucursal">Sucursal</a>
-            <a class="nav-item" data-destino="sec-cajeros">Cajeros</a>
+
+        <nav aria-label="Menú del gerente">
+
+            <button
+                type="button"
+                class="enlace-menu activo"
+                data-navegacion="inicio"
+                aria-current="page"
+            >
+                Inicio
+            </button>
+
+            <button
+                type="button"
+                class="enlace-menu"
+                data-navegacion="productos"
+            >
+                Productos
+            </button>
+
+            <button
+                type="button"
+                class="enlace-menu"
+                data-navegacion="sucursal"
+            >
+                Sucursal
+            </button>
+
+            <button
+                type="button"
+                class="enlace-menu"
+                data-navegacion="cajeros"
+            >
+                Cajeros
+            </button>
+
         </nav>
+
+        <button type="button" class="boton-salir" id="boton-cerrar-sesion">
+            Cerrar sesión
+        </button>
+
     </aside>
 
-    <main class="main-content">
-        <header class="header">
-            <h1>Bienvenido: Gerente</h1>
-            
-            <div class="header-controles">
-                <div class="busqueda">
-                    <input type="text" placeholder="Buscar...">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
-                <div class="ajustes-tema">
-                    <i class="fa-solid fa-sun"></i>
-                    <i class="fa-solid fa-moon"></i>
-                </div>
-                <i class="fa-solid fa-bell campana"></i>
+    <main class="contenido">
+
+        <header class="encabezado">
+
+            <div>
+                <h1>Panel del gerente</h1>
+                <p id="nombre-sucursal">Cargando...</p>
             </div>
+
+            <div class="controles-encabezado">
+
+                <button
+                    type="button"
+                    id="actualizar-datos"
+                    class="boton-tema"
+                >
+                    Actualizar datos
+                </button>
+
+                <button
+                    type="button"
+                    id="boton-tema"
+                    class="boton-tema"
+                    aria-pressed="false"
+                >
+                    Modo oscuro
+                </button>
+
+            </div>
+
         </header>
 
-        <section id="sec-dashboard" class="seccion-panel activa">
-            <div class="tarjetas-grid">
-                <div class="tarjeta-borde" data-destino="sec-productos">
-                    <div class="tarjeta-interior">
-                        <i class="fa-solid fa-cube"></i>
-                        <div class="tarjeta-info">
-                            <span class="numero">9573</span>
-                            <span class="texto">Total de<br>productos</span>
-                        </div>
-                    </div>
+        <div class="cuadros-principales">
+
+            <button
+                type="button"
+                class="cuadro"
+                data-navegacion="productos"
+                aria-controls="panel-productos"
+                aria-expanded="false"
+            >
+                <svg
+                    class="icono"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M12 3 3 7.5v9L12 21l9-4.5v-9L12 3Z"/>
+                    <path d="m3 7.5 9 4.5 9-4.5M12 12v9"/>
+                </svg>
+
+                <span class="texto-cuadro">
+                    <strong>Productos</strong>
+                    <span id="resumen-productos">
+                        Productos e inventario
+                    </span>
+                </span>
+            </button>
+
+            <button
+                type="button"
+                class="cuadro"
+                data-navegacion="sucursal"
+                aria-controls="panel-sucursal"
+                aria-expanded="false"
+            >
+                <svg
+                    class="icono"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M4 10v11h16V10M3 10l2-7h14l2 7"/>
+                    <path d="M3 10h18M9 21v-7h6v7M9 3l-1 7M15 3l1 7"/>
+                </svg>
+
+                <span class="texto-cuadro">
+                    <strong>Sucursal</strong>
+                    <span id="resumen-cajas">
+                        Información, cajas y ventas
+                    </span>
+                </span>
+            </button>
+
+            <button
+                type="button"
+                class="cuadro"
+                data-navegacion="cajeros"
+                aria-controls="panel-cajeros"
+                aria-expanded="false"
+            >
+                <svg
+                    class="icono"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <circle cx="9" cy="8" r="3"/>
+                    <path d="M3.5 19a5.5 5.5 0 0 1 11 0M16 6.5a2.5 2.5 0 0 1 0 5M16 14a4.5 4.5 0 0 1 4.5 5"/>
+                </svg>
+
+                <span class="texto-cuadro">
+                    <strong>Cajeros</strong>
+                    <span id="resumen-cajeros">Personal de caja</span>
+                </span>
+            </button>
+
+        </div>
+
+        <div class="area-inferior">
+
+            <p
+                id="estado-app"
+                class="mensaje"
+                role="status"
+                aria-live="polite"
+            >
+                Conectando con la base de datos...
+            </p>
+
+            <p id="mensaje-inicio" class="mensaje-inicio">
+                Selecciona Productos o Sucursal.
+            </p>
+
+            <section id="panel-productos" class="panel" hidden>
+
+                <h2>Productos e inventario</h2>
+
+                <div class="opciones">
+
+                    <button type="button" data-vista="agregar-producto">
+                        Agregar producto
+                    </button>
+
+                    <button type="button" data-vista="consultar-productos">
+                        Consultar productos
+                    </button>
+
+                    <button type="button" data-vista="modificar-producto">
+                        Modificar producto
+                    </button>
+
+                    <button type="button" data-vista="eliminar-producto">
+                        Eliminar producto
+                    </button>
+
+                    <button type="button" data-vista="inventario">
+                        Inventario actual
+                    </button>
+
+                    <button type="button" data-vista="actualizar-stock">
+                        Actualizar existencias
+                    </button>
+
+                    <button type="button" data-vista="stock-bajo">
+                        Stock bajo
+                    </button>
+
                 </div>
 
-                <div class="tarjeta-borde" data-destino="sec-sucursal">
-                    <div class="tarjeta-interior">
-                        <i class="fa-solid fa-store"></i>
-                        <div class="tarjeta-info">
-                            <span class="numero">12</span>
-                            <span class="texto">Total de<br>sucursales</span>
+                <section id="agregar-producto" class="vista" hidden>
+
+                    <h3>Agregar producto</h3>
+
+                    <form class="formulario" data-accion="agregar_producto">
+
+                        <div class="campo">
+                            <label for="codigo">Código</label>
+                            <input
+                                id="codigo"
+                                name="codigo"
+                                maxlength="50"
+                                required
+                            >
                         </div>
+
+                        <div class="campo">
+                            <label for="nombre">Nombre</label>
+                            <input
+                                id="nombre"
+                                name="nombre"
+                                maxlength="120"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="precio">Precio de venta</label>
+                            <input
+                                type="number"
+                                id="precio"
+                                name="precio"
+                                min="0"
+                                max="99999999.99"
+                                step="0.01"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="cantidad">Existencias iniciales</label>
+                            <input
+                                type="number"
+                                id="cantidad"
+                                name="existencias"
+                                min="0"
+                                max="1000000"
+                                step="1"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="minimo">Stock mínimo</label>
+                            <input
+                                type="number"
+                                id="minimo"
+                                name="stock_minimo"
+                                min="0"
+                                max="1000000"
+                                step="1"
+                                value="5"
+                                required
+                            >
+                        </div>
+
+                        <div class="acciones">
+                            <button type="submit">
+                                Guardar producto
+                            </button>
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <section id="consultar-productos" class="vista" hidden>
+
+                    <h3>Consultar productos</h3>
+
+                    <div class="tabla-contenedor">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Código</th>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Precio</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tabla-productos"></tbody>
+                        </table>
                     </div>
+
+                </section>
+
+                <section id="modificar-producto" class="vista" hidden>
+
+                    <h3>Modificar producto</h3>
+
+                    <form class="formulario" data-accion="modificar_producto">
+
+                        <div class="campo">
+                            <label for="editar-producto">Producto</label>
+                            <select
+                                id="editar-producto"
+                                name="id_producto"
+                                required
+                            >
+                                <option value="">Selecciona un producto</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="editar-nombre">Nombre</label>
+                            <input
+                                id="editar-nombre"
+                                name="nombre"
+                                maxlength="120"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="editar-precio">Precio</label>
+                            <input
+                                type="number"
+                                id="editar-precio"
+                                name="precio"
+                                min="0"
+                                max="99999999.99"
+                                step="0.01"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="editar-minimo">Stock mínimo</label>
+                            <input
+                                type="number"
+                                id="editar-minimo"
+                                name="stock_minimo"
+                                min="0"
+                                max="1000000"
+                                step="1"
+                                required
+                            >
+                        </div>
+
+                        <div class="acciones">
+                            <button type="submit">
+                                Guardar cambios
+                            </button>
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <section id="eliminar-producto" class="vista" hidden>
+
+                    <h3>Eliminar producto del catálogo</h3>
+
+                    <p class="nota">
+                        Se desactivará para conservar sus registros de ventas.
+                    </p>
+
+                    <form class="formulario" data-accion="eliminar_producto">
+
+                        <div class="campo">
+                            <label for="producto-eliminar">Producto</label>
+                            <select
+                                id="producto-eliminar"
+                                name="id_producto"
+                                required
+                            >
+                                <option value="">Selecciona un producto</option>
+                            </select>
+                        </div>
+
+                        <div class="acciones">
+                            <button type="submit">
+                                Eliminar del catálogo
+                            </button>
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <section id="inventario" class="vista" hidden>
+
+                    <h3>Inventario actual</h3>
+
+                    <div class="tabla-contenedor">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Código</th>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Existencias</th>
+                                    <th scope="col">Mínimo</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tabla-inventario"></tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+                <section id="actualizar-stock" class="vista" hidden>
+
+                    <h3>Actualizar existencias</h3>
+
+                    <p class="nota">
+                        La nueva cantidad reemplaza el total actual.
+                    </p>
+
+                    <form class="formulario" data-accion="actualizar_stock">
+
+                        <div class="campo">
+                            <label for="producto-stock">Producto</label>
+                            <select
+                                id="producto-stock"
+                                name="id_producto"
+                                required
+                            >
+                                <option value="">Selecciona un producto</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="nuevo-stock">Nueva existencia total</label>
+                            <input
+                                type="number"
+                                id="nuevo-stock"
+                                name="existencias"
+                                min="0"
+                                max="1000000"
+                                step="1"
+                                required
+                            >
+                        </div>
+
+                        <input
+                            type="hidden"
+                            id="stock-anterior"
+                            name="existencias_anteriores"
+                        >
+
+                        <p
+                            id="stock-observado"
+                            class="nota campo-completo"
+                        ></p>
+
+                        <div class="acciones">
+                            <button type="submit">
+                                Actualizar existencias
+                            </button>
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <section id="stock-bajo" class="vista" hidden>
+
+                    <h3>Productos con stock bajo</h3>
+
+                    <div class="tabla-contenedor">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Existencias</th>
+                                    <th scope="col">Mínimo</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tabla-stock-bajo"></tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+            </section>
+
+            <section id="panel-sucursal" class="panel" hidden>
+
+                <h2>Mi sucursal</h2>
+
+                <div class="opciones">
+
+                    <button type="button" data-vista="datos-sucursal">
+                        Datos de la sucursal
+                    </button>
+
+                    <button type="button" data-vista="consultar-cajas">
+                        Consultar cajas
+                    </button>
+
+                    <button type="button" data-vista="agregar-caja">
+                        Registrar caja
+                    </button>
+
+                    <button type="button" data-vista="eliminar-caja">
+                        Desactivar caja
+                    </button>
+
+                    <button type="button" data-vista="ventas">
+                        Historial de ventas
+                    </button>
+
                 </div>
 
-                <div class="tarjeta-borde" data-destino="sec-cajeros">
-                    <div class="tarjeta-interior">
-                        <i class="fa-solid fa-wallet"></i>
-                        <div class="tarjeta-info">
-                            <span class="numero">40</span>
-                            <span class="texto">Total de<br>cajeros</span>
+                <section id="datos-sucursal" class="vista" hidden>
+
+                    <h3>Datos de la sucursal</h3>
+
+                    <dl
+                        id="datos-sucursal-lista"
+                        class="datos-sucursal"
+                    ></dl>
+
+                </section>
+
+                <section id="consultar-cajas" class="vista" hidden>
+
+                    <h3>Cajas de la sucursal</h3>
+
+                    <div class="tabla-contenedor">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Caja</th>
+                                    <th scope="col">Estado</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tabla-cajas"></tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+                <section id="agregar-caja" class="vista" hidden>
+
+                    <h3>Registrar caja</h3>
+
+                    <form class="formulario" data-accion="agregar_caja">
+
+                        <div class="campo">
+                            <label for="nombre-caja">Nombre de la caja</label>
+                            <input
+                                id="nombre-caja"
+                                name="nombre"
+                                maxlength="50"
+                                required
+                            >
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="sec-productos" class="seccion-panel">
-            <div class="contenedor-modulo">
-                <h2>Registrar producto</h2>
-                <p class="subtitulo">Ingresa los detalles para dar de alta el producto en el catálogo.</p>
-                <form class="formulario">
-                    <div class="campo">
-                        <label for="codigo">Código</label>
-                        <input type="text" id="codigo" placeholder="Ejemplo: 7501000123" required>
-                    </div>
-                    <div class="campo">
-                        <label for="nombre">Nombre del producto</label>
-                        <input type="text" id="nombre" placeholder="Ejemplo: Cuaderno profesional" required>
-                    </div>
-                    <div class="campo">
-                        <label for="precio">Precio de venta</label>
-                        <input type="number" id="precio" min="0" step="0.01" placeholder="0.00" required>
-                    </div>
-                    <button type="submit" class="boton-guardar">Guardar Producto</button>
-                </form>
-            </div>
-        </section>
+                        <div class="acciones">
+                            <button type="submit" disabled>
+                                Guardar caja
+                            </button>
+                        </div>
 
-        <section id="sec-inventario" class="seccion-panel">
-            <div class="contenedor-modulo">
-                <h2>Control de Inventario</h2>
-                <p class="subtitulo">Existencias disponibles por sucursal y almacén.</p>
-            </div>
-        </section>
+                    </form>
 
-        <section id="sec-sucursal" class="seccion-panel">
-            <div class="contenedor-modulo">
-                <h2>Información de Sucursal</h2>
-                <p class="subtitulo">Detalles operativos de la sede asignada.</p>
-                <dl class="datos-sucursal">
-                    <dt>Nombre:</dt>
-                    <dd>Sucursal Centro</dd>
-                    <dt>Dirección:</dt>
-                    <dd>Calle Ejemplo #123</dd>
-                    <dt>Teléfono:</dt>
-                    <dd>3141234567</dd>
-                    <dt>Estado:</dt>
-                    <dd>Activa</dd>
-                </dl>
-            </div>
-        </section>
+                </section>
 
-        <section id="sec-cajeros" class="seccion-panel">
-            <div class="contenedor-modulo">
+                <section id="eliminar-caja" class="vista" hidden>
+
+                    <h3>Desactivar caja</h3>
+
+                    <p class="nota">
+                        Sus ventas anteriores se conservarán.
+                    </p>
+
+                    <form class="formulario" data-accion="eliminar_caja">
+
+                        <div class="campo">
+                            <label for="caja-eliminar">Caja</label>
+                            <select
+                                id="caja-eliminar"
+                                name="id_caja"
+                                required
+                            >
+                                <option value="">Selecciona una caja</option>
+                            </select>
+                        </div>
+
+                        <div class="acciones">
+                            <button type="submit" disabled>
+                                Desactivar caja
+                            </button>
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <section id="ventas" class="vista" hidden>
+
+                    <h3>Historial de ventas</h3>
+
+                    <div class="tabla-contenedor">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Folio</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Caja</th>
+                                    <th scope="col">Cajero</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Detalle</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tabla-ventas"></tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+            </section>
+
+            <section id="panel-cajeros" class="panel" hidden>
+
                 <h2>Gestión de Cajeros</h2>
-                <p class="subtitulo">Listado y asignación de personal en cajas.</p>
-            </div>
-        </section>
+
+                <div class="opciones">
+                    <button type="button" data-vista="crear-cajero">
+                        Crear cajero
+                    </button>
+                    <button type="button" data-vista="consultar-cajeros">
+                        Consultar cajeros
+                    </button>
+                    <button type="button" data-vista="editar-cajero">
+                        Editar cajero
+                    </button>
+                </div>
+
+                <section id="crear-cajero" class="vista" hidden>
+                    <h3>Crear cajero</h3>
+                    <form class="formulario" data-accion="crear_cajero">
+                        <div class="campo">
+                            <label for="cajero-nombre">Nombre completo</label>
+                            <input id="cajero-nombre" name="nombre" maxlength="100" required>
+                        </div>
+                        <div class="campo">
+                            <label for="cajero-usuario">Usuario</label>
+                            <input id="cajero-usuario" name="usuario" maxlength="50" required>
+                        </div>
+                        <div class="campo">
+                            <label for="cajero-password">Contraseña</label>
+                            <input id="cajero-password" name="password" type="password" autocomplete="new-password" required>
+                        </div>
+                        <div class="campo">
+                            <label for="cajero-activo">Estado</label>
+                            <select id="cajero-activo" name="activo">
+                                <option value="1">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="acciones">
+                            <button type="submit">Guardar cajero</button>
+                        </div>
+                    </form>
+                </section>
+
+                <section id="consultar-cajeros" class="vista" hidden>
+                    <h3>Consultar cajeros</h3>
+                    <div class="tabla-contenedor">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Usuario</th>
+                                    <th>Estado</th>
+                                    <th>Fecha de creación</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-cajeros"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="editar-cajero" class="vista" hidden>
+                    <h3>Editar cajero</h3>
+                    <form class="formulario" data-accion="editar_cajero">
+                        <input id="editar-cajero-id" name="id" type="hidden">
+                        <div class="campo">
+                            <label for="editar-cajero-nombre">Nombre completo</label>
+                            <input id="editar-cajero-nombre" name="nombre" maxlength="100" required>
+                        </div>
+                        <div class="campo">
+                            <label for="editar-cajero-usuario">Usuario</label>
+                            <input id="editar-cajero-usuario" name="usuario" maxlength="50" required>
+                        </div>
+                        <div class="campo">
+                            <label for="editar-cajero-password">Nueva contraseña</label>
+                            <input id="editar-cajero-password" name="password" type="password" autocomplete="new-password" placeholder="Déjala vacía para conservar la contraseña actual">
+                        </div>
+                        <div class="campo">
+                            <label for="editar-cajero-activo">Estado</label>
+                            <select id="editar-cajero-activo" name="activo">
+                                <option value="1">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="acciones">
+                            <button type="submit">Guardar cambios</button>
+                        </div>
+                    </form>
+                </section>
+
+            </section>
+
+        </div>
+
     </main>
 
+    <dialog id="dialogo-venta" aria-labelledby="titulo-detalle">
+
+        <button type="button" id="cerrar-detalle">
+            Cerrar
+        </button>
+
+        <h2 id="titulo-detalle">Detalle de venta</h2>
+
+        <p id="resumen-venta"></p>
+
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio vendido</th>
+                        <th scope="col">Importe</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabla-detalle"></tbody>
+            </table>
+        </div>
+
+    </dialog>
+
     <script>
-        const elementosClicables = document.querySelectorAll('[data-destino]');
-        const secciones = document.querySelectorAll('.seccion-panel');
-        const navLinks = document.querySelectorAll('.nav-item');
+        (() => {
+            const enlacesMenu = document.querySelectorAll('[data-navegacion]');
+            const paneles = document.querySelectorAll('.panel');
+            const vistas = document.querySelectorAll('.vista');
+            const botonesVista = document.querySelectorAll('[data-vista]');
+            const mensajeInicio = document.getElementById('mensaje-inicio');
+            const estadoApp = document.getElementById('estado-app');
+            const botonTema = document.getElementById('boton-tema');
+            const actualizarDatos = document.getElementById('actualizar-datos');
+            const botonCerrarSesion = document.getElementById('boton-cerrar-sesion');
+            const formularioAgregarProducto = document.querySelector('form[data-accion="agregar_producto"]');
+            const formularioModificarProducto = document.querySelector('form[data-accion="modificar_producto"]');
+            const formularioEliminarProducto = document.querySelector('form[data-accion="eliminar_producto"]');
+            const formularioActualizarStock = document.querySelector('form[data-accion="actualizar_stock"]');
+            const formularioCrearCajero = document.querySelector('form[data-accion="crear_cajero"]');
+            const formularioEditarCajero = document.querySelector('form[data-accion="editar_cajero"]');
+            let productos = [];
+            let cajeros = [];
+            const establecerTema = temaOscuro => {
+                document.documentElement.dataset.tema = temaOscuro ? 'oscuro' : '';
+                botonTema.textContent = temaOscuro ? 'Modo claro' : 'Modo oscuro';
+                botonTema.setAttribute('aria-pressed', String(temaOscuro));
+            };
 
-        elementosClicables.forEach(elemento => {
-            elemento.addEventListener('click', () => {
-                const idDestino = elemento.getAttribute('data-destino');
+            establecerTema(localStorage.getItem('private-storage-tema') === 'oscuro');
 
-                secciones.forEach(sec => sec.classList.remove('activa'));
-                document.getElementById(idDestino).classList.add('activa');
+            const escaparHtml = valor => String(valor ?? '').replace(/[&<>"']/g, caracter => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[caracter]));
 
-                navLinks.forEach(link => {
-                    if (link.getAttribute('data-destino') === idDestino) {
-                        link.classList.add('activo');
-                    } else {
-                        link.classList.remove('activo');
+            const formatearMoneda = valor => new Intl.NumberFormat('es-MX', {
+                style: 'currency',
+                currency: 'MXN'
+            }).format(Number(valor));
+
+            const mostrarEstado = (mensaje, error = false) => {
+                estadoApp.textContent = mensaje;
+                estadoApp.classList.toggle('error', error);
+            };
+
+            const procesarRespuesta = async respuesta => {
+                const datos = await respuesta.json();
+                if (respuesta.status === 401 && datos.redirect) {
+                    window.location.href = datos.redirect;
+                    return null;
+                }
+                return datos;
+            };
+
+            const cargarContexto = async () => {
+                const respuesta = await fetch('../../api/gerente/contexto.php');
+                const datos = await procesarRespuesta(respuesta);
+                if (!datos) return false;
+
+                if (datos.success === true) {
+                    document.getElementById('sucursal-lateral').textContent = datos.sucursal.nombre;
+                    document.getElementById('nombre-sucursal').textContent = datos.sucursal.nombre;
+                    return true;
+                }
+
+                throw new Error(datos.message || 'No se pudo cargar el contexto.');
+            };
+
+            const cargarCajeros = async () => {
+                const respuesta = await fetch('../../api/gerente/cajeros/listar.php');
+                const datos = await procesarRespuesta(respuesta);
+                if (!datos) return false;
+                if (datos.success !== true) throw new Error(datos.message || 'No se pudieron cargar los cajeros.');
+                cajeros = Array.isArray(datos.cajeros) ? datos.cajeros : [];
+                renderizarCajeros();
+                return true;
+            };
+
+            const renderizarCajeros = () => {
+                document.getElementById('tabla-cajeros').innerHTML = cajeros.map(cajero => `
+                    <tr>
+                        <td>${escaparHtml(cajero.nombre)}</td>
+                        <td>${escaparHtml(cajero.usuario)}</td>
+                        <td><span class="${Number(cajero.activo) === 1 ? 'estado-activo' : 'estado-inactivo'}">${Number(cajero.activo) === 1 ? 'Activo' : 'Inactivo'}</span></td>
+                        <td>${escaparHtml(cajero.fecha_creacion)}</td>
+                        <td class="acciones-tabla">
+                            <button class="boton-icono" type="button" data-accion-cajero="editar" data-id="${Number(cajero.id)}" title="Editar cajero" aria-label="Editar cajero"><i class="fa-solid fa-pen"></i></button>
+                            ${Number(cajero.activo) === 1 ? `<button class="boton-icono boton-eliminar" type="button" data-accion-cajero="desactivar" data-id="${Number(cajero.id)}" title="Desactivar cajero" aria-label="Desactivar cajero"><i class="fa-solid fa-trash"></i></button>` : ''}
+                        </td>
+                    </tr>
+                `).join('');
+
+                const cajerosActivos = cajeros.filter(cajero => Number(cajero.activo) === 1).length;
+                document.getElementById('resumen-cajeros').textContent = `${cajeros.length} ${cajeros.length === 1 ? 'cajero' : 'cajeros'} · ${cajerosActivos} activos`;
+            };
+
+            const actualizarSelectsProductos = () => {
+                const opciones = productos.map(producto => `
+                    <option value="${Number(producto.id)}">
+                        ${escaparHtml(producto.codigo)} — ${escaparHtml(producto.nombre)}
+                    </option>
+                `).join('');
+
+                document.getElementById('editar-producto').innerHTML = '<option value="">Selecciona un producto</option>' + opciones;
+                document.getElementById('producto-eliminar').innerHTML = '<option value="">Selecciona un producto</option>' + opciones;
+                document.getElementById('producto-stock').innerHTML = '<option value="">Selecciona un producto</option>' + opciones;
+            };
+
+            const renderizarProductos = () => {
+                document.getElementById('tabla-productos').innerHTML = productos.map(producto => `
+                    <tr>
+                        <td>${escaparHtml(producto.codigo)}</td>
+                        <td>${escaparHtml(producto.nombre)}</td>
+                        <td>${formatearMoneda(producto.precio)}</td>
+                    </tr>
+                `).join('');
+
+                document.getElementById('tabla-inventario').innerHTML = productos.map(producto => `
+                    <tr>
+                        <td>${escaparHtml(producto.codigo)}</td>
+                        <td>${escaparHtml(producto.nombre)}</td>
+                        <td>${producto.existencias}</td>
+                        <td>${producto.stock_minimo}</td>
+                    </tr>
+                `).join('');
+
+                document.getElementById('tabla-stock-bajo').innerHTML = productos
+                    .filter(producto => Number(producto.existencias) <= Number(producto.stock_minimo))
+                    .map(producto => `
+                        <tr>
+                            <td>${escaparHtml(producto.nombre)}</td>
+                            <td>${producto.existencias}</td>
+                            <td>${producto.stock_minimo}</td>
+                        </tr>
+                    `).join('');
+
+                actualizarSelectsProductos();
+                const productosStockBajo = productos.filter(producto => Number(producto.existencias) <= Number(producto.stock_minimo)).length;
+                document.getElementById('resumen-productos').textContent = `${productos.length} productos · ${productosStockBajo} con stock bajo`;
+            };
+
+            const cargarProductos = async () => {
+                const respuesta = await fetch('../../api/gerente/productos/listar.php');
+                const datos = await procesarRespuesta(respuesta);
+                if (!datos) return false;
+
+                if (datos.success === true) {
+                    productos = Array.isArray(datos.productos) ? datos.productos : [];
+                    renderizarProductos();
+                    return true;
+                }
+
+                throw new Error(datos.message || 'No se pudieron cargar los productos.');
+            };
+
+            function mostrarNavegacion(nombre) {
+                paneles.forEach(panel => {
+                    panel.hidden = panel.id !== `panel-${nombre}`;
+                });
+
+                mensajeInicio.hidden = nombre !== 'inicio';
+
+                document.querySelectorAll('[data-navegacion]').forEach(enlace => {
+                    const activo = enlace.dataset.navegacion === nombre;
+                    enlace.classList.toggle('activo', activo);
+                    enlace.classList.toggle('seleccionado', activo);
+                    enlace.setAttribute('aria-current', activo ? 'page' : 'false');
+
+                    if (enlace.classList.contains('cuadro')) {
+                        enlace.setAttribute('aria-expanded', activo ? 'true' : 'false');
                     }
                 });
+
+                if (nombre !== 'inicio') {
+                    mostrarVista(document.querySelector(`#panel-${nombre} [data-vista]`)?.dataset.vista);
+                }
+            }
+
+            function mostrarVista(nombre) {
+                if (!nombre) {
+                    return;
+                }
+
+                const vista = document.getElementById(nombre);
+                const panel = vista?.closest('.panel');
+
+                if (!vista || !panel) {
+                    return;
+                }
+
+                panel.querySelectorAll('.vista').forEach(elemento => {
+                    elemento.hidden = elemento !== vista;
+                });
+
+                panel.querySelectorAll('[data-vista]').forEach(boton => {
+                    boton.classList.toggle('activo', boton.dataset.vista === nombre);
+                });
+            }
+
+            document.getElementById('editar-producto').addEventListener('change', evento => {
+                const producto = productos.find(item => Number(item.id) === Number(evento.target.value));
+                document.getElementById('editar-nombre').value = producto ? producto.nombre : '';
+                document.getElementById('editar-precio').value = producto ? producto.precio : '';
+                document.getElementById('editar-minimo').value = producto ? producto.stock_minimo : '';
             });
-        });
+
+            document.getElementById('producto-stock').addEventListener('change', evento => {
+                const producto = productos.find(item => Number(item.id) === Number(evento.target.value));
+                document.getElementById('stock-observado').textContent = producto
+                    ? `Existencia actual: ${producto.existencias}`
+                    : '';
+                document.getElementById('stock-anterior').value = producto ? producto.existencias : '';
+            });
+
+            formularioAgregarProducto.addEventListener('submit', async evento => {
+                evento.preventDefault();
+                try {
+                    const respuesta = await fetch('../../api/gerente/productos/agregar.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({
+                            codigo: document.getElementById('codigo').value,
+                            nombre: document.getElementById('nombre').value,
+                            precio: document.getElementById('precio').value,
+                            existencias: document.getElementById('cantidad').value,
+                            stock_minimo: document.getElementById('minimo').value
+                        })
+                    });
+                    const datos = await procesarRespuesta(respuesta);
+                    if (!datos) return;
+                    if (datos.success !== true) throw new Error(datos.message || 'No se pudo agregar el producto.');
+                    formularioAgregarProducto.reset();
+                    document.getElementById('minimo').value = '5';
+                    await cargarProductos();
+                    mostrarEstado(datos.message || 'Producto agregado correctamente.');
+                } catch (error) {
+                    mostrarEstado(error.message || 'No se pudo comunicar con el servidor. Intenta nuevamente.', true);
+                }
+            });
+
+            formularioModificarProducto.addEventListener('submit', async evento => {
+                evento.preventDefault();
+                try {
+                    const respuesta = await fetch('../../api/gerente/productos/modificar.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({
+                            id_producto: document.getElementById('editar-producto').value,
+                            nombre: document.getElementById('editar-nombre').value,
+                            precio: document.getElementById('editar-precio').value,
+                            stock_minimo: document.getElementById('editar-minimo').value
+                        })
+                    });
+                    const datos = await procesarRespuesta(respuesta);
+                    if (!datos) return;
+                    if (datos.success !== true) throw new Error(datos.message || 'No se pudo modificar el producto.');
+                    await cargarProductos();
+                    mostrarEstado(datos.message || 'Producto modificado correctamente.');
+                } catch (error) {
+                    mostrarEstado(error.message || 'No se pudo comunicar con el servidor. Intenta nuevamente.', true);
+                }
+            });
+
+            formularioEliminarProducto.addEventListener('submit', async evento => {
+                evento.preventDefault();
+                if (!confirm('¿Desactivar este producto?')) return;
+                try {
+                    const respuesta = await fetch('../../api/gerente/productos/desactivar.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({
+                            id_producto: document.getElementById('producto-eliminar').value
+                        })
+                    });
+                    const datos = await procesarRespuesta(respuesta);
+                    if (!datos) return;
+                    if (datos.success !== true) throw new Error(datos.message || 'No se pudo desactivar el producto.');
+                    formularioEliminarProducto.reset();
+                    await cargarProductos();
+                    mostrarEstado(datos.message || 'Producto desactivado correctamente.');
+                } catch (error) {
+                    mostrarEstado(error.message || 'No se pudo comunicar con el servidor. Intenta nuevamente.', true);
+                }
+            });
+
+            formularioActualizarStock.addEventListener('submit', async evento => {
+                evento.preventDefault();
+                try {
+                    const respuesta = await fetch('../../api/gerente/productos/actualizar_stock.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({
+                            id_producto: document.getElementById('producto-stock').value,
+                            existencias: document.getElementById('nuevo-stock').value
+                        })
+                    });
+                    const datos = await procesarRespuesta(respuesta);
+                    if (!datos) return;
+                    if (datos.success !== true) throw new Error(datos.message || 'No se pudo actualizar el stock.');
+                    formularioActualizarStock.reset();
+                    document.getElementById('stock-observado').textContent = '';
+                    await cargarProductos();
+                    mostrarEstado(datos.message || 'Existencias actualizadas correctamente.');
+                } catch (error) {
+                    mostrarEstado(error.message || 'No se pudo comunicar con el servidor. Intenta nuevamente.', true);
+                }
+            });
+
+            formularioCrearCajero.addEventListener('submit', async evento => {
+                evento.preventDefault();
+                try {
+                    const respuesta = await fetch('../../api/gerente/cajeros/guardar.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({
+                            nombre: document.getElementById('cajero-nombre').value,
+                            usuario: document.getElementById('cajero-usuario').value,
+                            password: document.getElementById('cajero-password').value,
+                            activo: document.getElementById('cajero-activo').value
+                        })
+                    });
+                    const datos = await procesarRespuesta(respuesta);
+                    if (!datos) return;
+                    if (datos.success !== true) throw new Error(datos.message || 'No se pudo crear el cajero.');
+                    formularioCrearCajero.reset();
+                    document.getElementById('cajero-activo').value = '1';
+                    await cargarCajeros();
+                    mostrarEstado(datos.message || 'Cajero creado correctamente.');
+                } catch (error) {
+                    mostrarEstado(error.message || 'No se pudo comunicar con el servidor. Intenta nuevamente.', true);
+                }
+            });
+
+            formularioEditarCajero.addEventListener('submit', async evento => {
+                evento.preventDefault();
+                try {
+                    const respuesta = await fetch('../../api/gerente/cajeros/guardar.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({
+                            id: document.getElementById('editar-cajero-id').value,
+                            nombre: document.getElementById('editar-cajero-nombre').value,
+                            usuario: document.getElementById('editar-cajero-usuario').value,
+                            password: document.getElementById('editar-cajero-password').value,
+                            activo: document.getElementById('editar-cajero-activo').value
+                        })
+                    });
+                    const datos = await procesarRespuesta(respuesta);
+                    if (!datos) return;
+                    if (datos.success !== true) throw new Error(datos.message || 'No se pudo editar el cajero.');
+                    document.getElementById('editar-cajero-password').value = '';
+                    await cargarCajeros();
+                    mostrarEstado(datos.message || 'Cajero editado correctamente.');
+                } catch (error) {
+                    mostrarEstado(error.message || 'No se pudo comunicar con el servidor. Intenta nuevamente.', true);
+                }
+            });
+
+            document.getElementById('tabla-cajeros').addEventListener('click', async evento => {
+                const boton = evento.target.closest('button[data-accion-cajero]');
+                if (!boton) return;
+                const id = Number(boton.dataset.id);
+                const cajero = cajeros.find(item => Number(item.id) === id);
+                if (!cajero) return;
+
+                if (boton.dataset.accionCajero === 'editar') {
+                    document.getElementById('editar-cajero-id').value = cajero.id;
+                    document.getElementById('editar-cajero-nombre').value = cajero.nombre;
+                    document.getElementById('editar-cajero-usuario').value = cajero.usuario;
+                    document.getElementById('editar-cajero-password').value = '';
+                    document.getElementById('editar-cajero-activo').value = String(cajero.activo);
+                    mostrarVista('editar-cajero');
+                    return;
+                }
+
+                if (boton.dataset.accionCajero !== 'desactivar' || !confirm(`¿Desactivar a ${cajero.nombre}?`)) return;
+
+                try {
+                    const respuesta = await fetch('../../api/gerente/cajeros/desactivar.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({ id: String(id) })
+                    });
+                    const datos = await procesarRespuesta(respuesta);
+                    if (!datos) return;
+                    if (datos.success !== true) throw new Error(datos.message || 'No se pudo desactivar el cajero.');
+                    await cargarCajeros();
+                    mostrarEstado(datos.message || 'Cajero desactivado correctamente.');
+                } catch (error) {
+                    mostrarEstado(error.message || 'No se pudo comunicar con el servidor. Intenta nuevamente.', true);
+                }
+            });
+
+            enlacesMenu.forEach(enlace => {
+                enlace.addEventListener('click', () => {
+                    mostrarNavegacion(enlace.dataset.navegacion);
+                });
+            });
+
+            botonesVista.forEach(boton => {
+                boton.addEventListener('click', () => {
+                    mostrarVista(boton.dataset.vista);
+                });
+            });
+
+            botonTema.addEventListener('click', () => {
+                const temaOscuro = document.documentElement.dataset.tema === 'oscuro';
+                establecerTema(!temaOscuro);
+                localStorage.setItem('private-storage-tema', !temaOscuro ? 'oscuro' : 'claro');
+            });
+
+            botonCerrarSesion.addEventListener('click', async () => {
+                botonCerrarSesion.disabled = true;
+
+                try {
+                    const respuesta = await fetch('../../auth/logout.php', {
+                        method: 'POST'
+                    });
+                    const datos = await respuesta.json();
+
+                    if (datos.success === true && datos.redirect) {
+                        window.location.href = datos.redirect;
+                        return;
+                    }
+
+                    alert(datos.message || 'No se pudo cerrar la sesión. Intenta nuevamente.');
+                } catch (error) {
+                    alert('No se pudo cerrar la sesión. Intenta nuevamente.');
+                } finally {
+                    botonCerrarSesion.disabled = false;
+                }
+            });
+
+            actualizarDatos.addEventListener('click', async () => {
+                actualizarDatos.disabled = true;
+                try {
+                    const contextoCargado = await cargarContexto();
+                    if (!contextoCargado) return;
+                    await cargarProductos();
+                    await cargarCajeros();
+                    mostrarEstado('Datos actualizados correctamente.');
+                } catch (error) {
+                    mostrarEstado(error.message || 'No se pudo comunicar con el servidor. Intenta nuevamente.', true);
+                } finally {
+                    actualizarDatos.disabled = false;
+                }
+            });
+
+            const inicializar = async () => {
+                try {
+                    const contextoCargado = await cargarContexto();
+                    if (!contextoCargado) return;
+                    await cargarProductos();
+                    await cargarCajeros();
+                    mostrarEstado('Módulo conectado. Los datos corresponden a tu sucursal.');
+                    mostrarNavegacion('inicio');
+                } catch (error) {
+                    mostrarEstado(error.message || 'No se pudo comunicar con el servidor. Intenta nuevamente.', true);
+                }
+            };
+
+            inicializar();
+        })();
     </script>
+
 </body>
 </html>
