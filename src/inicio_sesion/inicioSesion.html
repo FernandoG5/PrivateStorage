@@ -1,1 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de sesión</title>
+    <link rel="stylesheet" href="inicioSesion.css">
+</head>
+
+<body>
+    <main class="login-page">
+        <section class="login-card" aria-label="Inicio de sesión">
+            <button
+                class="theme-toggle"
+                id="boton-tema"
+                type="button"
+                aria-label="Activar modo oscuro"
+                aria-pressed="false"
+            >
+                <span class="theme-toggle-icon" aria-hidden="true">◐</span>
+                <span class="theme-toggle-text">Tema oscuro</span>
+            </button>
+
+            <div class="login-layout">
+                <div class="brand-panel">
+                    <div class="brand-panel-content">
+                        <img class="login-logo" src="PrivateStorageLogo.png" alt="PrivateStorage">
+                        <p class="brand-kicker">Sistema de gestión</p>
+                        <h1>PrivateStorage</h1>
+                        <p class="brand-description">Accede con tus credenciales para continuar.</p>
+                    </div>
+                    <div class="brand-panel-line" aria-hidden="true"></div>
+                </div>
+
+                <div class="form-panel">
+                    <div class="form-heading">
+                        <p class="form-kicker">PrivateStorage</p>
+                        <h2>Iniciar sesión</h2>
+                        <p>Ingresa tus datos para acceder al sistema.</p>
+                    </div>
+
+                    <form class="login-form" action="../../auth/login.php" method="post">
+                        <div class="form-group">
+                            <label class="form-label" for="numeroTrabajador">No. de trabajador</label>
+                            <input
+                                class="form-input"
+                                type="text"
+                                id="numeroTrabajador"
+                                name="usuario"
+                                placeholder="Ingresa tu número de trabajador"
+                                autocomplete="username"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="password">Contraseña</label>
+                            <input
+                                class="form-input"
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Ingresa tu contraseña"
+                                autocomplete="current-password"
+                            >
+                        </div>
+
+                        <p class="login-message" role="alert" aria-live="polite"></p>
+
+                        <button class="login-button" type="submit">Iniciar Sesión</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const botonTema = document.querySelector('#boton-tema');
+        const temaGuardado = localStorage.getItem('private-storage-tema');
+
+        const establecerTema = temaOscuro => {
+            document.documentElement.dataset.tema = temaOscuro ? 'oscuro' : '';
+            botonTema.setAttribute('aria-pressed', String(temaOscuro));
+            botonTema.setAttribute('aria-label', temaOscuro ? 'Activar modo claro' : 'Activar modo oscuro');
+            botonTema.querySelector('.theme-toggle-text').textContent = temaOscuro ? 'Tema claro' : 'Tema oscuro';
+        };
+
+        establecerTema(temaGuardado === 'oscuro');
+
+        botonTema.addEventListener('click', () => {
+            const temaOscuro = document.documentElement.dataset.tema !== 'oscuro';
+            establecerTema(temaOscuro);
+            localStorage.setItem('private-storage-tema', temaOscuro ? 'oscuro' : 'claro');
+        });
+
+        const formularioLogin = document.querySelector('.login-form');
+        const campoUsuario = document.querySelector('#numeroTrabajador');
+        const campoPassword = document.querySelector('#password');
+        const botonLogin = document.querySelector('.login-button');
+        const mensajeLogin = document.querySelector('.login-message');
+
+        formularioLogin.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const usuario = campoUsuario.value.trim();
+            const password = campoPassword.value;
+
+            if (!usuario || !password) {
+                mensajeLogin.textContent = 'El usuario y la contraseña son obligatorios.';
+                return;
+            }
+
+            botonLogin.disabled = true;
+            mensajeLogin.textContent = '';
+
+            try {
+                const respuesta = await fetch('../../auth/login.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({ usuario, password })
+                });
+                const datos = await respuesta.json();
+
+                if (datos.success === true && datos.redirect) {
+                    window.location.href = datos.redirect;
+                    return;
+                }
+
+                mensajeLogin.textContent = datos.message || 'No se pudo iniciar sesión.';
+            } catch (error) {
+                mensajeLogin.textContent = 'No se pudo conectar con el servidor. Intenta nuevamente.';
+            } finally {
+                botonLogin.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>
