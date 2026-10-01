@@ -22,18 +22,28 @@ function obtenerSucursalSesion(): int
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') responderJson(['success' => false, 'message' => 'Solamente se permite el método POST.'], 405);
 $sucursalId = obtenerSucursalSesion();
 $id = $_POST['id_producto'] ?? null;
-$existencias = $_POST['existencias'] ?? null;
-if (!is_string($id) || !is_string($existencias) || !ctype_digit($id) || (int) $id <= 0) responderJson(['success' => false, 'message' => 'Los datos del producto no son válidos.'], 400);
-if (!ctype_digit($existencias) || (int) $existencias < 0 || (int) $existencias > 1000000) responderJson(['success' => false, 'message' => 'Las existencias no son válidas.'], 400);
+if (!is_string($id) || !ctype_digit($id) || (int) $id <= 0) responderJson(['success' => false, 'message' => 'El identificador del producto no es válido.'], 400);
 
 try {
     require_once __DIR__ . '/../../../config/database.php';
+    $conexion->beginTransaction();
     $pertenece = $conexion->prepare('SELECT id FROM inventario_sucursal WHERE producto_id = :id AND sucursal_id = :sucursal_id LIMIT 1');
     $pertenece->execute(['id' => (int) $id, 'sucursal_id' => $sucursalId]);
-    if ($pertenece->fetchColumn() === false) responderJson(['success' => false, 'message' => 'El producto no pertenece a tu sucursal.'], 404);
-    $actualizar = $conexion->prepare('UPDATE inventario_sucursal SET existencias = :existencias WHERE producto_id = :id AND sucursal_id = :sucursal_id');
-    $actualizar->execute(['existencias' => (int) $existencias, 'id' => (int) $id, 'sucursal_id' => $sucursalId]);
-    responderJson(['success' => true, 'message' => 'Existencias actualizadas correctamente.']);
+    if ($pertenece->fetchColumn() === false) {
+        $conexion->rollBack();
+        responderJson(['success' => false, 'message' => 'El producto no pertenece a tu sucursal.'], 404);
+    }
+    $conteo = $conexion->prepare('SELECT COUNT(*) FROM inventario_sucursal WHERE producto_id = :id');
+    $conteo->execute(['id' => (int) $id]);
+    if ((int) $conteo->fetchColumn() > 1) {
+        $conexion->rollBack();
+        responderJson(['success' => false, 'message' => 'No se puede desactivar este producto porque también está registrado en otras sucursales.'], 409);
+    }
+    $actualizar = $conexion->prepare('UPDATE productos SET activo = 0 WHERE id = :id');
+    $actualizar->execute(['id' => (int) $id]);
+    $conexion->commit();
+    responderJson(['success' => true, 'message' => 'Producto desactivado correctamente.']);
 } catch (Throwable $e) {
-    responderJson(['success' => false, 'message' => 'No se pudieron actualizar las existencias.'], 500);
+    if (isset($conexion) && $conexion->inTransaction()) $conexion->rollBack();
+    responderJson(['success' => false, 'message' => 'No se pudo desactivar el producto.'], 500);
 }
