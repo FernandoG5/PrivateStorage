@@ -1,59 +1,3 @@
-:root {
-    color-scheme: light;
-    --fondo: #f4f1fa;
-    --fondo-secundario: #ebe6f4;
-    --barra: #ffffff;
-    --encabezado: rgba(255, 255, 255, 0.84);
-    --superficie: #ffffff;
-    --superficie-elevada: #fbfaff;
-    --superficie-control: #f7f4fb;
-    --texto: #20152e;
-    --texto-secundario: #6d6477;
-    --borde: #e3ddea;
-    --borde-suave: #eeeaf3;
-    --morado: #5b21b6;
-    --morado-hover: #4c1d95;
-    --morado-profundo: #2e1065;
-    --morado-claro: #ede9fe;
-    --morado-brillante: #7c3aed;
-    --sobre-morado: #ffffff;
-    --estado-activo: #176b3a;
-    --estado-agotado: #a12828;
-    --error-fondo: #fef2f2;
-    --error-texto: #991b1b;
-    --sombra-suave: 0 8px 24px rgba(47, 24, 78, 0.08);
-    --sombra-elevada: 0 18px 42px rgba(47, 24, 78, 0.13);
-    --halo: rgba(91, 33, 182, 0.2);
-}
-
-:root[data-tema="oscuro"] {
-    color-scheme: dark;
-    --fondo: #0f0f12;
-    --fondo-secundario: #17151d;
-    --barra: #15141b;
-    --encabezado: rgba(24, 23, 31, 0.92);
-    --superficie: #1b1923;
-    --superficie-elevada: #211f2b;
-    --superficie-control: #252230;
-    --texto: #f8f6fb;
-    --texto-secundario: #b7afc2;
-    --borde: #3d354a;
-    --borde-suave: #302b3a;
-    --morado: #a78bfa;
-    --morado-hover: #c4b5fd;
-    --morado-profundo: #2e1065;
-    --morado-claro: #33245a;
-    --morado-brillante: #8b5cf6;
-    --sobre-morado: #181320;
-    --estado-activo: #81d5a1;
-    --estado-agotado: #ffaaa5;
-    --error-fondo: #41252d;
-    --error-texto: #ffd5d0;
-    --sombra-suave: 0 8px 24px rgba(0, 0, 0, 0.2);
-    --sombra-elevada: 0 18px 42px rgba(0, 0, 0, 0.35);
-    --halo: rgba(167, 139, 250, 0.28);
-}
-
 *,
 *::before,
 *::after {
@@ -751,5 +695,858 @@ dialog p {
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
+    }
+}
+
+/* Visual alignment with the administrator panel. */
+body {
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.barra_lateral {
+    z-index: 20;
+    width: 248px;
+    gap: 22px;
+    padding: 26px 16px 20px;
+    border: 0;
+    color: #ffffff;
+    background: linear-gradient(165deg, #2e1065 0%, #4c1d95 55%, #5b21b6 100%);
+    box-shadow: 12px 0 32px rgba(35, 16, 72, 0.18);
+}
+
+.marca-gerente {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+}
+
+.marca-gerente img {
+    display: block;
+    width: min(170px, 100%);
+    max-height: 48px;
+    object-fit: contain;
+}
+
+.perfil {
+    padding: 4px 8px 0;
+}
+
+.avatar {
+    width: 68px;
+    height: 68px;
+    margin-bottom: 12px;
+    border: 3px solid rgba(255, 255, 255, 0.45);
+    background: linear-gradient(135deg, #a78bfa, #7c3aed);
+}
+
+.perfil h2 {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.perfil p {
+    margin-top: 5px;
+    color: #ddd6fe;
+    font-size: 14px;
+}
+
+.barra_lateral nav {
+    gap: 7px;
+}
+
+.enlace-menu,
+.boton-salir {
+    display: flex;
+    min-height: 46px;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-color: transparent;
+    color: #ede9fe;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.icono-menu {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+}
+
+.enlace-menu:hover {
+    border-color: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(2px);
+}
+
+.enlace-menu.activo,
+.enlace-menu.seleccionado {
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #4c1d95;
+    background: #ffffff;
+    box-shadow: 0 8px 20px rgba(22, 9, 48, 0.2);
+}
+
+.boton-salir {
+    margin-top: auto;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.boton-salir:hover:not(:disabled) {
+    border-color: rgba(255, 255, 255, 0.48);
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.contenido {
+    margin-left: 248px;
+}
+
+.encabezado {
+    position: sticky;
+    z-index: 10;
+    top: 0;
+    min-height: 96px;
+    padding: 20px 34px;
+    backdrop-filter: blur(14px);
+}
+
+.encabezado h1 {
+    font-size: clamp(26px, 2.2vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+}
+
+.encabezado > div:first-child > p:last-child {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.etiqueta-panel {
+    margin: 0 0 5px !important;
+    color: var(--morado) !important;
+    font-size: 11px !important;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+.controles-encabezado {
+    gap: 10px;
+}
+
+.boton-tema {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 9px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+#actualizar-datos svg {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+}
+
+#actualizar-datos:hover:not(:disabled) {
+    border-color: var(--morado);
+    color: var(--morado);
+}
+
+.cuadros-principales {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    padding: 28px 34px 22px;
+}
+
+.cuadro {
+    min-height: 126px;
+    gap: 16px;
+    padding: 22px;
+    border-radius: 16px;
+    background: var(--superficie);
+    animation: vista-entrada 260ms ease both;
+}
+
+.cuadro .icono {
+    width: 48px;
+    height: 48px;
+    padding: 10px;
+    border-radius: 13px;
+    color: var(--morado);
+    background: var(--morado-claro);
+}
+
+.texto-cuadro strong {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.texto-cuadro > span {
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.area-inferior {
+    padding: 0 34px 36px;
+}
+
+#estado-app {
+    position: fixed;
+    z-index: 100;
+    top: 20px;
+    right: 24px;
+    width: min(420px, calc(100vw - 32px));
+    margin: 0;
+    padding: 14px 18px;
+    border: 1px solid var(--borde);
+    border-left: 4px solid var(--morado);
+    border-radius: 12px;
+    color: var(--texto);
+    background: var(--superficie);
+    box-shadow: var(--sombra-elevada);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+}
+
+#estado-app.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#estado-app.error {
+    border-left-color: var(--error-texto);
+}
+
+#estado-app:empty {
+    display: none;
+}
+
+.mensaje-inicio {
+    max-width: 760px;
+    margin: 18px auto 0;
+    padding: 54px 24px;
+    border: 1px dashed var(--borde);
+    border-radius: 16px;
+    color: var(--texto-secundario);
+    background: var(--superficie);
+    box-shadow: var(--sombra-suave);
+    font-size: 16px;
+}
+
+.opciones {
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin: 0 -2px 18px;
+    padding: 2px 2px 8px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--morado-claro) transparent;
+}
+
+.opciones button {
+    min-height: 42px;
+    flex: 0 0 auto;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border-color: color-mix(in srgb, var(--morado) 26%, var(--borde));
+    color: var(--texto-secundario);
+    background: var(--superficie);
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.opciones button:hover {
+    border-color: var(--morado);
+    color: var(--morado);
+    background: var(--morado-claro);
+}
+
+.opciones button.activo,
+.opciones button.seleccionado {
+    border-color: transparent;
+    color: var(--sobre-morado);
+    background: linear-gradient(110deg, var(--morado-brillante), var(--morado));
+}
+
+.vista {
+    min-width: 0;
+    padding: 30px;
+    border-radius: 16px;
+    background: var(--superficie);
+    animation: vista-entrada 240ms ease both;
+}
+
+.vista h3 {
+    margin-bottom: 22px;
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.vista h3::before {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--morado);
+    content: "GESTIÓN DE OPERACIONES";
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+#panel-productos .vista h3::before {
+    content: "PRODUCTOS E INVENTARIO";
+}
+
+#panel-sucursal .vista h3::before {
+    content: "ADMINISTRACIÓN DE SUCURSAL";
+}
+
+#panel-cajeros .vista h3::before {
+    content: "ADMINISTRACIÓN DE PERSONAL";
+}
+
+.formulario {
+    gap: 20px;
+}
+
+.campo {
+    gap: 8px;
+}
+
+.campo label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.campo input,
+.campo select {
+    min-height: 46px;
+    padding: 11px 13px;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.campo input:focus,
+.campo select:focus {
+    border-color: var(--morado);
+    box-shadow: 0 0 0 4px var(--halo);
+}
+
+.nota {
+    font-size: 14px;
+}
+
+.acciones button {
+    min-height: 44px;
+    padding: 11px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.acciones button:disabled {
+    border: 1px solid var(--borde);
+    color: var(--texto-secundario);
+    background: var(--superficie-control);
+    box-shadow: none;
+    opacity: 1;
+}
+
+form[data-accion="eliminar_producto"] .acciones button,
+form[data-accion="eliminar_caja"] .acciones button {
+    color: #ffffff;
+    background: linear-gradient(110deg, #dc4545, #b4232d);
+    box-shadow: 0 7px 16px rgba(180, 35, 45, 0.18);
+}
+
+form[data-accion="eliminar_producto"] .acciones button:hover:not(:disabled),
+form[data-accion="eliminar_caja"] .acciones button:hover:not(:disabled) {
+    background: #a91f29;
+}
+
+.tabla-contenedor {
+    width: 100%;
+    overflow-x: hidden;
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+th,
+td {
+    overflow: hidden;
+    padding: 15px 14px;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+th {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+tbody tr {
+    height: 60px;
+    transition: background 150ms ease;
+}
+
+tbody tr:hover {
+    background: color-mix(in srgb, var(--morado-claro) 68%, var(--superficie));
+}
+
+#tabla-productos td:first-child,
+#tabla-inventario td:first-child,
+#tabla-ventas td:first-child {
+    color: var(--morado);
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#tabla-productos td:last-child,
+#tabla-inventario td:nth-child(n + 3),
+#tabla-stock-bajo td:nth-child(n + 2),
+#tabla-ventas td:nth-child(5),
+#tabla-detalle td:nth-child(n + 2) {
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+#tabla-ventas td:nth-child(1),
+#tabla-ventas td:nth-child(2),
+#tabla-ventas td:nth-child(3),
+#tabla-ventas td:nth-child(4) {
+    text-align: left;
+}
+
+#tabla-ventas td:last-child,
+#tabla-cajeros td:last-child {
+    text-align: center;
+}
+
+#tabla-cajeros td:first-child {
+    font-weight: 700;
+}
+
+#tabla-cajeros td:nth-child(4) {
+    color: var(--texto-secundario);
+    font-variant-numeric: tabular-nums;
+}
+
+.estado-activo,
+.estado-inactivo {
+    display: inline-flex;
+    min-height: 26px;
+    align-items: center;
+    padding: 4px 10px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.estado-activo {
+    border-color: color-mix(in srgb, var(--estado-activo) 24%, transparent);
+    color: var(--estado-activo);
+    background: color-mix(in srgb, var(--estado-activo) 12%, var(--superficie));
+}
+
+.estado-inactivo {
+    border-color: var(--borde);
+    color: var(--texto-secundario);
+    background: var(--superficie-control);
+}
+
+.acciones-tabla {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.acciones-tabla > button {
+    margin: 0 3px;
+}
+
+.boton-icono {
+    display: inline-grid;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    color: var(--morado);
+    background: var(--superficie);
+    transition: color 150ms ease, background 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.boton-icono:hover {
+    border-color: var(--morado);
+    color: #ffffff;
+    background: var(--morado);
+    transform: translateY(-1px);
+}
+
+.boton-icono.boton-eliminar {
+    color: #b4232d;
+}
+
+.boton-icono.boton-eliminar:hover {
+    border-color: #b4232d;
+    color: #ffffff;
+    background: #b4232d;
+}
+
+.tabla-contenedor:has(tbody:empty)::after {
+    display: block;
+    padding: 30px 16px;
+    color: var(--texto-secundario);
+    content: "Aún no hay datos para mostrar.";
+    font-size: 14px;
+    text-align: center;
+}
+
+.datos-sucursal {
+    gap: 16px 22px;
+    font-size: 15px;
+}
+
+.datos-sucursal dt {
+    font-size: 14px;
+}
+
+dialog {
+    width: min(860px, calc(100vw - 36px));
+    max-height: min(84vh, 780px);
+    padding: 30px;
+    border-radius: 18px;
+    background: var(--superficie);
+    animation: modal-entrada 180ms ease both;
+}
+
+dialog::backdrop {
+    background: rgba(15, 10, 24, 0.62);
+    backdrop-filter: blur(5px);
+}
+
+dialog h2 {
+    margin: 20px 0 12px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+dialog p {
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+#cerrar-detalle {
+    float: right;
+    min-height: 40px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#cerrar-detalle:focus-visible,
+.boton-icono:focus-visible,
+.enlace-menu:focus-visible,
+.boton-salir:focus-visible,
+.opciones button:focus-visible,
+.acciones button:focus-visible,
+.boton-tema:focus-visible {
+    outline: 3px solid var(--halo);
+    outline-offset: 3px;
+}
+
+@keyframes vista-entrada {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes modal-entrada {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.99);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 1100px) {
+    .barra_lateral {
+        width: 76px;
+        align-items: center;
+        padding: 20px 10px;
+    }
+
+    .marca-gerente {
+        width: 54px;
+        min-height: 42px;
+        overflow: hidden;
+    }
+
+    .marca-gerente img {
+        width: 145px;
+        max-width: none;
+    }
+
+    .perfil h2,
+    .perfil p {
+        display: none;
+    }
+
+    .avatar {
+        width: 46px;
+        height: 46px;
+        margin: 0;
+        border-width: 2px;
+        font-size: 20px;
+    }
+
+    .barra_lateral nav {
+        width: 100%;
+    }
+
+    .enlace-menu,
+    .boton-salir {
+        width: 48px;
+        min-width: 48px;
+        justify-content: center;
+        gap: 0;
+        padding: 12px;
+        overflow: hidden;
+        font-size: 0;
+    }
+
+    .boton-salir {
+        margin-top: auto;
+    }
+
+    .contenido {
+        margin-left: 76px;
+    }
+
+    .cuadros-principales {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .tabla-contenedor {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 720px;
+    }
+}
+
+@media (max-width: 750px) {
+    body {
+        display: block;
+    }
+
+    .barra_lateral {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        min-height: 0;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 9px 12px;
+        overflow: visible;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .marca-gerente {
+        width: 110px;
+        min-width: 80px;
+        height: 40px;
+        justify-content: flex-start;
+    }
+
+    .marca-gerente img {
+        width: 110px;
+        max-width: 100%;
+    }
+
+    .perfil {
+        display: none;
+    }
+
+    .barra_lateral nav {
+        width: auto;
+        min-width: 0;
+        flex: 1;
+        flex-direction: row;
+        justify-content: center;
+        gap: 4px;
+        overflow-x: auto;
+    }
+
+    .enlace-menu,
+    .boton-salir {
+        width: 42px;
+        min-width: 42px;
+        height: 42px;
+        min-height: 42px;
+        padding: 10px;
+    }
+
+    .boton-salir {
+        margin: 0;
+    }
+
+    .contenido {
+        margin-left: 0;
+    }
+
+    .encabezado,
+    .cuadros-principales,
+    .area-inferior {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+    .encabezado {
+        position: static;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+        padding-top: 22px;
+        padding-bottom: 20px;
+    }
+
+    .controles-encabezado {
+        width: 100%;
+    }
+
+    .controles-encabezado button {
+        flex: 1;
+    }
+
+    .cuadros-principales {
+        padding-top: 20px;
+    }
+
+    .vista {
+        padding: 22px;
+    }
+
+    .tabla-contenedor {
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+    }
+
+    table {
+        min-width: 720px;
+    }
+
+    dialog {
+        width: calc(100vw - 24px);
+        max-height: 88vh;
+        padding: 22px;
+    }
+}
+
+@media (max-width: 520px) {
+    .marca-gerente {
+        width: 76px;
+        min-width: 66px;
+    }
+
+    .marca-gerente img {
+        width: 76px;
+        max-width: 100%;
+        object-position: left center;
+    }
+
+    .barra_lateral nav {
+        justify-content: flex-start;
+    }
+
+    .cuadros-principales {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    .cuadro {
+        min-height: 96px;
+    }
+
+    .texto-cuadro strong {
+        font-size: 18px;
+    }
+
+    .area-inferior {
+        padding-bottom: 24px;
+    }
+
+    .vista {
+        padding: 18px;
+    }
+
+    .formulario {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .datos-sucursal {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 7px;
+    }
+
+    .datos-sucursal dd {
+        margin-bottom: 8px;
+    }
+
+    #estado-app {
+        top: 66px;
+        right: 12px;
+        width: calc(100vw - 24px);
+    }
+
+    dialog {
+        padding: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vista,
+    dialog {
+        animation: none;
     }
 }
