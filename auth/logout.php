@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../config/app.php';
+
 session_start();
 
 header('Content-Type: application/json; charset=utf-8');
@@ -37,5 +39,5 @@ session_destroy();
 
 responderJson([
     'success' => true,
-    'redirect' => '/PrivateStorage-main/src/inicio_sesion/inicioSesion.html'
+    'redirect' => privateStorageUrl('/src/inicio_sesion/inicioSesion.html')
 ]);
