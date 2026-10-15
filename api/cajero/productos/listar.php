@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../../../config/app.php';
+
 session_start();
 header('Content-Type: application/json; charset=utf-8');
 
@@ -16,7 +18,7 @@ function obtenerSucursalSesion(): int
         responderJson([
             'success' => false,
             'message' => 'La sesión ha expirado.',
-            'redirect' => '/PrivateStorage-main/src/inicio_sesion/inicioSesion.html'
+            'redirect' => privateStorageUrl('/src/inicio_sesion/inicioSesion.html')
         ], 401);
     }
 
@@ -49,11 +51,21 @@ $sucursalId = obtenerSucursalSesion();
 
 try {
     require_once __DIR__ . '/../../../config/database.php';
+    $consultaCategorias = $conexion->prepare(
+        'SELECT id, nombre
+         FROM categorias
+         WHERE activo = 1
+         ORDER BY nombre ASC'
+    );
+    $consultaCategorias->execute();
+
     $consulta = $conexion->prepare(
-        'SELECT p.id, p.codigo, p.nombre, p.precio,
+        'SELECT p.id, p.codigo, p.nombre, p.precio, p.categoria_id,
+                COALESCE(c.nombre, \'Sin categoría\') AS categoria,
                 i.existencias, i.stock_minimo
          FROM inventario_sucursal i
          INNER JOIN productos p ON p.id = i.producto_id
+         LEFT JOIN categorias c ON c.id = p.categoria_id
          WHERE i.sucursal_id = :sucursal_id
            AND p.activo = 1
          ORDER BY p.nombre ASC'
@@ -62,6 +74,7 @@ try {
 
     responderJson([
         'success' => true,
+        'categorias' => $consultaCategorias->fetchAll(),
         'productos' => $consulta->fetchAll()
     ]);
 } catch (Throwable $e) {
