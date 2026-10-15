@@ -1,59 +1,3 @@
-:root {
-    color-scheme: light;
-    --fondo: #f4f1fa;
-    --fondo-secundario: #ebe6f4;
-    --barra: #ffffff;
-    --encabezado: rgba(255, 255, 255, 0.82);
-    --superficie: #ffffff;
-    --superficie-elevada: #fbfaff;
-    --superficie-control: #f7f4fb;
-    --texto: #20152e;
-    --texto-secundario: #6d6477;
-    --borde: #e3ddea;
-    --borde-suave: #eeeaf3;
-    --morado: #5b21b6;
-    --morado-hover: #4c1d95;
-    --morado-profundo: #2e1065;
-    --morado-claro: #ede9fe;
-    --morado-brillante: #7c3aed;
-    --sobre-morado: #ffffff;
-    --estado-activo: #176b3a;
-    --estado-inactivo: #a12828;
-    --error-fondo: #fef2f2;
-    --error-texto: #991b1b;
-    --sombra-suave: 0 8px 24px rgba(47, 24, 78, 0.08);
-    --sombra-elevada: 0 18px 42px rgba(47, 24, 78, 0.13);
-    --halo: rgba(91, 33, 182, 0.2);
-}
-
-:root[data-tema="oscuro"] {
-    color-scheme: dark;
-    --fondo: #0f0f12;
-    --fondo-secundario: #17151d;
-    --barra: #15141b;
-    --encabezado: rgba(24, 23, 31, 0.92);
-    --superficie: #1b1923;
-    --superficie-elevada: #211f2b;
-    --superficie-control: #252230;
-    --texto: #f8f6fb;
-    --texto-secundario: #b7afc2;
-    --borde: #3d354a;
-    --borde-suave: #302b3a;
-    --morado: #a78bfa;
-    --morado-hover: #c4b5fd;
-    --morado-profundo: #2e1065;
-    --morado-claro: #33245a;
-    --morado-brillante: #8b5cf6;
-    --sobre-morado: #181320;
-    --estado-activo: #81d5a1;
-    --estado-inactivo: #ffaaa5;
-    --error-fondo: #41252d;
-    --error-texto: #ffd5d0;
-    --sombra-suave: 0 8px 24px rgba(0, 0, 0, 0.2);
-    --sombra-elevada: 0 18px 42px rgba(0, 0, 0, 0.35);
-    --halo: rgba(167, 139, 250, 0.28);
-}
-
 *,
 *::before,
 *::after {
@@ -71,7 +15,7 @@ body {
     min-height: 100vh;
     margin: 0;
     color: var(--texto);
-    font-family: Lato, "Segoe UI", Arial, sans-serif;
+    font-family: var(--font-ui);
     background:
         linear-gradient(135deg, rgba(255, 255, 255, 0.74), transparent 45%),
         linear-gradient(120deg, var(--fondo) 0%, var(--fondo-secundario) 100%);
@@ -348,7 +292,6 @@ select:focus-visible {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
-    max-width: 1020px;
 }
 
 .tarjeta-borde {
@@ -416,7 +359,6 @@ select:focus-visible {
 
 .contenedor-modulo {
     width: 100%;
-    max-width: 1180px;
     padding: 28px;
     border: 1px solid var(--borde);
     border-radius: 16px;

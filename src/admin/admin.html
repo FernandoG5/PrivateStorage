@@ -7,37 +7,63 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="admin_estilos.css">
+    <link rel="stylesheet" href="admin_vistas.css">
+    <link rel="stylesheet" href="../../shared/panel-base.css">
 </head>
 
 <body>
 
+    <button class="menu-movil" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-navegacion">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+    </button>
+
     <aside class="sidebar">
+        <a class="marca-admin" href="#sec-dashboard" aria-label="Private Storage, panel">
+            <img src="../../recursos/LogoBlancoPS.png" alt="Private Storage">
+        </a>
         <div class="perfil">
-            <div class="avatar" aria-hidden="true">A</div>
+            <div class="avatar" aria-hidden="true">
+                <span>A</span>
+                <span class="avatar-iniciales">AD</span>
+            </div>
             <p class="nombre">Administrador</p>
         </div>
-        <nav id="menu-navegacion">
-            <a class="nav-item activo" data-destino="sec-dashboard">Dashboard</a>
-            <a class="nav-item" data-destino="sec-inventario">Inventario</a>
-            <a class="nav-item" data-destino="sec-sucursal">Sucursales</a>
-            <a class="nav-item" data-destino="sec-gerentes">Gerentes</a>
+        <nav id="menu-navegacion" aria-label="Navegación del administrador">
+            <a class="nav-item activo" href="#sec-dashboard" data-destino="sec-dashboard">
+                <i class="fa-solid fa-chart-pie" aria-hidden="true"></i><span>Dashboard</span>
+            </a>
+            <a class="nav-item" href="#sec-inventario" data-destino="sec-inventario">
+                <i class="fa-solid fa-boxes-stacked" aria-hidden="true"></i><span>Inventario</span>
+            </a>
+            <a class="nav-item" href="#sec-ventas" data-destino="sec-ventas">
+                <i class="fa-solid fa-receipt" aria-hidden="true"></i><span>Ventas</span>
+            </a>
+            <a class="nav-item" href="#sec-sucursal" data-destino="sec-sucursal">
+                <i class="fa-solid fa-store" aria-hidden="true"></i><span>Sucursales</span>
+            </a>
+            <a class="nav-item" href="#sec-gerentes" data-destino="sec-gerentes">
+                <i class="fa-solid fa-user-tie" aria-hidden="true"></i><span>Gerentes</span>
+            </a>
         </nav>
         <button class="boton-cerrar-sesion" id="boton-cerrar-sesion" type="button">
-            <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+            <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span class="sidebar-action-label">Cerrar sesión</span>
         </button>
     </aside>
 
     <main class="main-content">
         <header class="header">
-            <h1>Bienvenido: Administrador</h1>
+            <div class="header-saludo">
+                <p class="header-kicker">PANEL DE CONTROL</p>
+                <h1>Bienvenido, Administrador</h1>
+            </div>
             
             <div class="header-controles">
                 <div class="busqueda">
-                    <input type="text" placeholder="Buscar...">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Buscar..." aria-label="Buscar en el panel">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                 </div>
                 <button
                     type="button"
@@ -46,99 +72,454 @@
                     aria-label="Cambiar tema"
                     aria-pressed="false"
                 >
-                    <i class="fa-solid fa-sun"></i>
-                    <i class="fa-solid fa-moon"></i>
+                    <i class="fa-solid fa-sun" aria-hidden="true"></i>
+                    <i class="fa-solid fa-moon" aria-hidden="true"></i>
                 </button>
-                <i class="fa-solid fa-bell campana"></i>
+                <button class="notificaciones-toggle" type="button" aria-label="Abrir notificaciones" aria-expanded="false" aria-controls="panel-notificaciones">
+                    <i class="fa-solid fa-bell campana" aria-hidden="true"></i>
+                    <span class="indicador-notificaciones" aria-hidden="true"></span>
+                </button>
             </div>
         </header>
 
+        <aside class="panel-notificaciones" id="panel-notificaciones" aria-label="Notificaciones" hidden>
+            <div class="notificaciones-cabecera">
+                <div>
+                    <p class="etiqueta-seccion">CENTRO DE ACTIVIDAD</p>
+                    <h2>Notificaciones</h2>
+                </div>
+                <button class="cerrar-notificaciones" type="button" aria-label="Cerrar notificaciones">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+            <p class="nota-panel" id="notificaciones-vacias">No hay alertas de stock bajo.</p>
+            <div id="lista-notificaciones-stock"></div>
+        </aside>
+
         <section id="sec-dashboard" class="seccion-panel activa">
+            <div class="dashboard-intro">
+                <div>
+                    <p class="etiqueta-seccion">RESUMEN DEL SISTEMA</p>
+                    <h2>Vistazo general</h2>
+                </div>
+            </div>
             <div class="tarjetas-grid">
-                <div class="tarjeta-borde" data-destino="sec-inventario">
+                <div class="tarjeta-borde stat-productos" data-destino="sec-inventario" role="button" tabindex="0">
                     <div class="tarjeta-interior">
-                        <i class="fa-solid fa-cube"></i>
+                        <span class="stat-icono" aria-hidden="true"><i class="fa-solid fa-cube" aria-hidden="true"></i></span>
                         <div class="tarjeta-info">
-                            <span class="texto">Inventario General</span>
-                            <span class="resumen-card" id="resumen-inventario">Sin productos registrados<br>Control por sucursal</span>
+                            <span class="numero" id="total-productos-activos">—</span>
+                            <span class="texto">Total de productos</span>
+                            <span class="resumen-card" id="resumen-inventario">Productos activos</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="tarjeta-borde" data-destino="sec-sucursal">
+                <div class="tarjeta-borde stat-sucursales" data-destino="sec-sucursal" role="button" tabindex="0">
                     <div class="tarjeta-interior">
-                        <i class="fa-solid fa-store"></i>
+                        <span class="stat-icono" aria-hidden="true"><i class="fa-solid fa-store" aria-hidden="true"></i></span>
                         <div class="tarjeta-info">
                             <span class="numero" id="total-sucursales">0</span>
-                            <span class="texto">Total de<br>sucursales</span>
+                            <span class="texto">Total de sucursales</span>
                             <span class="resumen-card" id="resumen-sucursales">0 activas</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="tarjeta-borde" data-destino="sec-gerentes">
+                <div class="tarjeta-borde stat-gerentes" data-destino="sec-gerentes" role="button" tabindex="0">
                     <div class="tarjeta-interior">
-                        <i class="fa-solid fa-wallet"></i>
+                        <span class="stat-icono" aria-hidden="true"><i class="fa-solid fa-user-tie" aria-hidden="true"></i></span>
                         <div class="tarjeta-info">
                             <span class="numero" id="total-gerentes">0</span>
-                            <span class="texto">Total de<br>gerentes</span>
+                            <span class="texto">Total de gerentes</span>
                             <span class="resumen-card" id="resumen-gerentes">0 activos</span>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-columna dashboard-columna-principal">
+                    <article class="panel-card">
+                        <div class="panel-card-header">
+                            <div>
+                                <p class="etiqueta-seccion">INVENTARIO</p>
+                                <h2>Productos con poco stock</h2>
+                            </div>
+                        </div>
+                        <div class="tabla-contenedor tabla-demo-scroll">
+                            <table class="tabla-dashboard">
+                                <thead><tr><th>Producto</th><th>Sucursal</th><th>Restante</th></tr></thead>
+                                <tbody id="dashboard-stock-bajo">
+                                    <tr><td colspan="3" class="nota-panel">Cargando inventario…</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+
+                    <article class="panel-card">
+                        <div class="panel-card-header">
+                            <div>
+                                <p class="etiqueta-seccion">ACTIVIDAD</p>
+                                <h2>Últimas ventas</h2>
+                            </div>
+                        </div>
+                        <div class="ventas-demo" id="dashboard-ultimas-ventas">
+                            <p class="nota-panel">Cargando ventas…</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="dashboard-columna dashboard-columna-lateral">
+                    <article class="panel-card">
+                        <div class="panel-card-header">
+                            <div>
+                                <p class="etiqueta-seccion">RENDIMIENTO</p>
+                                <h2>Top sucursales por ventas</h2>
+                            </div>
+                        </div>
+                        <div class="ranking-demo" id="dashboard-top-sucursales">
+                            <p class="nota-panel">Cargando ventas…</p>
+                        </div>
+                    </article>
+
+                    <article class="panel-card accesos-panel">
+                        <div class="panel-card-header">
+                            <div>
+                                <p class="etiqueta-seccion">NAVEGACIÓN</p>
+                                <h2>Accesos rápidos</h2>
+                            </div>
+                        </div>
+                        <div class="accesos-grid">
+                            <button class="acceso-rapido" type="button" data-destino="sec-inventario"><i class="fa-solid fa-boxes-stacked" aria-hidden="true"></i><span>Ver inventario</span><i class="fa-solid fa-arrow-up-right-from-square acceso-flecha" aria-hidden="true"></i></button>
+                            <button class="acceso-rapido" type="button" data-destino="sec-ventas"><i class="fa-solid fa-receipt" aria-hidden="true"></i><span>Consultar ventas</span><i class="fa-solid fa-arrow-up-right-from-square acceso-flecha" aria-hidden="true"></i></button>
+                            <button class="acceso-rapido" type="button" data-destino="sec-sucursal"><i class="fa-solid fa-store" aria-hidden="true"></i><span>Abrir sucursales</span><i class="fa-solid fa-arrow-up-right-from-square acceso-flecha" aria-hidden="true"></i></button>
+                            <button class="acceso-rapido" type="button" data-destino="sec-gerentes"><i class="fa-solid fa-user-tie" aria-hidden="true"></i><span>Administrar gerentes</span><i class="fa-solid fa-arrow-up-right-from-square acceso-flecha" aria-hidden="true"></i></button>
+                        </div>
+                    </article>
+                </div>
+            </div>
         </section>
 
         <section id="sec-inventario" class="seccion-panel">
-            <div class="contenedor-modulo">
-                <h2>Control de Inventario</h2>
-                <p class="subtitulo">Existencias disponibles por sucursal y almacén.</p>
+            <div class="inventario-vista">
+                <div class="inventario-titulo">
+                    <div>
+                        <p class="etiqueta-seccion">PRODUCTOS Y EXISTENCIAS</p>
+                        <h2>Control de inventario</h2>
+                        <p class="subtitulo">Consulta de productos por sucursal y categoría.</p>
+                    </div>
+                </div>
+                <div class="inventario-herramientas">
+                    <label class="filtro-inventario">
+                        <span>Filtrar por sucursal</span>
+                        <select aria-label="Filtrar por sucursal"><option value="">Todas las sucursales</option></select>
+                    </label>
+                    <label class="filtro-inventario">
+                        <span>Filtrar por categoría</span>
+                        <select aria-label="Filtrar por categoría"><option value="">Todas las categorías</option></select>
+                    </label>
+                    <button class="boton-guardar boton-nuevo" type="button">
+                        <i class="fa-solid fa-plus" aria-hidden="true"></i> Agregar producto
+                    </button>
+                </div>
+                <div class="inventario-modal-overlay" id="modal-producto-admin" hidden>
+                    <div class="inventario-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-producto-admin" tabindex="-1">
+                        <div class="inventario-modal-encabezado">
+                            <div>
+                                <h3 id="titulo-modal-producto-admin">Agregar producto</h3>
+                                <p>Completa los datos del producto y sus existencias.</p>
+                            </div>
+                            <button class="inventario-modal-cerrar" id="boton-cerrar-modal-producto-admin" type="button" aria-label="Cerrar ventana">
+                                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <form class="formulario formulario-sucursal oculto" id="formulario-producto-admin" novalidate>
+                            <input id="producto-admin-id" type="hidden">
+                            <input id="producto-admin-sucursal-anterior" type="hidden">
+                            <div class="campos-sucursal">
+                                <div class="campo">
+                                    <label for="producto-admin-codigo">Código</label>
+                                    <input id="producto-admin-codigo" type="text" maxlength="50" required>
+                                </div>
+                                <div class="campo">
+                                    <label for="producto-admin-nombre">Nombre</label>
+                                    <input id="producto-admin-nombre" type="text" maxlength="120" required>
+                                </div>
+                                <div class="campo">
+                                    <label for="producto-admin-precio">Precio</label>
+                                    <input id="producto-admin-precio" type="number" min="0" step="0.01" required>
+                                </div>
+                                <div class="campo">
+                                    <label for="producto-admin-categoria">Categoría</label>
+                                    <select id="producto-admin-categoria" required>
+                                        <option value="">Selecciona una categoría</option>
+                                    </select>
+                                </div>
+                                <div class="campo">
+                                    <label for="producto-admin-sucursal">Sucursal</label>
+                                    <select id="producto-admin-sucursal" required>
+                                        <option value="">Selecciona una sucursal</option>
+                                    </select>
+                                </div>
+                                <div class="campo">
+                                    <label for="producto-admin-existencias">Existencias</label>
+                                    <input id="producto-admin-existencias" type="number" min="0" max="1000000" step="1" required>
+                                </div>
+                                <div class="campo">
+                                    <label for="producto-admin-stock-minimo">Stock mínimo</label>
+                                    <input id="producto-admin-stock-minimo" type="number" min="0" max="1000000" step="1" required>
+                                </div>
+                            </div>
+                            <p class="inventario-modal-error" id="error-formulario-producto-admin" role="alert" aria-live="assertive" hidden></p>
+                            <div class="acciones-formulario">
+                                <button class="boton-guardar" type="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar producto</button>
+                                <button class="boton-secundario" id="boton-cancelar-producto-admin" type="button">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="inventario-toast" id="toast-inventario-admin" role="status" aria-live="polite" hidden></div>
+                <div class="tabla-contenedor inventario-tabla-contenedor">
+                    <table class="tabla-inventario">
+                        <thead>
+                            <tr>
+                                <th class="col-centro">No. Sucursal</th>
+                                <th>Código</th>
+                                <th>Nombre del producto</th>
+                                <th>Categoría</th>
+                                <th class="col-derecha">Precio unitario</th>
+                                <th class="col-centro">Cantidad</th>
+                                <th class="col-derecha">Valor stock</th>
+                                <th class="col-centro">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-inventario-admin"></tbody>
+                    </table>
+                </div>
+                <div class="inventario-paginacion">
+                    <label class="inventario-paginacion-selector">
+                        <span>Mostrar</span>
+                        <select aria-label="Productos por página">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                        </select>
+                        <span>por página</span>
+                    </label>
+                    <p class="inventario-paginacion-resumen" aria-live="polite"></p>
+                    <nav class="inventario-paginacion-controles" aria-label="Paginación del inventario"></nav>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-ventas" class="seccion-panel">
+            <div class="ventas-vista">
+                <div class="inventario-titulo">
+                    <div>
+                        <p class="etiqueta-seccion">REGISTRO Y SEGUIMIENTO</p>
+                        <h2>Consulta de ventas</h2>
+                        <p class="subtitulo">Historial de ventas y detalle de tickets registrados.</p>
+                    </div>
+                </div>
+                <div class="ventas-resumen-grid" aria-label="Resumen del periodo">
+                    <article class="tarjeta-borde ventas-stat-total">
+                        <div class="tarjeta-interior">
+                            <span class="stat-icono" aria-hidden="true"><i class="fa-solid fa-sack-dollar"></i></span>
+                            <div class="tarjeta-info">
+                                <span class="numero" id="ventas-total-vendido">—</span>
+                                <span class="texto">Total vendido</span>
+                                <span class="resumen-card">En el periodo seleccionado</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="tarjeta-borde ventas-stat-cantidad">
+                        <div class="tarjeta-interior">
+                            <span class="stat-icono" aria-hidden="true"><i class="fa-solid fa-receipt"></i></span>
+                            <div class="tarjeta-info">
+                                <span class="numero" id="ventas-numero-ventas">—</span>
+                                <span class="texto">Número de ventas</span>
+                                <span class="resumen-card">En el periodo seleccionado</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="tarjeta-borde ventas-stat-ticket">
+                        <div class="tarjeta-interior">
+                            <span class="stat-icono" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span>
+                            <div class="tarjeta-info">
+                                <span class="numero" id="ventas-ticket-promedio">—</span>
+                                <span class="texto">Ticket promedio</span>
+                                <span class="resumen-card">Por venta</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="tarjeta-borde ventas-stat-producto">
+                        <div class="tarjeta-interior">
+                            <span class="stat-icono" aria-hidden="true"><i class="fa-solid fa-cube"></i></span>
+                            <div class="tarjeta-info">
+                                <span class="numero" id="ventas-producto-mas-vendido">—</span>
+                                <span class="texto">Producto más vendido</span>
+                                <span class="resumen-card" id="ventas-producto-cantidad">En el periodo seleccionado</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <p class="ventas-alerta-error" id="ventas-error-resumen" role="status" aria-live="polite" hidden></p>
+
+                <article class="panel-card ventas-filtros">
+                    <div class="ventas-filtros-campos">
+                        <label class="ventas-campo">
+                            <span>Desde</span>
+                            <input id="ventas-fecha-desde" type="date" aria-label="Fecha desde">
+                        </label>
+                        <label class="ventas-campo">
+                            <span>Hasta</span>
+                            <input id="ventas-fecha-hasta" type="date" aria-label="Fecha hasta">
+                        </label>
+                        <label class="ventas-campo">
+                            <span>Sucursal</span>
+                            <select id="ventas-filtro-sucursal" aria-label="Filtrar ventas por sucursal">
+                                <option value="">Todas las sucursales</option>
+                            </select>
+                        </label>
+                        <label class="ventas-campo ventas-busqueda">
+                            <span>Folio o cajero</span>
+                            <span class="ventas-search-shell">
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                                <input id="ventas-busqueda" type="search" maxlength="100" placeholder="Buscar folio o cajero">
+                            </span>
+                        </label>
+                    </div>
+                    <div class="ventas-filtros-acciones">
+                        <div class="ventas-atajos" role="group" aria-label="Atajos de periodo">
+                            <button class="ventas-atajo" type="button" data-ventas-periodo="hoy" aria-pressed="false">Hoy</button>
+                            <button class="ventas-atajo" type="button" data-ventas-periodo="7dias" aria-pressed="false">Últimos 7 días</button>
+                            <button class="ventas-atajo" type="button" data-ventas-periodo="mes" aria-pressed="false">Este mes</button>
+                            <button class="ventas-atajo" type="button" data-ventas-periodo="todo" aria-pressed="false">Todo</button>
+                        </div>
+                        <button class="boton-secundario ventas-limpiar" id="ventas-limpiar-filtros" type="button">
+                            <i class="fa-solid fa-eraser" aria-hidden="true"></i> Limpiar filtros
+                        </button>
+                    </div>
+                </article>
+
+                <article class="panel-card ventas-historial">
+                    <div class="panel-card-header">
+                        <div>
+                            <p class="etiqueta-seccion">HISTORIAL</p>
+                            <h2>Ventas registradas</h2>
+                        </div>
+                    </div>
+                    <div class="ventas-tabla-contenedor">
+                        <table class="tabla-inventario ventas-tabla">
+                            <thead>
+                                <tr>
+                                    <th>Folio</th>
+                                    <th>Fecha y hora</th>
+                                    <th>Sucursal</th>
+                                    <th>Cajero</th>
+                                    <th class="col-centro">Artículos</th>
+                                    <th>Método de pago</th>
+                                    <th class="col-centro">Total</th>
+                                    <th class="col-centro">Detalle</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-ventas-admin">
+                                <tr><td class="ventas-estado" colspan="8">Cargando ventas…</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="inventario-paginacion ventas-paginacion">
+                        <label class="inventario-paginacion-selector">
+                            <span>Mostrar</span>
+                            <select id="ventas-por-pagina" aria-label="Ventas por página">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                            </select>
+                            <span>por página</span>
+                        </label>
+                        <p class="inventario-paginacion-resumen" id="ventas-paginacion-resumen" aria-live="polite"></p>
+                        <nav class="inventario-paginacion-controles" id="ventas-paginacion-controles" aria-label="Paginación de ventas"></nav>
+                    </div>
+                </article>
+
+                <div class="inventario-modal-overlay ventas-modal-overlay" id="modal-detalle-venta" hidden>
+                    <section class="inventario-modal-dialog ventas-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-detalle-venta" tabindex="-1">
+                        <header class="inventario-modal-encabezado">
+                            <div>
+                                <p class="etiqueta-seccion">COMPROBANTE</p>
+                                <h2 id="titulo-modal-detalle-venta">Detalle de venta</h2>
+                            </div>
+                            <button class="inventario-modal-cerrar" id="boton-cerrar-modal-venta" type="button" aria-label="Cerrar detalle de venta">
+                                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                            </button>
+                        </header>
+                        <div id="detalle-venta-contenido" class="ventas-ticket-contenido">
+                            <p class="nota-panel">Cargando detalle de venta…</p>
+                        </div>
+                    </section>
+                </div>
             </div>
         </section>
 
         <section id="sec-sucursal" class="seccion-panel">
             <div class="contenedor-modulo">
-                <h2>Gestión de Sucursales</h2>
-                <p class="subtitulo">Administra las sedes y su información de contacto.</p>
-                <button class="boton-guardar boton-nuevo" id="boton-nueva-sucursal" type="button">
-                    <i class="fa-solid fa-plus"></i> Agregar sucursal
-                </button>
-
-                <form class="formulario formulario-sucursal oculto" id="formulario-sucursal">
-                    <input id="sucursal-id" type="hidden">
-                    <div class="campos-sucursal">
-                        <div class="campo">
-                            <label for="sucursal-nombre">Nombre de sucursal</label>
-                            <input id="sucursal-nombre" type="text" required>
-                        </div>
-                        <div class="campo">
-                            <label for="sucursal-direccion">Dirección</label>
-                            <input id="sucursal-direccion" type="text" required>
-                        </div>
-                        <div class="campo">
-                            <label for="sucursal-telefono">Teléfono</label>
-                            <input id="sucursal-telefono" type="tel" required>
-                        </div>
-                        <div class="campo">
-                            <label for="sucursal-estado">Estado</label>
-                            <select id="sucursal-estado">
-                                <option value="activa">Activa</option>
-                                <option value="inactiva">Inactiva</option>
-                            </select>
-                        </div>
+                <header class="sucursales-encabezado">
+                    <div>
+                        <p class="etiqueta-seccion">ADMINISTRACIÓN DE SEDES</p>
+                        <h2>Gestión de Sucursales</h2>
+                        <p class="subtitulo">Administra las sedes y su información de contacto.</p>
                     </div>
-                    <div class="acciones-formulario">
-                        <button class="boton-guardar" type="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar sucursal</button>
-                        <button class="boton-secundario" id="boton-cancelar-sucursal" type="button">Cancelar</button>
-                    </div>
-                </form>
+                    <button class="boton-guardar boton-nuevo" id="boton-nueva-sucursal" type="button">
+                        <i class="fa-solid fa-plus" aria-hidden="true"></i> Agregar sucursal
+                    </button>
+                </header>
 
-                <div class="tabla-contenedor">
+                <div class="sucursales-resumen" aria-label="Resumen de sucursales">
+                    <article class="sucursal-resumen-tarjeta">
+                        <span class="sucursal-resumen-icono"><i class="fa-solid fa-store" aria-hidden="true"></i></span>
+                        <div><strong id="resumen-sucursales-total">0</strong><span>Total de sucursales</span></div>
+                    </article>
+                    <article class="sucursal-resumen-tarjeta">
+                        <span class="sucursal-resumen-icono sucursal-resumen-activa"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></span>
+                        <div><strong id="resumen-sucursales-activas">0</strong><span>Activas</span></div>
+                    </article>
+                    <article class="sucursal-resumen-tarjeta">
+                        <span class="sucursal-resumen-icono sucursal-resumen-inactiva"><i class="fa-solid fa-circle-pause" aria-hidden="true"></i></span>
+                        <div><strong id="resumen-sucursales-inactivas">0</strong><span>Inactivas</span></div>
+                    </article>
+                </div>
+
+                <div class="sucursales-herramientas">
+                    <label class="sucursales-busqueda" for="sucursales-busqueda">
+                        <span>Buscar sucursal</span>
+                        <span class="sucursales-busqueda-campo">
+                            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                            <input id="sucursales-busqueda" type="search" placeholder="Nombre o dirección" autocomplete="off">
+                        </span>
+                    </label>
+                    <label class="sucursales-filtro-estado" for="sucursales-filtro-estado">
+                        <span>Estado</span>
+                        <select id="sucursales-filtro-estado">
+                            <option value="">Todas</option>
+                            <option value="activa">Activas</option>
+                            <option value="inactiva">Inactivas</option>
+                        </select>
+                    </label>
+                </div>
+
+                <p class="sucursales-error" id="sucursales-error" role="alert" hidden>No se pudieron cargar las sucursales.</p>
+                <div class="tabla-contenedor sucursales-tabla-contenedor">
                     <table class="tabla-gerentes tabla-sucursales">
                         <thead>
                             <tr>
                                 <th>Sucursal</th>
                                 <th>Dirección</th>
+                                <th>Gerente</th>
+                                <th>Productos</th>
                                 <th>Teléfono</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
@@ -146,54 +527,138 @@
                         </thead>
                         <tbody id="lista-sucursales"></tbody>
                     </table>
-                    <p class="tabla-vacia oculto" id="tabla-sucursales-vacia">No hay sucursales registradas.</p>
+                    <p class="tabla-vacia oculto" id="tabla-sucursales-vacia">Aún no hay sucursales registradas</p>
                 </div>
+                <div class="inventario-paginacion sucursales-paginacion">
+                    <label class="inventario-paginacion-selector">
+                        <span>Mostrar</span>
+                        <select id="sucursales-por-pagina" aria-label="Sucursales por página">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                        </select>
+                        <span>por página</span>
+                    </label>
+                    <p class="inventario-paginacion-resumen" id="sucursales-paginacion-resumen" aria-live="polite"></p>
+                    <nav class="inventario-paginacion-controles" id="sucursales-paginacion-controles" aria-label="Paginación de sucursales"></nav>
+                </div>
+
+                <div class="inventario-modal-overlay sucursales-modal" id="modal-sucursal" hidden>
+                    <section class="inventario-modal-dialog sucursales-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-sucursal" tabindex="-1">
+                        <header class="inventario-modal-encabezado">
+                            <div>
+                                <p class="etiqueta-seccion">ADMINISTRACIÓN DE SEDES</p>
+                                <h2 id="titulo-modal-sucursal">Agregar sucursal</h2>
+                            </div>
+                            <button class="inventario-modal-cerrar" id="boton-cerrar-modal-sucursal" type="button" aria-label="Cerrar formulario de sucursal">
+                                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                            </button>
+                        </header>
+                        <form class="formulario formulario-sucursal oculto" id="formulario-sucursal">
+                            <input id="sucursal-id" type="hidden">
+                            <div class="campos-sucursal">
+                                <div class="campo">
+                                    <label for="sucursal-nombre">Nombre de sucursal</label>
+                                    <input id="sucursal-nombre" type="text" required>
+                                </div>
+                                <div class="campo">
+                                    <label for="sucursal-direccion">Dirección</label>
+                                    <input id="sucursal-direccion" type="text" required>
+                                </div>
+                                <div class="campo">
+                                    <label for="sucursal-telefono">Teléfono</label>
+                                    <input id="sucursal-telefono" type="tel" required>
+                                </div>
+                                <div class="campo">
+                                    <label for="sucursal-estado">Estado</label>
+                                    <select id="sucursal-estado">
+                                        <option value="activa">Activa</option>
+                                        <option value="inactiva">Inactiva</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <p class="inventario-modal-error" id="error-formulario-sucursal" role="alert" aria-live="assertive" hidden></p>
+                            <div class="acciones-formulario">
+                                <button class="boton-guardar" type="submit"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Guardar sucursal</button>
+                                <button class="boton-secundario" id="boton-cancelar-sucursal" type="button">Cancelar</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+                <div class="inventario-modal-overlay sucursales-modal" id="modal-confirmar-eliminacion-sucursal" hidden>
+                    <section class="inventario-modal-dialog sucursales-confirmacion-dialog" role="dialog" aria-modal="true" aria-labelledby="titulo-confirmacion-sucursal" tabindex="-1">
+                        <header class="inventario-modal-encabezado">
+                            <div>
+                                <p class="etiqueta-seccion">CONFIRMACIÓN</p>
+                                <h2 id="titulo-confirmacion-sucursal">Eliminar sucursal</h2>
+                            </div>
+                            <button class="inventario-modal-cerrar" id="boton-cerrar-confirmacion-sucursal" type="button" aria-label="Cancelar eliminación">
+                                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                            </button>
+                        </header>
+                        <p class="sucursales-confirmacion-texto">¿Eliminar definitivamente la sucursal <strong id="nombre-confirmacion-sucursal"></strong>? Esta acción no se puede deshacer.</p>
+                        <div class="sucursales-confirmacion-acciones">
+                            <button class="boton-secundario" id="boton-cancelar-eliminacion-sucursal" type="button">Cancelar</button>
+                            <button class="sucursal-boton-confirmar-eliminacion" id="boton-confirmar-eliminacion-sucursal" type="button">
+                                <i class="fa-solid fa-trash" aria-hidden="true"></i> Eliminar sucursal
+                            </button>
+                        </div>
+                    </section>
+                </div>
+                <div class="inventario-toast" id="toast-sucursales" role="status" aria-live="polite" hidden></div>
             </div>
         </section>
 
         <section id="sec-gerentes" class="seccion-panel">
             <div class="contenedor-modulo">
-                <h2>Gestión de Gerentes</h2>
-                <p class="subtitulo">Listado y asignación de gerentes por tienda.</p>
-                <button class="boton-guardar boton-nuevo" id="boton-nuevo-gerente" type="button">
-                    <i class="fa-solid fa-plus"></i> Crear gerente
-                </button>
-
-                <form class="formulario formulario-gerente oculto" id="formulario-gerente">
-                    <input id="gerente-id" type="hidden">
-                    <div class="campos-gerente">
-                        <div class="campo">
-                            <label for="gerente-nombre">Nombre completo</label>
-                            <input id="gerente-nombre" type="text" required>
-                        </div>
-                        <div class="campo">
-                            <label for="gerente-usuario">Usuario</label>
-                            <input id="gerente-usuario" type="text" required>
-                        </div>
-                        <div class="campo">
-                            <label for="gerente-password">Contraseña</label>
-                            <input id="gerente-password" type="password" autocomplete="new-password" required>
-                        </div>
-                        <div class="campo">
-                            <label for="gerente-sucursal">Sucursal asignada</label>
-                            <select id="gerente-sucursal" required></select>
-                        </div>
-                        <div class="campo">
-                            <label for="gerente-activo">Estado</label>
-                            <select id="gerente-activo">
-                                <option value="1">Activo</option>
-                                <option value="0">Inactivo</option>
-                            </select>
-                        </div>
+                <header class="gerentes-encabezado">
+                    <div>
+                        <p class="etiqueta-seccion">ADMINISTRACIÓN DE PERSONAL</p>
+                        <h2>Gestión de Gerentes</h2>
+                        <p class="subtitulo">Listado y asignación de gerentes por tienda.</p>
                     </div>
-                    <div class="acciones-formulario">
-                        <button class="boton-guardar" type="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar gerente</button>
-                        <button class="boton-secundario" id="boton-cancelar-gerente" type="button">Cancelar</button>
-                    </div>
-                </form>
+                    <button class="boton-guardar boton-nuevo" id="boton-nuevo-gerente" type="button">
+                        <i class="fa-solid fa-plus" aria-hidden="true"></i> Agregar gerente
+                    </button>
+                </header>
 
-                <div class="tabla-contenedor">
-                    <table class="tabla-gerentes">
+                <div class="gerentes-resumen" aria-label="Resumen de gerentes">
+                    <article class="gerente-resumen-tarjeta">
+                        <span class="gerente-resumen-icono"><i class="fa-solid fa-user-group" aria-hidden="true"></i></span>
+                        <div><strong id="resumen-gerentes-total">0</strong><span>Total de gerentes</span></div>
+                    </article>
+                    <article class="gerente-resumen-tarjeta">
+                        <span class="gerente-resumen-icono gerente-resumen-activo"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></span>
+                        <div><strong id="resumen-gerentes-activos">0</strong><span>Activos</span></div>
+                    </article>
+                    <article class="gerente-resumen-tarjeta">
+                        <span class="gerente-resumen-icono gerente-resumen-inactivo"><i class="fa-solid fa-circle-pause" aria-hidden="true"></i></span>
+                        <div><strong id="resumen-gerentes-inactivos">0</strong><span>Inactivos</span></div>
+                    </article>
+                </div>
+
+                <div class="gerentes-herramientas">
+                    <label class="gerentes-busqueda" for="gerentes-busqueda">
+                        <span>Buscar gerente</span>
+                        <span class="gerentes-busqueda-campo">
+                            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                            <input id="gerentes-busqueda" type="search" placeholder="Nombre o usuario" autocomplete="off">
+                        </span>
+                    </label>
+                    <label class="gerentes-filtro-estado" for="gerentes-filtro-estado">
+                        <span>Estado</span>
+                        <select id="gerentes-filtro-estado">
+                            <option value="">Todos</option>
+                            <option value="1">Activos</option>
+                            <option value="0">Inactivos</option>
+                        </select>
+                    </label>
+                </div>
+
+                <p class="gerentes-error" id="gerentes-error" role="alert" hidden>No se pudieron cargar los gerentes.</p>
+                <div class="tabla-contenedor gerentes-tabla-contenedor">
+                    <table class="tabla-gerentes tabla-gerentes-admin">
                         <thead>
                             <tr>
                                 <th>Gerente</th>
@@ -207,6 +672,94 @@
                     </table>
                     <p class="tabla-vacia oculto" id="tabla-vacia">No hay gerentes registrados.</p>
                 </div>
+                <div class="inventario-paginacion gerentes-paginacion">
+                    <label class="inventario-paginacion-selector">
+                        <span>Mostrar</span>
+                        <select id="gerentes-por-pagina" aria-label="Gerentes por página">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                        </select>
+                        <span>por página</span>
+                    </label>
+                    <p class="inventario-paginacion-resumen" id="gerentes-paginacion-resumen" aria-live="polite"></p>
+                    <nav class="inventario-paginacion-controles" id="gerentes-paginacion-controles" aria-label="Paginación de gerentes"></nav>
+                </div>
+
+                <div class="inventario-modal-overlay gerentes-modal" id="modal-gerente" hidden>
+                    <section class="inventario-modal-dialog gerentes-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-gerente" tabindex="-1">
+                        <header class="inventario-modal-encabezado">
+                            <div>
+                                <p class="etiqueta-seccion">ADMINISTRACIÓN DE PERSONAL</p>
+                                <h2 id="titulo-modal-gerente">Agregar gerente</h2>
+                            </div>
+                            <button class="inventario-modal-cerrar" id="boton-cerrar-modal-gerente" type="button" aria-label="Cerrar formulario de gerente">
+                                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                            </button>
+                        </header>
+                        <form class="formulario formulario-gerente oculto" id="formulario-gerente">
+                            <input id="gerente-id" type="hidden">
+                            <div class="campos-gerente">
+                                <div class="campo">
+                                    <label for="gerente-nombre">Nombre completo</label>
+                                    <input id="gerente-nombre" type="text" required>
+                                </div>
+                                <div class="campo">
+                                    <label for="gerente-usuario">Usuario</label>
+                                    <input id="gerente-usuario" type="text" required>
+                                </div>
+                                <div class="campo">
+                                    <label for="gerente-password">Contraseña</label>
+                                    <div class="gerente-password-campo">
+                                        <input id="gerente-password" type="password" autocomplete="new-password" required>
+                                        <button class="gerente-password-toggle" id="boton-ver-password-gerente" type="button" aria-label="Mostrar contraseña" aria-pressed="false">
+                                            <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <small class="gerente-password-ayuda" id="gerente-password-ayuda" hidden>Déjalo vacío para conservar la actual</small>
+                                </div>
+                                <div class="campo">
+                                    <label for="gerente-sucursal">Sucursal asignada</label>
+                                    <select id="gerente-sucursal" required></select>
+                                </div>
+                                <div class="campo">
+                                    <label for="gerente-activo">Estado</label>
+                                    <select id="gerente-activo">
+                                        <option value="1">Activo</option>
+                                        <option value="0">Inactivo</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <p class="inventario-modal-error" id="error-formulario-gerente" role="alert" aria-live="assertive" hidden></p>
+                            <div class="acciones-formulario">
+                                <button class="boton-guardar" type="submit"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Guardar gerente</button>
+                                <button class="boton-secundario" id="boton-cancelar-gerente" type="button">Cancelar</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+                <div class="inventario-modal-overlay gerentes-modal" id="modal-confirmar-desactivacion-gerente" hidden>
+                    <section class="inventario-modal-dialog gerentes-confirmacion-dialog" role="dialog" aria-modal="true" aria-labelledby="titulo-confirmacion-gerente" tabindex="-1">
+                        <header class="inventario-modal-encabezado">
+                            <div>
+                                <p class="etiqueta-seccion">CONFIRMACIÓN</p>
+                                <h2 id="titulo-confirmacion-gerente">Desactivar gerente</h2>
+                            </div>
+                            <button class="inventario-modal-cerrar" id="boton-cerrar-confirmacion-gerente" type="button" aria-label="Cancelar desactivación">
+                                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                            </button>
+                        </header>
+                        <p class="gerentes-confirmacion-texto">¿Desactivar a <strong id="nombre-confirmacion-gerente"></strong>? El registro y sus referencias se conservarán; el gerente ya no podrá acceder.</p>
+                        <div class="gerentes-confirmacion-acciones">
+                            <button class="boton-secundario" id="boton-cancelar-desactivacion-gerente" type="button">Cancelar</button>
+                            <button class="gerente-boton-confirmar-desactivacion" id="boton-confirmar-desactivacion-gerente" type="button">
+                                <i class="fa-solid fa-user-slash" aria-hidden="true"></i> Desactivar gerente
+                            </button>
+                        </div>
+                    </section>
+                </div>
+                <div class="inventario-toast" id="toast-gerentes" role="status" aria-live="polite" hidden></div>
             </div>
         </section>
     </main>
@@ -220,12 +773,49 @@
         const tablaVacia = document.getElementById('tabla-vacia');
         const totalGerentes = document.getElementById('total-gerentes');
         const resumenGerentes = document.getElementById('resumen-gerentes');
+        const gerentesModal = document.getElementById('modal-gerente');
+        const gerentesConfirmacionModal = document.getElementById('modal-confirmar-desactivacion-gerente');
+        const gerentesPorPaginaSelect = document.getElementById('gerentes-por-pagina');
+        const gerentesPaginacionResumen = document.getElementById('gerentes-paginacion-resumen');
+        const gerentesPaginacionControles = document.getElementById('gerentes-paginacion-controles');
+        const gerentesBusqueda = document.getElementById('gerentes-busqueda');
+        const gerentesFiltroEstado = document.getElementById('gerentes-filtro-estado');
+        const gerentesError = document.getElementById('gerentes-error');
+        const errorFormularioGerente = document.getElementById('error-formulario-gerente');
+        const toastGerentes = document.getElementById('toast-gerentes');
+        const gerentePassword = document.getElementById('gerente-password');
+        const gerentePasswordAyuda = document.getElementById('gerente-password-ayuda');
+        const claveGerentesPorPagina = 'privateStorage.gerentes.porPagina';
+        const opcionesGerentesPorPagina = [5, 10, 20, 30];
         let gerentes = [];
+        let paginaGerentesActual = 1;
+        let gerentesPorPagina = 10;
+        let elementoEnfoqueGerenteAnterior = null;
+        let resolverConfirmacionGerente = null;
+        let temporizadorToastGerentes;
         const formularioSucursal = document.getElementById('formulario-sucursal');
         const listaSucursales = document.getElementById('lista-sucursales');
         const tablaSucursalesVacia = document.getElementById('tabla-sucursales-vacia');
         const totalSucursales = document.getElementById('total-sucursales');
         const resumenSucursales = document.getElementById('resumen-sucursales');
+        const sucursalesModal = document.getElementById('modal-sucursal');
+        const sucursalesConfirmacionModal = document.getElementById('modal-confirmar-eliminacion-sucursal');
+        const sucursalesPorPaginaSelect = document.getElementById('sucursales-por-pagina');
+        const sucursalesPaginacionResumen = document.getElementById('sucursales-paginacion-resumen');
+        const sucursalesPaginacionControles = document.getElementById('sucursales-paginacion-controles');
+        const sucursalesBusqueda = document.getElementById('sucursales-busqueda');
+        const sucursalesFiltroEstado = document.getElementById('sucursales-filtro-estado');
+        const sucursalesError = document.getElementById('sucursales-error');
+        const errorFormularioSucursal = document.getElementById('error-formulario-sucursal');
+        const toastSucursales = document.getElementById('toast-sucursales');
+        const claveSucursalesPorPagina = 'privateStorage.sucursales.porPagina';
+        const opcionesSucursalesPorPagina = [5, 10, 20, 30];
+        let paginaSucursalesActual = 1;
+        let sucursalesPorPagina = 10;
+        let productosPorSucursal = new Map();
+        let elementoEnfoqueSucursalAnterior = null;
+        let resolverConfirmacionSucursal = null;
+        let temporizadorToastSucursales;
         const botonTema = document.getElementById('boton-tema');
         const botonCerrarSesion = document.getElementById('boton-cerrar-sesion');
         let sucursales = [];
@@ -302,62 +892,289 @@
 
                 if (datos.success === true) {
                     gerentes = Array.isArray(datos.gerentes) ? datos.gerentes : [];
+                    gerentesError.hidden = true;
                     renderizarGerentes();
-                    return;
+                    renderizarSucursales();
+                    return true;
                 }
 
-                alert(datos.message || 'No se pudieron cargar los gerentes.');
+                console.error('No se pudieron cargar los gerentes:', datos.message);
+                gerentesError.textContent = datos.message || 'No se pudieron cargar los gerentes.';
+                gerentesError.hidden = false;
+                tablaVacia.classList.add('oculto');
             } catch (error) {
-                alert('No se pudo comunicar con el servidor. Intenta nuevamente.');
+                console.error('No se pudo comunicar con el servidor al cargar gerentes:', error);
+                gerentesError.textContent = 'No se pudieron cargar los gerentes. Revisa tu conexión e intenta nuevamente.';
+                gerentesError.hidden = false;
+                tablaVacia.classList.add('oculto');
             }
+            return false;
+        };
+
+        const leerGerentesPorPagina = () => {
+            try {
+                const guardado = Number(localStorage.getItem(claveGerentesPorPagina));
+                return opcionesGerentesPorPagina.includes(guardado) ? guardado : 10;
+            } catch (error) {
+                console.warn('No se pudo leer la preferencia de paginación de gerentes:', error);
+                return 10;
+            }
+        };
+
+        const guardarGerentesPorPagina = cantidad => {
+            try {
+                localStorage.setItem(claveGerentesPorPagina, String(cantidad));
+            } catch (error) {
+                console.warn('No se pudo guardar la preferencia de paginación de gerentes:', error);
+            }
+        };
+
+        const filtrarGerentes = () => {
+            const busqueda = gerentesBusqueda.value.trim().toLocaleLowerCase('es-MX');
+            const estado = gerentesFiltroEstado.value;
+            return gerentes.filter(gerente => {
+                const coincideTexto = !busqueda
+                    || `${gerente.nombre ?? ''} ${gerente.usuario ?? ''}`.toLocaleLowerCase('es-MX').includes(busqueda);
+                return coincideTexto && (!estado || String(Number(gerente.activo)) === estado);
+            });
+        };
+
+        const paginasGerentesVisibles = (pagina, totalPaginas) => {
+            if (totalPaginas <= 7) {
+                return Array.from({ length: totalPaginas }, (_, indice) => indice + 1);
+            }
+            const visibles = new Set([1, totalPaginas]);
+            for (let numero = Math.max(2, pagina - 1); numero <= Math.min(totalPaginas - 1, pagina + 1); numero += 1) {
+                visibles.add(numero);
+            }
+            const resultado = [];
+            let anterior = 0;
+            for (const numero of [...visibles].sort((a, b) => a - b)) {
+                if (numero - anterior === 2) resultado.push(numero - 1);
+                else if (numero - anterior > 2) resultado.push('…');
+                resultado.push(numero);
+                anterior = numero;
+            }
+            return resultado;
+        };
+
+        const renderizarPaginacionGerentes = total => {
+            if (total === 0) {
+                gerentesPaginacionResumen.textContent = 'No hay gerentes que mostrar';
+                gerentesPaginacionControles.hidden = true;
+                gerentesPaginacionControles.replaceChildren();
+                return;
+            }
+            const totalPaginas = Math.ceil(total / gerentesPorPagina);
+            paginaGerentesActual = Math.min(Math.max(1, paginaGerentesActual), totalPaginas);
+            const inicio = (paginaGerentesActual - 1) * gerentesPorPagina + 1;
+            const fin = Math.min(paginaGerentesActual * gerentesPorPagina, total);
+            gerentesPaginacionResumen.textContent = `Mostrando ${inicio}-${fin} de ${total} gerentes`;
+            gerentesPaginacionControles.hidden = false;
+            gerentesPaginacionControles.innerHTML = `
+                <button class="paginacion-boton" type="button" data-paginacion-gerente="anterior"
+                    aria-label="Página anterior" ${paginaGerentesActual === 1 ? 'disabled' : ''}>Anterior</button>
+                ${paginasGerentesVisibles(paginaGerentesActual, totalPaginas).map(numero => Number.isInteger(numero)
+                    ? `<button class="paginacion-boton${numero === paginaGerentesActual ? ' activa' : ''}" type="button"
+                        data-pagina-gerente="${numero}" aria-label="Página ${numero}" ${numero === paginaGerentesActual ? 'aria-current="page" disabled' : ''}>${numero}</button>`
+                    : '<span class="paginacion-elipsis" aria-hidden="true">…</span>'
+                ).join('')}
+                <button class="paginacion-boton" type="button" data-paginacion-gerente="siguiente"
+                    aria-label="Página siguiente" ${paginaGerentesActual === totalPaginas ? 'disabled' : ''}>Siguiente</button>
+            `;
+        };
+
+        const abrirModalGerente = (modal, activador, elementoInicial) => {
+            elementoEnfoqueGerenteAnterior = activador instanceof HTMLElement ? activador : document.activeElement;
+            modal.hidden = false;
+            document.body.classList.add('inventario-modal-abierto');
+            elementoInicial?.focus();
+        };
+
+        const cerrarModalGerente = (modal, devolverFoco = true) => {
+            modal.hidden = true;
+            if (gerentesModal.hidden && gerentesConfirmacionModal.hidden) {
+                document.body.classList.remove('inventario-modal-abierto');
+            }
+            if (devolverFoco && elementoEnfoqueGerenteAnterior?.isConnected) {
+                elementoEnfoqueGerenteAnterior.focus();
+            }
+            elementoEnfoqueGerenteAnterior = null;
+        };
+
+        const mostrarToastGerentes = (mensaje, error = false) => {
+            window.clearTimeout(temporizadorToastGerentes);
+            toastGerentes.textContent = mensaje;
+            toastGerentes.classList.toggle('gerentes-toast-error', error);
+            toastGerentes.hidden = false;
+            temporizadorToastGerentes = window.setTimeout(() => {
+                toastGerentes.hidden = true;
+            }, 4000);
         };
 
         const limpiarFormulario = () => {
             formularioGerente.reset();
             document.getElementById('gerente-id').value = '';
-            document.getElementById('gerente-password').required = true;
-            document.getElementById('gerente-password').placeholder = '';
+            gerentePassword.required = true;
+            gerentePassword.placeholder = '';
+            gerentePassword.type = 'password';
+            gerentePasswordAyuda.hidden = true;
+            document.getElementById('boton-ver-password-gerente').setAttribute('aria-label', 'Mostrar contraseña');
+            document.getElementById('boton-ver-password-gerente').setAttribute('aria-pressed', 'false');
+            document.querySelector('#boton-ver-password-gerente i').className = 'fa-solid fa-eye';
             document.getElementById('gerente-activo').value = '1';
+            errorFormularioGerente.textContent = '';
+            errorFormularioGerente.hidden = true;
             formularioGerente.classList.add('oculto');
+            cerrarModalGerente(gerentesModal);
         };
 
-        const mostrarFormulario = (gerente = null) => {
+        const mostrarFormulario = (gerente = null, activador = document.activeElement) => {
+            errorFormularioGerente.textContent = '';
+            errorFormularioGerente.hidden = true;
+            document.getElementById('titulo-modal-gerente').textContent = gerente ? 'Editar gerente' : 'Agregar gerente';
             formularioGerente.classList.remove('oculto');
             document.getElementById('gerente-id').value = gerente ? gerente.id : '';
             document.getElementById('gerente-nombre').value = gerente ? gerente.nombre : '';
             document.getElementById('gerente-usuario').value = gerente ? gerente.usuario : '';
-            document.getElementById('gerente-password').value = '';
-            document.getElementById('gerente-password').required = !gerente;
-            document.getElementById('gerente-password').placeholder = gerente
-                ? 'Dejar vacío para conservar la contraseña actual'
-                : '';
+            gerentePassword.value = '';
+            gerentePassword.type = 'password';
+            gerentePassword.required = !gerente;
+            gerentePassword.placeholder = gerente ? 'Déjalo vacío para conservar la actual' : '';
+            gerentePasswordAyuda.hidden = !gerente;
+            document.getElementById('boton-ver-password-gerente').setAttribute('aria-label', 'Mostrar contraseña');
+            document.getElementById('boton-ver-password-gerente').setAttribute('aria-pressed', 'false');
+            document.querySelector('#boton-ver-password-gerente i').className = 'fa-solid fa-eye';
             actualizarSelectSucursales(gerente ? gerente.sucursal_id : '');
             document.getElementById('gerente-sucursal').value = gerente ? String(gerente.sucursal_id) : '';
             document.getElementById('gerente-activo').value = gerente ? String(gerente.activo) : '1';
-            document.getElementById('gerente-nombre').focus();
+            abrirModalGerente(gerentesModal, activador, document.getElementById('gerente-nombre'));
         };
 
         const renderizarGerentes = () => {
-            listaGerentes.innerHTML = gerentes.map(gerente => `
+            const gerentesFiltrados = filtrarGerentes();
+            const inicio = (paginaGerentesActual - 1) * gerentesPorPagina;
+            const gerentesVisibles = gerentesFiltrados.slice(inicio, inicio + gerentesPorPagina);
+            listaGerentes.innerHTML = gerentesVisibles.map(gerente => `
                 <tr>
-                    <td><strong>${escaparHtml(gerente.nombre)}</strong></td>
-                    <td>${escaparHtml(gerente.usuario)}</td>
-                    <td>${escaparHtml(gerente.sucursal || 'Sin sucursal')}</td>
-                    <td><span class="${Number(gerente.activo) === 1 ? 'estado-activo' : 'estado-inactivo'}">${Number(gerente.activo) === 1 ? 'Activo' : 'Inactivo'}</span></td>
-                    <td class="acciones-tabla">
-                        <button class="boton-icono" type="button" data-accion="editar" data-id="${gerente.id}" title="Editar gerente" aria-label="Editar gerente"><i class="fa-solid fa-pen"></i></button>
-                        <button class="boton-icono boton-eliminar" type="button" data-accion="desactivar" data-id="${gerente.id}" title="Desactivar gerente" aria-label="Desactivar gerente"><i class="fa-solid fa-trash"></i></button>
+                    <td class="gerente-col-nombre" title="${escaparHtml(gerente.nombre)}">
+                        <span class="gerente-avatar" aria-hidden="true">${escaparHtml(String(gerente.nombre ?? '').trim().charAt(0).toLocaleUpperCase('es-MX') || '?')}</span>
+                        <strong>${escaparHtml(gerente.nombre)}</strong>
+                    </td>
+                    <td class="gerente-col-usuario" title="${escaparHtml(gerente.usuario)}">${escaparHtml(gerente.usuario)}</td>
+                    <td class="gerente-col-sucursal" title="${escaparHtml(gerente.sucursal || 'Sin sucursal')}">${escaparHtml(gerente.sucursal || 'Sin sucursal')}</td>
+                    <td class="gerente-col-estado"><span class="${Number(gerente.activo) === 1 ? 'estado-activo' : 'estado-inactivo'}">${Number(gerente.activo) === 1 ? 'Activo' : 'Inactivo'}</span></td>
+                    <td class="acciones-tabla gerente-col-acciones">
+                        <button class="boton-icono" type="button" data-accion="editar" data-id="${Number(gerente.id)}" title="Editar" aria-label="Editar"><i class="fa-solid fa-pen" aria-hidden="true"></i></button>
+                        <button class="boton-icono boton-eliminar" type="button" data-accion="desactivar" data-id="${Number(gerente.id)}" title="Desactivar" aria-label="Desactivar"><i class="fa-solid fa-user-slash" aria-hidden="true"></i></button>
                     </td>
                 </tr>
             `).join('');
-            tablaVacia.classList.toggle('oculto', gerentes.length > 0);
+            tablaVacia.textContent = gerentes.length === 0
+                ? 'Aún no hay gerentes registrados'
+                : 'No hay gerentes que coincidan con la búsqueda';
+            tablaVacia.classList.toggle('oculto', gerentesFiltrados.length > 0 || !gerentesError.hidden);
             totalGerentes.textContent = gerentes.length;
             const gerentesActivos = gerentes.filter(gerente => Number(gerente.activo) === 1).length;
             resumenGerentes.textContent = `${gerentesActivos} ${gerentesActivos === 1 ? 'activo' : 'activos'}`;
+            document.getElementById('resumen-gerentes-total').textContent = gerentes.length;
+            document.getElementById('resumen-gerentes-activos').textContent = gerentesActivos;
+            document.getElementById('resumen-gerentes-inactivos').textContent = gerentes.length - gerentesActivos;
+            renderizarPaginacionGerentes(gerentesFiltrados.length);
         };
 
-        document.getElementById('boton-nuevo-gerente').addEventListener('click', () => mostrarFormulario());
+        gerentesPorPagina = leerGerentesPorPagina();
+        gerentesPorPaginaSelect.value = String(gerentesPorPagina);
+        document.getElementById('boton-nuevo-gerente').addEventListener('click', evento => mostrarFormulario(null, evento.currentTarget));
         document.getElementById('boton-cancelar-gerente').addEventListener('click', limpiarFormulario);
+        document.getElementById('boton-cerrar-modal-gerente').addEventListener('click', limpiarFormulario);
+        document.getElementById('boton-ver-password-gerente').addEventListener('click', evento => {
+            const mostrarPassword = gerentePassword.type === 'password';
+            gerentePassword.type = mostrarPassword ? 'text' : 'password';
+            evento.currentTarget.setAttribute('aria-label', mostrarPassword ? 'Ocultar contraseña' : 'Mostrar contraseña');
+            evento.currentTarget.setAttribute('aria-pressed', String(mostrarPassword));
+            evento.currentTarget.querySelector('i').className = `fa-solid fa-eye${mostrarPassword ? '-slash' : ''}`;
+            gerentePassword.focus();
+        });
+        gerentesBusqueda.addEventListener('input', () => {
+            paginaGerentesActual = 1;
+            renderizarGerentes();
+        });
+        gerentesFiltroEstado.addEventListener('change', () => {
+            paginaGerentesActual = 1;
+            renderizarGerentes();
+        });
+        gerentesPorPaginaSelect.addEventListener('change', () => {
+            const nuevoTamanio = Number(gerentesPorPaginaSelect.value);
+            if (!opcionesGerentesPorPagina.includes(nuevoTamanio)) return;
+            gerentesPorPagina = nuevoTamanio;
+            paginaGerentesActual = 1;
+            guardarGerentesPorPagina(nuevoTamanio);
+            renderizarGerentes();
+        });
+        gerentesPaginacionControles.addEventListener('click', evento => {
+            const boton = evento.target.closest('button');
+            if (!boton || boton.disabled) return;
+            if (boton.dataset.paginacionGerente === 'anterior') paginaGerentesActual -= 1;
+            else if (boton.dataset.paginacionGerente === 'siguiente') paginaGerentesActual += 1;
+            else if (boton.dataset.paginaGerente) paginaGerentesActual = Number(boton.dataset.paginaGerente);
+            renderizarGerentes();
+        });
+
+        const confirmarDesactivacionGerente = gerente => new Promise(resolve => {
+            resolverConfirmacionGerente = resolve;
+            document.getElementById('nombre-confirmacion-gerente').textContent = gerente.nombre;
+            abrirModalGerente(
+                gerentesConfirmacionModal,
+                document.activeElement,
+                document.getElementById('boton-cancelar-desactivacion-gerente')
+            );
+        });
+
+        const cerrarConfirmacionDesactivacionGerente = confirmado => {
+            const resolver = resolverConfirmacionGerente;
+            resolverConfirmacionGerente = null;
+            cerrarModalGerente(gerentesConfirmacionModal);
+            resolver?.(confirmado);
+        };
+
+        document.getElementById('boton-cerrar-confirmacion-gerente').addEventListener('click', () => cerrarConfirmacionDesactivacionGerente(false));
+        document.getElementById('boton-cancelar-desactivacion-gerente').addEventListener('click', () => cerrarConfirmacionDesactivacionGerente(false));
+        document.getElementById('boton-confirmar-desactivacion-gerente').addEventListener('click', () => cerrarConfirmacionDesactivacionGerente(true));
+        gerentesModal.addEventListener('click', evento => {
+            if (evento.target === gerentesModal) limpiarFormulario();
+        });
+        gerentesConfirmacionModal.addEventListener('click', evento => {
+            if (evento.target === gerentesConfirmacionModal) cerrarConfirmacionDesactivacionGerente(false);
+        });
+        document.addEventListener('keydown', evento => {
+            const modalActivo = !gerentesModal.hidden
+                ? gerentesModal
+                : !gerentesConfirmacionModal.hidden ? gerentesConfirmacionModal : null;
+            if (!modalActivo) return;
+            if (evento.key === 'Escape') {
+                evento.preventDefault();
+                if (modalActivo === gerentesModal) limpiarFormulario();
+                else cerrarConfirmacionDesactivacionGerente(false);
+                return;
+            }
+            if (evento.key !== 'Tab') return;
+            const elementosEnfocables = [...modalActivo.querySelectorAll(
+                'button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            )].filter(elemento => elemento.getClientRects().length > 0);
+            const primero = elementosEnfocables[0];
+            const ultimo = elementosEnfocables[elementosEnfocables.length - 1];
+            if (!elementosEnfocables.includes(document.activeElement)) {
+                evento.preventDefault();
+                primero?.focus();
+            } else if (evento.shiftKey && document.activeElement === primero) {
+                evento.preventDefault();
+                ultimo?.focus();
+            } else if (!evento.shiftKey && document.activeElement === ultimo) {
+                evento.preventDefault();
+                primero.focus();
+            }
+        });
 
         formularioGerente.addEventListener('submit', async evento => {
             evento.preventDefault();
@@ -383,13 +1200,22 @@
 
                 if (datos.success === true) {
                     limpiarFormulario();
-                    await cargarGerentes();
+                    const listadoActualizado = await cargarGerentes();
+                    mostrarToastGerentes(
+                        listadoActualizado
+                            ? 'Gerente guardado correctamente'
+                            : 'Gerente guardado, pero no se pudo actualizar el listado.',
+                        !listadoActualizado
+                    );
                     return;
                 }
 
-                alert(datos.message || 'No se pudo guardar el gerente.');
+                errorFormularioGerente.textContent = datos.message || 'No se pudo guardar el gerente.';
+                errorFormularioGerente.hidden = false;
             } catch (error) {
-                alert('No se pudo comunicar con el servidor. Intenta nuevamente.');
+                console.error('No se pudo guardar el gerente:', error);
+                errorFormularioGerente.textContent = 'No se pudo comunicar con el servidor. Intenta nuevamente.';
+                errorFormularioGerente.hidden = false;
             }
         });
 
@@ -397,15 +1223,14 @@
             const boton = evento.target.closest('button[data-accion]');
             if (!boton) return;
             const id = Number(boton.dataset.id);
-            const gerente = gerentes.find(item => item.id === id);
-            if (boton.dataset.accion === 'editar') {
-                mostrarFormulario(gerente);
+            const gerente = gerentes.find(item => Number(item.id) === id);
+            if (boton.dataset.accion === 'editar' && gerente) {
+                mostrarFormulario(gerente, boton);
                 return;
             }
 
-            if (boton.dataset.accion !== 'desactivar' || !gerente || !confirm(`¿Desactivar a ${gerente.nombre}?`)) {
-                return;
-            }
+            if (boton.dataset.accion !== 'desactivar' || !gerente) return;
+            if (!await confirmarDesactivacionGerente(gerente)) return;
 
             try {
                 const respuesta = await fetch('../../api/gerentes/eliminar.php', {
@@ -418,13 +1243,21 @@
                 const datos = await respuesta.json();
 
                 if (datos.success === true) {
-                    await cargarGerentes();
+                    const listadoActualizado = await cargarGerentes();
+                    document.getElementById('boton-nuevo-gerente').focus();
+                    mostrarToastGerentes(
+                        listadoActualizado
+                            ? 'Gerente desactivado correctamente'
+                            : 'Gerente desactivado, pero no se pudo actualizar el listado.',
+                        !listadoActualizado
+                    );
                     return;
                 }
 
-                alert(datos.message || 'No se pudo desactivar el gerente.');
+                mostrarToastGerentes(datos.message || 'No se pudo desactivar el gerente.', true);
             } catch (error) {
-                alert('No se pudo comunicar con el servidor. Intenta nuevamente.');
+                console.error('No se pudo desactivar el gerente:', error);
+                mostrarToastGerentes('No se pudo comunicar con el servidor. Intenta nuevamente.', true);
             }
         });
 
@@ -443,59 +1276,297 @@
 
                 if (datos.success === true) {
                     sucursales = Array.isArray(datos.sucursales) ? datos.sucursales : [];
+                    sucursalesError.hidden = true;
                     renderizarSucursales();
                     actualizarSelectSucursales();
-                    return;
+                    return true;
                 }
 
-                alert(datos.message || 'No se pudieron cargar las sucursales.');
+                console.error('No se pudieron cargar las sucursales:', datos.message);
+                sucursalesError.textContent = datos.message || 'No se pudieron cargar las sucursales.';
+                sucursalesError.hidden = false;
+                tablaSucursalesVacia.classList.add('oculto');
             } catch (error) {
-                alert('No se pudo comunicar con el servidor. Intenta nuevamente.');
+                console.error('No se pudo comunicar con el servidor al cargar sucursales:', error);
+                sucursalesError.textContent = 'No se pudieron cargar las sucursales. Revisa tu conexión e intenta nuevamente.';
+                sucursalesError.hidden = false;
+                tablaSucursalesVacia.classList.add('oculto');
             }
+            return false;
+        };
+
+        const cargarConteosProductosSucursal = async () => {
+            try {
+                const respuesta = await fetch('../../api/admin/inventario.php');
+                const datos = await respuesta.json();
+                if (datos.success !== true || !Array.isArray(datos.productos)) {
+                    throw new Error(datos.message || 'La respuesta del inventario no contiene productos.');
+                }
+
+                const productosAgrupados = new Map();
+                datos.productos.forEach(producto => {
+                    if (producto.sucursal_id === null || producto.sucursal_id === undefined) return;
+                    const sucursalId = String(producto.sucursal_id);
+                    if (!productosAgrupados.has(sucursalId)) productosAgrupados.set(sucursalId, new Set());
+                    productosAgrupados.get(sucursalId).add(String(producto.id));
+                });
+                productosPorSucursal = new Map(
+                    [...productosAgrupados].map(([id, productos]) => [id, productos.size])
+                );
+            } catch (error) {
+                console.warn('No se pudo calcular el número de productos por sucursal:', error);
+                productosPorSucursal = new Map();
+            }
+            renderizarSucursales();
+        };
+
+        const leerSucursalesPorPagina = () => {
+            try {
+                const guardado = Number(localStorage.getItem(claveSucursalesPorPagina));
+                return opcionesSucursalesPorPagina.includes(guardado) ? guardado : 10;
+            } catch (error) {
+                console.warn('No se pudo leer la preferencia de paginación de sucursales:', error);
+                return 10;
+            }
+        };
+
+        const guardarSucursalesPorPagina = cantidad => {
+            try {
+                localStorage.setItem(claveSucursalesPorPagina, String(cantidad));
+            } catch (error) {
+                console.warn('No se pudo guardar la preferencia de paginación de sucursales:', error);
+            }
+        };
+
+        const filtrarSucursales = () => {
+            const busqueda = sucursalesBusqueda.value.trim().toLocaleLowerCase('es-MX');
+            const estado = sucursalesFiltroEstado.value;
+            return sucursales.filter(sucursal => {
+                const coincideTexto = !busqueda
+                    || `${sucursal.nombre ?? ''} ${sucursal.direccion ?? ''}`.toLocaleLowerCase('es-MX').includes(busqueda);
+                return coincideTexto && (!estado || sucursal.estado === estado);
+            });
+        };
+
+        const paginasSucursalesVisibles = (pagina, totalPaginas) => {
+            if (totalPaginas <= 7) {
+                return Array.from({ length: totalPaginas }, (_, indice) => indice + 1);
+            }
+            const visibles = new Set([1, totalPaginas]);
+            for (let numero = Math.max(2, pagina - 1); numero <= Math.min(totalPaginas - 1, pagina + 1); numero += 1) {
+                visibles.add(numero);
+            }
+            const resultado = [];
+            let anterior = 0;
+            for (const numero of [...visibles].sort((a, b) => a - b)) {
+                if (numero - anterior === 2) resultado.push(numero - 1);
+                else if (numero - anterior > 2) resultado.push('…');
+                resultado.push(numero);
+                anterior = numero;
+            }
+            return resultado;
+        };
+
+        const renderizarPaginacionSucursales = total => {
+            if (total === 0) {
+                sucursalesPaginacionResumen.textContent = 'No hay sucursales que mostrar';
+                sucursalesPaginacionControles.hidden = true;
+                sucursalesPaginacionControles.replaceChildren();
+                return;
+            }
+            const totalPaginas = Math.ceil(total / sucursalesPorPagina);
+            paginaSucursalesActual = Math.min(Math.max(1, paginaSucursalesActual), totalPaginas);
+            const inicio = (paginaSucursalesActual - 1) * sucursalesPorPagina + 1;
+            const fin = Math.min(paginaSucursalesActual * sucursalesPorPagina, total);
+            sucursalesPaginacionResumen.textContent = `Mostrando ${inicio}-${fin} de ${total} sucursales`;
+            sucursalesPaginacionControles.hidden = false;
+            sucursalesPaginacionControles.innerHTML = `
+                <button class="paginacion-boton" type="button" data-paginacion-sucursal="anterior"
+                    aria-label="Página anterior" ${paginaSucursalesActual === 1 ? 'disabled' : ''}>Anterior</button>
+                ${paginasSucursalesVisibles(paginaSucursalesActual, totalPaginas).map(numero => Number.isInteger(numero)
+                    ? `<button class="paginacion-boton${numero === paginaSucursalesActual ? ' activa' : ''}" type="button"
+                        data-pagina-sucursal="${numero}" aria-label="Página ${numero}" ${numero === paginaSucursalesActual ? 'aria-current="page" disabled' : ''}>${numero}</button>`
+                    : '<span class="paginacion-elipsis" aria-hidden="true">…</span>'
+                ).join('')}
+                <button class="paginacion-boton" type="button" data-paginacion-sucursal="siguiente"
+                    aria-label="Página siguiente" ${paginaSucursalesActual === totalPaginas ? 'disabled' : ''}>Siguiente</button>
+            `;
+        };
+
+        const abrirModalSucursal = (modal, activador, elementoInicial) => {
+            elementoEnfoqueSucursalAnterior = activador instanceof HTMLElement ? activador : document.activeElement;
+            modal.hidden = false;
+            document.body.classList.add('inventario-modal-abierto');
+            elementoInicial?.focus();
+        };
+
+        const cerrarModalSucursal = (modal, devolverFoco = true) => {
+            modal.hidden = true;
+            if (sucursalesModal.hidden && sucursalesConfirmacionModal.hidden) {
+                document.body.classList.remove('inventario-modal-abierto');
+            }
+            if (devolverFoco && elementoEnfoqueSucursalAnterior?.isConnected) {
+                elementoEnfoqueSucursalAnterior.focus();
+            }
+            elementoEnfoqueSucursalAnterior = null;
+        };
+
+        const mostrarToastSucursales = (mensaje, error = false) => {
+            window.clearTimeout(temporizadorToastSucursales);
+            toastSucursales.textContent = mensaje;
+            toastSucursales.classList.toggle('sucursales-toast-error', error);
+            toastSucursales.hidden = false;
+            temporizadorToastSucursales = window.setTimeout(() => {
+                toastSucursales.hidden = true;
+            }, 4000);
         };
 
         const limpiarFormularioSucursal = () => {
             formularioSucursal.reset();
             document.getElementById('sucursal-id').value = '';
             document.getElementById('sucursal-estado').value = 'activa';
+            errorFormularioSucursal.textContent = '';
+            errorFormularioSucursal.hidden = true;
             formularioSucursal.classList.add('oculto');
+            cerrarModalSucursal(sucursalesModal);
         };
 
-        const mostrarFormularioSucursal = (sucursal = null) => {
+        const mostrarFormularioSucursal = (sucursal = null, activador = document.activeElement) => {
+            errorFormularioSucursal.textContent = '';
+            errorFormularioSucursal.hidden = true;
+            document.getElementById('titulo-modal-sucursal').textContent = sucursal ? 'Editar sucursal' : 'Agregar sucursal';
             formularioSucursal.classList.remove('oculto');
             document.getElementById('sucursal-id').value = sucursal ? sucursal.id : '';
             document.getElementById('sucursal-nombre').value = sucursal ? sucursal.nombre : '';
             document.getElementById('sucursal-direccion').value = sucursal ? sucursal.direccion : '';
             document.getElementById('sucursal-telefono').value = sucursal ? sucursal.telefono : '';
             document.getElementById('sucursal-estado').value = sucursal ? sucursal.estado : 'activa';
-            document.getElementById('sucursal-nombre').focus();
+            abrirModalSucursal(sucursalesModal, activador, document.getElementById('sucursal-nombre'));
         };
 
         const renderizarSucursales = () => {
-            listaSucursales.innerHTML = sucursales.map(sucursal => {
+            const sucursalesFiltradas = filtrarSucursales();
+            const inicio = (paginaSucursalesActual - 1) * sucursalesPorPagina;
+            const sucursalesVisibles = sucursalesFiltradas.slice(inicio, inicio + sucursalesPorPagina);
+            listaSucursales.innerHTML = sucursalesVisibles.map(sucursal => {
                 const id = Number(sucursal.id);
                 const estadoActiva = sucursal.estado === 'activa';
+                const nombresGerentes = gerentes
+                    .filter(gerente => String(gerente.sucursal_id) === String(id) && Number(gerente.activo) === 1)
+                    .map(gerente => gerente.nombre);
+                const gerenteAsignado = nombresGerentes.join(', ') || 'Sin asignar';
                 return `
                     <tr>
-                        <td><strong>${escaparHtml(sucursal.nombre)}</strong></td>
-                        <td>${escaparHtml(sucursal.direccion)}</td>
-                        <td>${escaparHtml(sucursal.telefono)}</td>
-                        <td><span class="${estadoActiva ? 'estado-activo' : 'estado-inactivo'}">${estadoActiva ? 'Activa' : 'Inactiva'}</span></td>
-                        <td class="acciones-tabla">
-                            <button class="boton-icono" type="button" data-accion-sucursal="editar" data-id="${id}" title="Editar sucursal" aria-label="Editar sucursal"><i class="fa-solid fa-pen"></i></button>
-                            <button class="boton-icono boton-eliminar" type="button" data-accion-sucursal="eliminar" data-id="${id}" title="Eliminar sucursal" aria-label="Eliminar sucursal"><i class="fa-solid fa-trash"></i></button>
+                        <td class="sucursal-col-nombre" title="${escaparHtml(sucursal.nombre)}"><strong>${escaparHtml(sucursal.nombre)}</strong></td>
+                        <td class="sucursal-col-direccion" title="${escaparHtml(sucursal.direccion)}">${escaparHtml(sucursal.direccion)}</td>
+                        <td class="sucursal-col-gerente" title="${escaparHtml(gerenteAsignado)}">${escaparHtml(gerenteAsignado)}</td>
+                        <td class="sucursal-col-productos">${productosPorSucursal.has(String(id)) ? productosPorSucursal.get(String(id)) : '—'}</td>
+                        <td class="sucursal-col-telefono">${escaparHtml(sucursal.telefono)}</td>
+                        <td class="sucursal-col-estado"><span class="${estadoActiva ? 'estado-activo' : 'estado-inactivo'}">${estadoActiva ? 'Activa' : 'Inactiva'}</span></td>
+                        <td class="acciones-tabla sucursal-col-acciones">
+                            <button class="boton-icono" type="button" data-accion-sucursal="editar" data-id="${id}" title="Editar" aria-label="Editar"><i class="fa-solid fa-pen" aria-hidden="true"></i></button>
+                            <button class="boton-icono boton-eliminar" type="button" data-accion-sucursal="eliminar" data-id="${id}" title="Eliminar" aria-label="Eliminar"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>
                         </td>
                     </tr>
                 `;
             }).join('');
-            tablaSucursalesVacia.classList.toggle('oculto', sucursales.length > 0);
+            tablaSucursalesVacia.textContent = sucursales.length === 0
+                ? 'Aún no hay sucursales registradas'
+                : 'No hay sucursales que coincidan con la búsqueda';
+            tablaSucursalesVacia.classList.toggle('oculto', sucursalesFiltradas.length > 0 || !sucursalesError.hidden);
             totalSucursales.textContent = sucursales.length;
             const sucursalesActivas = sucursales.filter(sucursal => sucursal.estado === 'activa').length;
             resumenSucursales.textContent = `${sucursalesActivas} ${sucursalesActivas === 1 ? 'activa' : 'activas'}`;
+            document.getElementById('resumen-sucursales-total').textContent = sucursales.length;
+            document.getElementById('resumen-sucursales-activas').textContent = sucursalesActivas;
+            document.getElementById('resumen-sucursales-inactivas').textContent = sucursales.length - sucursalesActivas;
+            renderizarPaginacionSucursales(sucursalesFiltradas.length);
         };
 
-        document.getElementById('boton-nueva-sucursal').addEventListener('click', () => mostrarFormularioSucursal());
+        sucursalesPorPagina = leerSucursalesPorPagina();
+        sucursalesPorPaginaSelect.value = String(sucursalesPorPagina);
+        document.getElementById('boton-nueva-sucursal').addEventListener('click', evento => mostrarFormularioSucursal(null, evento.currentTarget));
         document.getElementById('boton-cancelar-sucursal').addEventListener('click', limpiarFormularioSucursal);
+        document.getElementById('boton-cerrar-modal-sucursal').addEventListener('click', limpiarFormularioSucursal);
+        sucursalesBusqueda.addEventListener('input', () => {
+            paginaSucursalesActual = 1;
+            renderizarSucursales();
+        });
+        sucursalesFiltroEstado.addEventListener('change', () => {
+            paginaSucursalesActual = 1;
+            renderizarSucursales();
+        });
+        sucursalesPorPaginaSelect.addEventListener('change', () => {
+            const nuevoTamanio = Number(sucursalesPorPaginaSelect.value);
+            if (!opcionesSucursalesPorPagina.includes(nuevoTamanio)) return;
+            sucursalesPorPagina = nuevoTamanio;
+            paginaSucursalesActual = 1;
+            guardarSucursalesPorPagina(nuevoTamanio);
+            renderizarSucursales();
+        });
+        sucursalesPaginacionControles.addEventListener('click', evento => {
+            const boton = evento.target.closest('button');
+            if (!boton || boton.disabled) return;
+            if (boton.dataset.paginacionSucursal === 'anterior') paginaSucursalesActual -= 1;
+            else if (boton.dataset.paginacionSucursal === 'siguiente') paginaSucursalesActual += 1;
+            else if (boton.dataset.paginaSucursal) paginaSucursalesActual = Number(boton.dataset.paginaSucursal);
+            renderizarSucursales();
+        });
+
+        const confirmarEliminacionSucursal = sucursal => new Promise(resolve => {
+            resolverConfirmacionSucursal = resolve;
+            document.getElementById('nombre-confirmacion-sucursal').textContent = sucursal.nombre;
+            abrirModalSucursal(
+                sucursalesConfirmacionModal,
+                document.activeElement,
+                document.getElementById('boton-cancelar-eliminacion-sucursal')
+            );
+        });
+
+        const cerrarConfirmacionEliminacionSucursal = confirmado => {
+            const resolver = resolverConfirmacionSucursal;
+            resolverConfirmacionSucursal = null;
+            cerrarModalSucursal(sucursalesConfirmacionModal);
+            resolver?.(confirmado);
+        };
+
+        document.getElementById('boton-cerrar-confirmacion-sucursal').addEventListener('click', () => cerrarConfirmacionEliminacionSucursal(false));
+        document.getElementById('boton-cancelar-eliminacion-sucursal').addEventListener('click', () => cerrarConfirmacionEliminacionSucursal(false));
+        document.getElementById('boton-confirmar-eliminacion-sucursal').addEventListener('click', () => cerrarConfirmacionEliminacionSucursal(true));
+        sucursalesModal.addEventListener('click', evento => {
+            if (evento.target === sucursalesModal) limpiarFormularioSucursal();
+        });
+        sucursalesConfirmacionModal.addEventListener('click', evento => {
+            if (evento.target === sucursalesConfirmacionModal) cerrarConfirmacionEliminacionSucursal(false);
+        });
+        document.addEventListener('keydown', evento => {
+            const modalActivo = !sucursalesModal.hidden
+                ? sucursalesModal
+                : !sucursalesConfirmacionModal.hidden ? sucursalesConfirmacionModal : null;
+            if (!modalActivo) return;
+            if (evento.key === 'Escape') {
+                evento.preventDefault();
+                if (modalActivo === sucursalesModal) limpiarFormularioSucursal();
+                else cerrarConfirmacionEliminacionSucursal(false);
+                return;
+            }
+            if (evento.key !== 'Tab') return;
+            const elementosEnfocables = [...modalActivo.querySelectorAll(
+                'button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            )].filter(elemento => elemento.getClientRects().length > 0);
+            const primero = elementosEnfocables[0];
+            const ultimo = elementosEnfocables[elementosEnfocables.length - 1];
+            if (!elementosEnfocables.includes(document.activeElement)) {
+                evento.preventDefault();
+                primero?.focus();
+            } else if (evento.shiftKey && document.activeElement === primero) {
+                evento.preventDefault();
+                ultimo?.focus();
+            } else if (!evento.shiftKey && document.activeElement === ultimo) {
+                evento.preventDefault();
+                primero?.focus();
+            }
+        });
 
         formularioSucursal.addEventListener('submit', async evento => {
             evento.preventDefault();
@@ -520,12 +1591,16 @@
                 if (datos.success === true) {
                     limpiarFormularioSucursal();
                     await cargarSucursales();
+                    mostrarToastSucursales('Sucursal guardada correctamente');
                     return;
                 }
 
-                alert(datos.message || 'No se pudo guardar la sucursal.');
+                errorFormularioSucursal.textContent = datos.message || 'No se pudo guardar la sucursal.';
+                errorFormularioSucursal.hidden = false;
             } catch (error) {
-                alert('No se pudo comunicar con el servidor. Intenta nuevamente.');
+                console.error('No se pudo guardar la sucursal:', error);
+                errorFormularioSucursal.textContent = 'No se pudo comunicar con el servidor. Intenta nuevamente.';
+                errorFormularioSucursal.hidden = false;
             }
         });
 
@@ -536,13 +1611,12 @@
             const sucursal = sucursales.find(item => Number(item.id) === id);
 
             if (boton.dataset.accionSucursal === 'editar' && sucursal) {
-                mostrarFormularioSucursal(sucursal);
+                mostrarFormularioSucursal(sucursal, boton);
                 return;
             }
 
-            if (boton.dataset.accionSucursal !== 'eliminar' || !sucursal || !confirm(`¿Eliminar ${sucursal.nombre}?`)) {
-                return;
-            }
+            if (boton.dataset.accionSucursal !== 'eliminar' || !sucursal) return;
+            if (!await confirmarEliminacionSucursal(sucursal)) return;
 
             try {
                 const respuesta = await fetch('../../api/sucursales/eliminar.php', {
@@ -556,22 +1630,29 @@
 
                 if (datos.success === true) {
                     await cargarSucursales();
+                    document.getElementById('boton-nueva-sucursal').focus();
+                    mostrarToastSucursales('Sucursal eliminada correctamente');
                     return;
                 }
 
-                alert(datos.message || 'No se pudo eliminar la sucursal.');
+                mostrarToastSucursales(datos.message || 'No se pudo eliminar la sucursal.', true);
             } catch (error) {
-                alert('No se pudo comunicar con el servidor. Intenta nuevamente.');
+                console.error('No se pudo eliminar la sucursal:', error);
+                mostrarToastSucursales('No se pudo comunicar con el servidor. Intenta nuevamente.', true);
             }
         });
 
         const inicializarDatos = async () => {
             await cargarSucursales();
             actualizarSelectSucursales();
-            await cargarGerentes();
+            await Promise.all([cargarGerentes(), cargarConteosProductosSucursal()]);
         };
 
         inicializarDatos();
     </script>
+    <script src="admin_dashboard.js" defer></script>
+    <script src="admin_inventario.js" defer></script>
+    <script src="admin_ventas.js" defer></script>
+    <script src="admin_visual.js" defer></script>
 </body>
 </html>
