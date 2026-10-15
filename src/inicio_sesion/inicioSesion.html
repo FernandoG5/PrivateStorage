@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de sesión</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="inicioSesion.css">
 </head>
 
@@ -24,13 +27,17 @@
 
             <div class="login-layout">
                 <div class="brand-panel">
+                    <div class="brand-panel-orb brand-panel-orb-one" aria-hidden="true"></div>
+                    <div class="brand-panel-orb brand-panel-orb-two" aria-hidden="true"></div>
                     <div class="brand-panel-content">
-                        <img class="login-logo" src="PrivateStorageLogo.png" alt="PrivateStorage">
+                        <img class="login-logo" src="../../recursos/LogoBlancoPS.png" alt="PrivateStorage">
                         <p class="brand-kicker">Sistema de gestión</p>
                         <h1>PrivateStorage</h1>
                         <p class="brand-description">Accede con tus credenciales para continuar.</p>
                     </div>
-                    <div class="brand-panel-line" aria-hidden="true"></div>
+                    <div class="brand-panel-line" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                    </div>
                 </div>
 
                 <div class="form-panel">
@@ -43,26 +50,54 @@
                     <form class="login-form" action="../../auth/login.php" method="post">
                         <div class="form-group">
                             <label class="form-label" for="numeroTrabajador">No. de trabajador</label>
-                            <input
-                                class="form-input"
-                                type="text"
-                                id="numeroTrabajador"
-                                name="usuario"
-                                placeholder="Ingresa tu número de trabajador"
-                                autocomplete="username"
-                            >
+                            <div class="input-shell">
+                                <svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="12" cy="8" r="4"></circle>
+                                    <path d="M5 21v-2a7 7 0 0 1 14 0v2"></path>
+                                </svg>
+                                <input
+                                    class="form-input"
+                                    type="text"
+                                    id="numeroTrabajador"
+                                    name="usuario"
+                                    placeholder="Ingresa tu número de trabajador"
+                                    autocomplete="username"
+                                >
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label" for="password">Contraseña</label>
-                            <input
-                                class="form-input"
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Ingresa tu contraseña"
-                                autocomplete="current-password"
-                            >
+                            <div class="input-shell">
+                                <svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="4" y="10" width="16" height="11" rx="2"></rect>
+                                    <path d="M8 10V7a4 4 0 1 1 8 0v3m-4 5v2"></path>
+                                </svg>
+                                <input
+                                    class="form-input"
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Ingresa tu contraseña"
+                                    autocomplete="current-password"
+                                >
+                                <button
+                                    class="password-toggle"
+                                    type="button"
+                                    aria-label="Mostrar contraseña"
+                                    aria-controls="password"
+                                    aria-pressed="false"
+                                >
+                                    <svg class="eye-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <svg class="eye-off-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"></path>
+                                        <path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a15.7 15.7 0 0 1-3.1 3.8M6.2 6.2C3.5 8 2 12 2 12s3.5 7 10 7a10.6 10.6 0 0 0 4.1-.8"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
 
                         <p class="login-message" role="alert" aria-live="polite"></p>
@@ -114,14 +149,35 @@
             mensajeLogin.textContent = '';
 
             try {
-                const respuesta = await fetch('../../auth/login.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: new URLSearchParams({ usuario, password })
-                });
-                const datos = await respuesta.json();
+                let respuesta;
+                try {
+                    respuesta = await fetch('../../auth/login.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams({ usuario, password })
+                    });
+                } catch (error) {
+                    console.log('No se pudo conectar con el servidor (fallo de red):', error);
+                    mensajeLogin.textContent = 'No se pudo conectar con el servidor. Verifica que Apache esté iniciado y vuelve a intentar.';
+                    return;
+                }
+
+                const respuestaCruda = await respuesta.text();
+                let datos;
+                try {
+                    datos = JSON.parse(respuestaCruda);
+                } catch (error) {
+                    console.log('El servidor devolvió una respuesta inválida, no es JSON válido:', {
+                        status: respuesta.status,
+                        contentType: respuesta.headers.get('content-type'),
+                        respuesta: respuestaCruda,
+                        error
+                    });
+                    mensajeLogin.textContent = 'El servidor respondió con un formato inválido. Consulta la consola para más detalles.';
+                    return;
+                }
 
                 if (datos.success === true && datos.redirect) {
                     window.location.href = datos.redirect;
@@ -130,10 +186,25 @@
 
                 mensajeLogin.textContent = datos.message || 'No se pudo iniciar sesión.';
             } catch (error) {
-                mensajeLogin.textContent = 'No se pudo conectar con el servidor. Intenta nuevamente.';
+                console.log('Error inesperado durante el inicio de sesión:', error);
+                mensajeLogin.textContent = 'Ocurrió un error inesperado. Consulta la consola para más detalles.';
             } finally {
                 botonLogin.disabled = false;
             }
+        });
+    </script>
+    <script>
+        const botonVisibilidadPassword = document.querySelector('.password-toggle');
+        const campoVisibilidadPassword = document.querySelector('#password');
+
+        botonVisibilidadPassword.addEventListener('click', () => {
+            const mostrarPassword = campoVisibilidadPassword.type === 'password';
+            campoVisibilidadPassword.type = mostrarPassword ? 'text' : 'password';
+            botonVisibilidadPassword.setAttribute('aria-pressed', String(mostrarPassword));
+            botonVisibilidadPassword.setAttribute(
+                'aria-label',
+                mostrarPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
+            );
         });
     </script>
 </body>
