@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../../../config/app.php';
+
 session_start();
 header('Content-Type: application/json; charset=utf-8');
 
@@ -13,7 +15,7 @@ function responderJson(array $respuesta, int $codigoHttp = 200): never
 function obtenerSucursalSesion(): int
 {
     if (($_SESSION['autenticado'] ?? false) !== true) {
-        responderJson(['success' => false, 'message' => 'La sesión ha expirado.', 'redirect' => '/PrivateStorage-main/src/inicio_sesion/inicioSesion.html'], 401);
+        responderJson(['success' => false, 'message' => 'La sesión ha expirado.', 'redirect' => privateStorageUrl('/src/inicio_sesion/inicioSesion.html')], 401);
     }
     if ((int) ($_SESSION['rol_id'] ?? 0) !== 2) {
         responderJson(['success' => false, 'message' => 'No tienes permiso para acceder a este módulo.'], 403);

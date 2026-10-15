@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../../../config/app.php';
+
 session_start();
 header('Content-Type: application/json; charset=utf-8');
 
@@ -16,7 +18,7 @@ function obtenerSucursalSesion(): int
         responderJson([
             'success' => false,
             'message' => 'La sesión ha expirado.',
-            'redirect' => '/PrivateStorage-main/src/inicio_sesion/inicioSesion.html'
+            'redirect' => privateStorageUrl('/src/inicio_sesion/inicioSesion.html')
         ], 401);
     }
     if ((int) ($_SESSION['rol_id'] ?? 0) !== 2) {
