@@ -7,45 +7,59 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="cajero_estilos.css">
+    <link rel="stylesheet" href="../../shared/panel-base.css">
 </head>
 
 <aside class="sidebar">
-        <div class="perfil">
-            <div class="avatar" aria-hidden="true">C</div>
-            <p class="nombre">Cajero</p>
+        <div class="marca-cajero">
+            <img src="../../recursos/LogoBlancoPS.png" alt="Private Storage">
         </div>
-        <nav id="menu-navegacion">
-            <a class="nav-item activo" data-destino="sec-ventas">Ventas</a>
-            <a class="nav-item" data-destino="sec-inventario">Inventario</a>
+        <div class="perfil">
+            <div class="avatar" aria-hidden="true">C<span class="avatar-iniciales">CA</span></div>
+            <p class="nombre">Cajero</p>
+            <p class="sucursal-perfil" id="sucursal-perfil">Cargando sucursal...</p>
+        </div>
+        <nav id="menu-navegacion" aria-label="Menú del cajero">
+            <a class="nav-item activo" data-destino="sec-ventas" href="#sec-ventas">
+                <i class="fa-solid fa-cash-register" aria-hidden="true"></i><span>Ventas</span>
+            </a>
+            <a class="nav-item" data-destino="sec-inventario" href="#sec-inventario">
+                <i class="fa-solid fa-boxes-stacked" aria-hidden="true"></i><span>Inventario</span>
+            </a>
         </nav>
         <button class="boton-cerrar-sesion" id="boton-cerrar-sesion" type="button">
-            <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+            <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span>Cerrar sesión</span>
         </button>
     </aside>
 
-    <main class="main-content">
+    <main class="main-content panel-cajero">
         <header class="header">
-            <h1 id="saludo-cajero">Bienvenido: Cargando...</h1>
-            
+            <div class="header-saludo">
+                <p class="header-kicker">PUNTO DE VENTA</p>
+                <h1 id="saludo-cajero">Bienvenido, Cargando...</h1>
+            </div>
             <div class="header-controles">
-                <div class="busqueda">
-                    <input type="text" placeholder="Buscar...">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
+                <label class="busqueda" aria-label="Buscar productos">
+                    <input type="search" placeholder="Buscar...">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                </label>
                 <button
                     class="ajustes-tema"
                     id="boton-tema"
                     type="button"
                     aria-label="Activar modo oscuro"
                     aria-pressed="false"
+                    title="Cambiar tema"
                 >
-                    <i class="fa-solid fa-sun"></i>
-                    <i class="fa-solid fa-moon"></i>
+                    <i class="fa-solid fa-sun" aria-hidden="true"></i>
+                    <i class="fa-solid fa-moon" aria-hidden="true"></i>
                 </button>
-                <i class="fa-solid fa-bell campana"></i>
+                <button class="campana-control" type="button" aria-label="Notificaciones" title="Notificaciones">
+                    <i class="fa-solid fa-bell campana" aria-hidden="true"></i>
+                </button>
             </div>
         </header>
 
@@ -54,16 +68,29 @@
                 <div class="pos-catalogo">
                     <div class="pos-titulo">
                         <div>
-                            <h2>Punto de Venta</h2>
+                            <p class="etiqueta-panel">VENTA</p>
+                            <h2>Punto de venta</h2>
                             <p class="subtitulo">Registra una compra y actualiza las existencias.</p>
                         </div>
                         <span class="pos-sucursal" id="pos-sucursal"><i class="fa-solid fa-store"></i> Cargando sucursal...</span>
                     </div>
-                    <div class="pos-busqueda">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input id="busqueda-productos" type="search" placeholder="Buscar productos por nombre o código...">
-                    </div>
-                    <div class="productos-grid" id="lista-productos"></div>
+                    <label class="pos-busqueda">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                        <input id="busqueda-productos" type="search" placeholder="Buscar productos por nombre o código..." aria-label="Buscar productos por nombre o código">
+                    </label>
+                    <div class="categorias-grid" id="categorias-productos" aria-label="Categorías de productos"></div>
+                    <section class="productos-categoria" id="productos-categoria" hidden>
+                        <div class="productos-categoria-cabecera">
+                            <button class="boton-volver-categorias" id="volver-categorias" type="button">
+                                <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Categorías
+                            </button>
+                            <div>
+                                <span class="eyebrow" id="etiqueta-categoria-productos">PRODUCTOS</span>
+                                <h3 id="titulo-categoria-productos">Productos</h3>
+                            </div>
+                        </div>
+                        <div class="productos-grid" id="lista-productos"></div>
+                    </section>
                 </div>
 
                 <aside class="pos-carrito">
@@ -75,7 +102,7 @@
                         <span class="contador-carrito" id="contador-carrito">0</span>
                     </div>
                     <div class="carrito-items" id="carrito-items">
-                        <p class="carrito-vacio">Agrega productos para comenzar la venta.</p>
+                        <p class="carrito-vacio"><i class="fa-solid fa-basket-shopping" aria-hidden="true"></i><span>Agrega productos para comenzar la venta.</span></p>
                     </div>
                     <div class="carrito-resumen">
                         <div><span>Subtotal</span><strong id="subtotal-venta">$0.00</strong></div>
@@ -92,13 +119,29 @@
                     </div>
                 </aside>
             </div>
-            <div class="ticket-resultado oculto" id="ticket-resultado"></div>
         </section>
 
         <section id="sec-inventario" class="seccion-panel">
             <div class="contenedor-modulo">
-                <h2>Inventario</h2>
-                <p class="subtitulo">Existencias disponibles. Vista de solo lectura para el cajero.</p>
+                <div class="inventario-encabezado">
+                    <div>
+                        <p class="etiqueta-panel">CONTROL DE EXISTENCIAS</p>
+                        <h2>Inventario</h2>
+                        <p class="subtitulo">Existencias disponibles. Vista de solo lectura para el cajero.</p>
+                    </div>
+                </div>
+                <div class="barra-filtros">
+                    <label class="buscador-inventario">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                        <input id="buscar-inventario" type="search" placeholder="Buscar por nombre o código..." aria-label="Buscar en el inventario">
+                    </label>
+                    <label class="filtro-inventario" for="filtro-categoria-inventario">
+                        <span>Categoría</span>
+                        <select id="filtro-categoria-inventario">
+                            <option value="">Todas las categorías</option>
+                        </select>
+                    </label>
+                </div>
                 <div class="tabla-contenedor">
                     <table class="tabla-inventario">
                         <thead>
@@ -113,9 +156,29 @@
                         <tbody id="lista-inventario"></tbody>
                     </table>
                 </div>
+                <div class="paginacion-panel" id="paginacion-inventario"></div>
             </div>
         </section>
     </main>
+
+    <dialog class="ticket-resultado" id="ticket-resultado" aria-labelledby="titulo-ticket" aria-modal="true"></dialog>
+    <dialog class="dialogo-confirmacion-venta" id="dialogo-confirmacion-venta" aria-labelledby="titulo-confirmacion-venta">
+        <div class="confirmacion-cabecera">
+            <div>
+                <p class="etiqueta-panel">CONFIRMAR VENTA</p>
+                <h2 id="titulo-confirmacion-venta">¿Confirmar la venta?</h2>
+            </div>
+            <button class="boton-icono" type="button" data-cerrar-confirmacion aria-label="Cerrar confirmación" title="Cerrar">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+        </div>
+        <p id="mensaje-confirmacion-venta"></p>
+        <div class="acciones-confirmacion-venta">
+            <button class="boton-secundario" type="button" data-cerrar-confirmacion>Cancelar</button>
+            <button class="boton-confirmar" type="button" id="aceptar-confirmacion-venta">Confirmar venta</button>
+        </div>
+    </dialog>
+    <div id="estado-app" role="status" aria-live="polite"></div>
 
     <script>
         const elementosClicables = document.querySelectorAll('[data-destino]');
@@ -123,6 +186,8 @@
         const navLinks = document.querySelectorAll('.nav-item');
         const botonTema = document.getElementById('boton-tema');
         const botonCerrarSesion = document.getElementById('boton-cerrar-sesion');
+        const estadoApp = document.getElementById('estado-app');
+        let temporizadorToast;
 
         const establecerTema = temaOscuro => {
             document.documentElement.dataset.tema = temaOscuro ? 'oscuro' : '';
@@ -130,13 +195,29 @@
             botonTema.setAttribute('aria-label', temaOscuro ? 'Activar modo claro' : 'Activar modo oscuro');
         };
 
-        establecerTema(localStorage.getItem('private-storage-tema') === 'oscuro');
+        try {
+            establecerTema(localStorage.getItem('private-storage-tema') === 'oscuro');
+        } catch (error) {
+            establecerTema(false);
+        }
 
         botonTema.addEventListener('click', () => {
             const temaOscuro = document.documentElement.dataset.tema !== 'oscuro';
             establecerTema(temaOscuro);
-            localStorage.setItem('private-storage-tema', temaOscuro ? 'oscuro' : 'claro');
+            try {
+                localStorage.setItem('private-storage-tema', temaOscuro ? 'oscuro' : 'claro');
+            } catch (error) {
+                mostrarToast('No se pudo guardar la preferencia de tema.', true);
+            }
         });
+
+        const mostrarToast = (mensaje, esError = false) => {
+            estadoApp.textContent = mensaje;
+            estadoApp.classList.toggle('error', esError);
+            estadoApp.classList.add('visible');
+            clearTimeout(temporizadorToast);
+            temporizadorToast = setTimeout(() => estadoApp.classList.remove('visible'), 4200);
+        };
 
         botonCerrarSesion.addEventListener('click', async () => {
             botonCerrarSesion.disabled = true;
@@ -152,9 +233,9 @@
                     return;
                 }
 
-                alert(datos.message || 'No se pudo cerrar la sesión. Intenta nuevamente.');
+                mostrarToast(datos.message || 'No se pudo cerrar la sesión. Intenta nuevamente.', true);
             } catch (error) {
-                alert('No se pudo cerrar la sesión. Intenta nuevamente.');
+                mostrarToast('No se pudo cerrar la sesión. Intenta nuevamente.', true);
             } finally {
                 botonCerrarSesion.disabled = false;
             }
@@ -178,9 +259,12 @@
         });
 
         let productos = [];
+        let categoriasDisponibles = [];
         const carrito = [];
         let ventaEnProceso = false;
         const listaProductos = document.getElementById('lista-productos');
+        const categoriasProductos = document.getElementById('categorias-productos');
+        const panelProductosCategoria = document.getElementById('productos-categoria');
         const carritoItems = document.getElementById('carrito-items');
         const busquedaProductos = document.getElementById('busqueda-productos');
         const subtotalVenta = document.getElementById('subtotal-venta');
@@ -188,7 +272,30 @@
         const contadorCarrito = document.getElementById('contador-carrito');
         const confirmarVenta = document.getElementById('confirmar-venta');
         const ticketResultado = document.getElementById('ticket-resultado');
+        const dialogoConfirmacionVenta = document.getElementById('dialogo-confirmacion-venta');
+        const aceptarConfirmacionVenta = document.getElementById('aceptar-confirmacion-venta');
         const listaInventario = document.getElementById('lista-inventario');
+        const filtroCategoriaInventario = document.getElementById('filtro-categoria-inventario');
+        const busquedaInventario = document.getElementById('buscar-inventario');
+        const paginacionInventario = document.getElementById('paginacion-inventario');
+        const tamanosPagina = [5, 10, 20, 30];
+        let paginaInventario = 1;
+        let tamanoPaginaInventario = 10;
+        try {
+            const tamanoGuardado = Number(localStorage.getItem('cajero-inventario-tamano-pagina'));
+            if (tamanosPagina.includes(tamanoGuardado)) tamanoPaginaInventario = tamanoGuardado;
+        } catch (error) {
+            tamanoPaginaInventario = 10;
+        }
+        let categoriaSeleccionada = null;
+        let resolverConfirmacion;
+
+        const solicitarConfirmacion = mensaje => new Promise(resolve => {
+            resolverConfirmacion = resolve;
+            document.getElementById('mensaje-confirmacion-venta').textContent = mensaje;
+            dialogoConfirmacionVenta.showModal();
+            dialogoConfirmacionVenta.querySelector('[data-cerrar-confirmacion]').focus();
+        });
 
         const escaparHtml = valor => String(valor ?? '').replace(/[&<>"']/g, caracter => ({
             '&': '&amp;',
@@ -212,7 +319,11 @@
             id: Number(producto.id),
             precio: Number(producto.precio),
             existencias: Number(producto.existencias),
-            stock_minimo: Number(producto.stock_minimo)
+            stock_minimo: Number(producto.stock_minimo),
+            categoria_id: producto.categoria_id === null || producto.categoria_id === undefined
+                ? null
+                : String(producto.categoria_id),
+            categoria: String(producto.categoria || 'Sin categoría')
         }));
 
         const cargarContexto = async () => {
@@ -220,12 +331,16 @@
             const datos = await procesarRespuesta(respuesta);
             if (!datos) return false;
             if (datos.success !== true) throw new Error(datos.message || 'No se pudo cargar el contexto.');
-            document.getElementById('saludo-cajero').textContent = `Bienvenido: ${datos.cajero.nombre}`;
+            const nombreCajero = String(datos.cajero.nombre || 'Cajero');
+            document.getElementById('saludo-cajero').textContent = `Bienvenido, ${nombreCajero}`;
+            document.querySelector('.perfil .nombre').textContent = nombreCajero;
+            document.getElementById('sucursal-perfil').textContent = datos.sucursal.nombre;
             document.getElementById('pos-sucursal').innerHTML = `<i class="fa-solid fa-store"></i> ${escaparHtml(datos.sucursal.nombre)}`;
             return true;
         };
 
-        const moneda = cantidad => `$${Number(cantidad).toFixed(2)}`;
+        const formatoMoneda = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+        const moneda = cantidad => formatoMoneda.format(Number(cantidad) || 0);
 
         const cantidadEnCarrito = productoId => {
             const item = carrito.find(elemento => elemento.id === productoId);
@@ -250,51 +365,194 @@
             const datos = await procesarRespuesta(respuesta);
             if (!datos) return false;
             if (datos.success !== true) throw new Error(datos.message || 'No se pudieron cargar los productos.');
+            categoriasDisponibles = Array.isArray(datos.categorias)
+                ? datos.categorias.map(categoria => ({
+                    id: String(categoria.id),
+                    nombre: String(categoria.nombre || 'Sin categoría')
+                }))
+                : [];
             productos = normalizarProductos(Array.isArray(datos.productos) ? datos.productos : []);
             sincronizarCarritoConInventario();
+            actualizarCategorias();
             renderizarProductos(busquedaProductos.value);
             renderizarInventario();
             renderizarCarrito();
             return true;
         };
 
+        const claveCategoria = producto => producto.categoria_id
+            ? `id:${producto.categoria_id}`
+            : `nombre:${producto.categoria.toLocaleLowerCase('es-MX')}`;
+
+        const obtenerCategorias = () => {
+            const categorias = new Map();
+            categoriasDisponibles.forEach(categoria => {
+                const clave = `id:${categoria.id}`;
+                categorias.set(clave, { clave, nombre: categoria.nombre, cantidad: 0 });
+            });
+            productos.forEach(producto => {
+                const clave = claveCategoria(producto);
+                const categoria = categorias.get(clave) || {
+                    clave,
+                    nombre: producto.categoria || 'Sin categoría',
+                    cantidad: 0
+                };
+                categoria.cantidad += 1;
+                categorias.set(clave, categoria);
+            });
+            return [...categorias.values()].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es-MX'));
+        };
+
+        const iconoCategoria = nombre => {
+            const categoria = nombre.toLocaleLowerCase('es-MX');
+            if (/procesador|cpu/.test(categoria)) return 'fa-microchip';
+            if (/memoria|ram/.test(categoria)) return 'fa-memory';
+            if (/almacenamiento|disco|ssd/.test(categoria)) return 'fa-hard-drive';
+            if (/pantalla|monitor/.test(categoria)) return 'fa-desktop';
+            if (/accesorio|perif[eé]rico/.test(categoria)) return 'fa-keyboard';
+            if (/componente/.test(categoria)) return 'fa-puzzle-piece';
+            if (/red|conectividad/.test(categoria)) return 'fa-wifi';
+            if (/mouse|rat[oó]n/.test(categoria)) return 'fa-computer-mouse';
+            if (/tarjeta gr[aá]fica|gr[aá]fica|video/.test(categoria)) return 'fa-layer-group';
+            if (/motherboard|placa base/.test(categoria)) return 'fa-memory';
+            if (/fuente/.test(categoria)) return 'fa-plug';
+            if (/gabinete/.test(categoria)) return 'fa-computer';
+            if (/refrigeraci[oó]n|ventilaci[oó]n/.test(categoria)) return 'fa-fan';
+            if (/audio/.test(categoria)) return 'fa-headphones';
+            if (/cable|adaptador/.test(categoria)) return 'fa-plug';
+            if (/impresora|esc[aá]ner/.test(categoria)) return 'fa-print';
+            if (/software/.test(categoria)) return 'fa-compact-disc';
+            return 'fa-layer-group';
+        };
+
+        const actualizarCategorias = () => {
+            const categorias = obtenerCategorias();
+            categoriasProductos.innerHTML = categorias.length
+                ? categorias.map(categoria => `
+                    <button class="tarjeta-categoria${categoria.cantidad === 0 ? ' sin-productos' : ''}" type="button" data-categoria-key="${escaparHtml(categoria.clave)}">
+                        <span class="categoria-icono"><i class="fa-solid ${iconoCategoria(categoria.nombre)}" aria-hidden="true"></i></span>
+                        <span class="categoria-datos">
+                            <strong>${escaparHtml(categoria.nombre)}</strong>
+                            <small>${categoria.cantidad} producto${categoria.cantidad === 1 ? '' : 's'}</small>
+                        </span>
+                        <i class="fa-solid fa-chevron-right categoria-flecha" aria-hidden="true"></i>
+                    </button>
+                `).join('')
+                : '<p class="catalogo-vacio">Aún no hay categorías registradas.</p>';
+
+            const valorAnterior = filtroCategoriaInventario.value;
+            filtroCategoriaInventario.innerHTML = '<option value="">Todas las categorías</option>' + categorias.map(categoria => `
+                <option value="${escaparHtml(categoria.clave)}">${escaparHtml(categoria.nombre)}</option>
+            `).join('');
+            if (categorias.some(categoria => categoria.clave === valorAnterior)) {
+                filtroCategoriaInventario.value = valorAnterior;
+            }
+        };
+
         const renderizarProductos = (filtro = '') => {
-            const texto = filtro.toLowerCase().trim();
-            const productosFiltrados = productos.filter(producto =>
-                producto.nombre.toLowerCase().includes(texto) || producto.codigo.toLowerCase().includes(texto)
-            );
+            const texto = filtro.toLocaleLowerCase('es-MX').trim();
+            const productosFiltrados = productos.filter(producto => {
+                if (texto) {
+                    return producto.nombre.toLocaleLowerCase('es-MX').includes(texto)
+                        || producto.codigo.toLocaleLowerCase('es-MX').includes(texto);
+                }
+                return categoriaSeleccionada && claveCategoria(producto) === categoriaSeleccionada;
+            });
+
+            categoriasProductos.hidden = Boolean(texto || categoriaSeleccionada);
+            panelProductosCategoria.hidden = !texto && !categoriaSeleccionada;
+            if (!categoriasProductos.hidden) return;
+
+            const categoria = obtenerCategorias().find(item => item.clave === categoriaSeleccionada);
+            document.getElementById('etiqueta-categoria-productos').textContent = texto ? 'BÚSQUEDA' : 'CATEGORÍA';
+            document.getElementById('titulo-categoria-productos').textContent = texto
+                ? 'Resultados de búsqueda'
+                : categoria?.nombre || 'Productos';
+            document.getElementById('volver-categorias').hidden = Boolean(texto);
+
+            if (productosFiltrados.length === 0) {
+                listaProductos.innerHTML = `<p class="catalogo-vacio">${texto ? 'No se encontraron productos.' : 'Aún no hay productos en esta categoría.'}</p>`;
+                return;
+            }
+
             listaProductos.innerHTML = productosFiltrados.map(producto => {
                 const disponible = producto.existencias - cantidadEnCarrito(producto.id);
+                const pocoStock = disponible > 0 && producto.stock_minimo > 0 && disponible <= producto.stock_minimo;
+                const claseStock = disponible <= 0 ? 'sin-stock' : pocoStock ? 'poco-stock' : 'stock-disponible';
+                const textoStock = disponible <= 0 ? 'Agotado' : pocoStock ? `${disponible} · Poco stock` : `${disponible} disponibles`;
                 return `
                     <article class="producto-item">
-                        <div class="producto-icono"><i class="fa-solid fa-box"></i></div>
+                        <div class="producto-icono"><i class="fa-solid fa-box" aria-hidden="true"></i></div>
                         <div class="producto-datos">
                             <span class="producto-codigo">${escaparHtml(producto.codigo)}</span>
                             <h3>${escaparHtml(producto.nombre)}</h3>
                             <strong>${moneda(producto.precio)}</strong>
-                            <small class="${disponible <= 0 ? 'sin-stock' : ''}">${Math.max(0, disponible)} disponibles</small>
+                            <small class="badge-stock ${claseStock}">${textoStock}</small>
                         </div>
-                        <button class="boton-agregar" type="button" data-producto-id="${producto.id}" ${disponible <= 0 ? 'disabled' : ''} aria-label="Agregar ${escaparHtml(producto.nombre)}" title="Agregar producto"><i class="fa-solid fa-plus"></i></button>
+                        <button class="boton-agregar" type="button" data-producto-id="${producto.id}" ${disponible <= 0 ? 'disabled' : ''} aria-label="Agregar ${escaparHtml(producto.nombre)}" title="Agregar producto"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
                     </article>
                 `;
             }).join('');
         };
 
         const renderizarInventario = () => {
-            listaInventario.innerHTML = productos.map(producto => `
+            const categoriaFiltro = filtroCategoriaInventario.value;
+            const texto = busquedaInventario.value.toLocaleLowerCase('es-MX').trim();
+            const productosFiltrados = productos.filter(producto =>
+                (!categoriaFiltro || claveCategoria(producto) === categoriaFiltro)
+                && (!texto || producto.nombre.toLocaleLowerCase('es-MX').includes(texto)
+                    || producto.codigo.toLocaleLowerCase('es-MX').includes(texto))
+            );
+            const paginas = Math.max(1, Math.ceil(productosFiltrados.length / tamanoPaginaInventario));
+            paginaInventario = Math.min(paginaInventario, paginas);
+            const desde = (paginaInventario - 1) * tamanoPaginaInventario;
+            const productosVisibles = productosFiltrados.slice(desde, desde + tamanoPaginaInventario);
+
+            listaInventario.innerHTML = productosVisibles.length ? productosVisibles.map(producto => {
+                const agotado = producto.existencias <= 0;
+                const pocoStock = !agotado && producto.stock_minimo > 0 && producto.existencias <= producto.stock_minimo;
+                const estado = agotado ? 'Agotado' : pocoStock ? 'Poco stock' : 'Disponible';
+                const claseEstado = agotado ? 'estado-agotado' : pocoStock ? 'estado-poco-stock' : 'estado-disponible';
+                return `
                 <tr>
-                    <td><strong>${escaparHtml(producto.nombre)}</strong></td>
-                    <td>${escaparHtml(producto.codigo)}</td>
-                    <td>${moneda(producto.precio)}</td>
-                    <td>${producto.existencias}</td>
-                    <td><span class="${producto.existencias > 0 ? 'estado-disponible' : 'estado-agotado'}">${producto.existencias > 0 ? 'Disponible' : 'Agotado'}</span></td>
+                    <td class="inventario-producto"><strong>${escaparHtml(producto.nombre)}</strong></td>
+                    <td class="codigo-inventario">${escaparHtml(producto.codigo)}</td>
+                    <td class="celda-numero">${moneda(producto.precio)}</td>
+                    <td class="celda-numero">${producto.existencias}</td>
+                    <td class="celda-numero"><span class="${claseEstado}">${estado}</span></td>
                 </tr>
-            `).join('');
+            `;
+            }).join('') : `<tr><td colspan="5" class="inventario-vacio">${productos.length ? 'No se encontraron productos con esos filtros.' : 'Aún no hay productos en el inventario.'}</td></tr>`;
+
+            const inicioVisible = productosFiltrados.length ? desde + 1 : 0;
+            const finVisible = Math.min(desde + tamanoPaginaInventario, productosFiltrados.length);
+            const paginasCercanas = new Set([1, paginas, paginaInventario - 1, paginaInventario, paginaInventario + 1]);
+            const paginasVisibles = [...paginasCercanas].filter(numero => numero >= 1 && numero <= paginas).sort((a, b) => a - b);
+            let anterior = 0;
+            const controles = paginasVisibles.map(numero => {
+                const elipsis = anterior && numero - anterior > 1 ? '<span class="paginacion-elipsis" aria-hidden="true">…</span>' : '';
+                anterior = numero;
+                return `${elipsis}<button class="paginacion-boton${numero === paginaInventario ? ' activa' : ''}" type="button" data-pagina="${numero}" ${numero === paginaInventario ? 'aria-current="page"' : ''} aria-label="Página ${numero}">${numero}</button>`;
+            }).join('');
+            paginacionInventario.innerHTML = `
+                <label class="inventario-paginacion-selector">
+                    <span>Filas por página</span>
+                    <select aria-label="Filas por página">
+                        ${tamanosPagina.map(tamano => `<option value="${tamano}" ${tamano === tamanoPaginaInventario ? 'selected' : ''}>${tamano}</option>`).join('')}
+                    </select>
+                </label>
+                <p class="inventario-paginacion-resumen">Mostrando ${inicioVisible}-${finVisible} de ${productosFiltrados.length}</p>
+                <div class="inventario-paginacion-controles">
+                    <button class="paginacion-boton" type="button" data-pagina="${paginaInventario - 1}" ${paginaInventario === 1 ? 'disabled' : ''}>Anterior</button>
+                    ${controles}
+                    <button class="paginacion-boton" type="button" data-pagina="${paginaInventario + 1}" ${paginaInventario === paginas ? 'disabled' : ''}>Siguiente</button>
+                </div>
+            `;
         };
 
         const renderizarCarrito = () => {
             if (carrito.length === 0) {
-                carritoItems.innerHTML = '<p class="carrito-vacio">Agrega productos para comenzar la venta.</p>';
+                carritoItems.innerHTML = '<p class="carrito-vacio"><i class="fa-solid fa-basket-shopping" aria-hidden="true"></i><span>Agrega productos para comenzar la venta.</span></p>';
             } else {
                 carritoItems.innerHTML = carrito.map(item => `
                     <div class="carrito-item">
@@ -323,26 +581,51 @@
         const renderizarTicket = venta => {
             const productosTicket = Array.isArray(venta.productos) ? venta.productos : [];
             ticketResultado.innerHTML = `
-                <h2>Venta confirmada</h2>
-                <p><strong>Folio:</strong> ${escaparHtml(venta.folio)}</p>
-                <p><strong>Fecha:</strong> ${escaparHtml(venta.fecha)}</p>
-                <p><strong>Método de pago:</strong> ${escaparHtml(venta.metodo_pago)}</p>
+                <div class="ticket-modal-cabecera">
+                    <h2 class="sr-only" id="titulo-ticket">Venta confirmada</h2>
+                    <button class="ticket-cerrar" type="button" data-cerrar-ticket aria-label="Cerrar ticket" title="Cerrar">
+                        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="ticket-cabecera">
+                    <div>
+                        <span>VENTA CONFIRMADA</span>
+                        <strong>Folio ${escaparHtml(venta.folio)}</strong>
+                    </div>
+                    <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+                </div>
+                <div class="ticket-metadatos">
+                    <p><span>Fecha</span><strong>${escaparHtml(venta.fecha)}</strong></p>
+                    <p><span>Método de pago</span><strong>${escaparHtml(venta.metodo_pago)}</strong></p>
+                </div>
                 <div class="ticket-lineas">
                     ${productosTicket.map(producto => `
                         <div class="ticket-linea">
-                            <span>${Number(producto.cantidad)} × ${escaparHtml(producto.nombre)}</span>
-                            <span>${moneda(producto.importe)}</span>
-                            <small>${escaparHtml(producto.codigo)} · ${moneda(producto.precio_unitario)} c/u</small>
+                            <div>
+                                <strong>${Number(producto.cantidad)} × ${escaparHtml(producto.nombre)}</strong>
+                                <small>${escaparHtml(producto.codigo)} · ${moneda(producto.precio_unitario)} c/u</small>
+                            </div>
+                            <strong>${moneda(producto.importe)}</strong>
                         </div>
                     `).join('')}
                 </div>
-                <p class="ticket-total"><strong>Total pagado:</strong> ${moneda(venta.total)}</p>
+                <div class="ticket-total"><span>Total pagado</span><strong>${moneda(venta.total)}</strong></div>
                 <button type="button" data-imprimir-ticket>
                     <i class="fa-solid fa-print"></i> Imprimir ticket
                 </button>
             `;
-            ticketResultado.classList.remove('oculto');
+            ticketResultado.showModal();
+            ticketResultado.querySelector('[data-cerrar-ticket]').focus();
         };
+
+        categoriasProductos.addEventListener('click', evento => {
+            const botonCategoria = evento.target.closest('[data-categoria-key]');
+            if (botonCategoria) {
+                categoriaSeleccionada = botonCategoria.dataset.categoriaKey;
+                busquedaProductos.value = '';
+                renderizarProductos();
+            }
+        });
 
         listaProductos.addEventListener('click', evento => {
             const boton = evento.target.closest('[data-producto-id]');
@@ -371,12 +654,77 @@
         });
 
         busquedaProductos.addEventListener('input', evento => renderizarProductos(evento.target.value));
+        document.getElementById('volver-categorias').addEventListener('click', () => {
+            categoriaSeleccionada = null;
+            busquedaProductos.value = '';
+            renderizarProductos();
+        });
+        filtroCategoriaInventario.addEventListener('change', () => {
+            paginaInventario = 1;
+            renderizarInventario();
+        });
+        busquedaInventario.addEventListener('input', () => {
+            paginaInventario = 1;
+            renderizarInventario();
+        });
+        paginacionInventario.addEventListener('change', evento => {
+            if (evento.target.matches('select')) {
+                tamanoPaginaInventario = Number(evento.target.value);
+                paginaInventario = 1;
+                try {
+                    localStorage.setItem('cajero-inventario-tamano-pagina', String(tamanoPaginaInventario));
+                } catch (error) {
+                    mostrarToast('No se pudo guardar la cantidad de filas por página.', true);
+                }
+                renderizarInventario();
+            }
+        });
+        paginacionInventario.addEventListener('click', evento => {
+            const boton = evento.target.closest('[data-pagina]');
+            if (!boton || boton.disabled) return;
+            paginaInventario = Number(boton.dataset.pagina);
+            renderizarInventario();
+        });
+
+        dialogoConfirmacionVenta.querySelectorAll('[data-cerrar-confirmacion]').forEach(boton => {
+            boton.addEventListener('click', () => dialogoConfirmacionVenta.close('cancel'));
+        });
+        aceptarConfirmacionVenta.addEventListener('click', () => dialogoConfirmacionVenta.close('confirm'));
+        dialogoConfirmacionVenta.addEventListener('click', evento => {
+            if (evento.target === dialogoConfirmacionVenta) dialogoConfirmacionVenta.close('cancel');
+        });
+        dialogoConfirmacionVenta.addEventListener('close', () => {
+            if (resolverConfirmacion) {
+                resolverConfirmacion(dialogoConfirmacionVenta.returnValue === 'confirm');
+                resolverConfirmacion = null;
+            }
+            confirmarVenta.focus();
+        });
+        dialogoConfirmacionVenta.addEventListener('keydown', evento => {
+            if (evento.key === 'Escape') {
+                evento.preventDefault();
+                dialogoConfirmacionVenta.close('cancel');
+                return;
+            }
+            if (evento.key !== 'Tab') return;
+            const elementos = [...dialogoConfirmacionVenta.querySelectorAll('button:not(:disabled)')];
+            if (!elementos.length) return;
+            const primero = elementos[0];
+            const ultimo = elementos[elementos.length - 1];
+            if (evento.shiftKey && document.activeElement === primero) {
+                evento.preventDefault();
+                ultimo.focus();
+            } else if (!evento.shiftKey && document.activeElement === ultimo) {
+                evento.preventDefault();
+                primero.focus();
+            }
+        });
 
         confirmarVenta.addEventListener('click', async () => {
             if (carrito.length === 0 || ventaEnProceso) return;
 
             const total = carrito.reduce((acumulado, item) => acumulado + item.precio * item.cantidad, 0);
-            if (!confirm(`¿Confirmar esta venta por ${moneda(total)}?`)) return;
+            if (!await solicitarConfirmacion(`¿Confirmar esta venta por ${moneda(total)}?`)) return;
 
             ventaEnProceso = true;
             renderizarCarrito();
@@ -403,16 +751,20 @@
                 }
 
                 carrito.length = 0;
-                await cargarProductos();
                 renderizarCarrito();
                 renderizarTicket(datos.venta);
+                try {
+                    await cargarProductos();
+                } catch (errorActualizacion) {
+                    mostrarToast(`La venta se confirmó, pero no se pudo actualizar el inventario en pantalla. ${errorActualizacion.message || ''}`.trim(), true);
+                }
             } catch (error) {
-                alert(error.message || 'No se pudo comunicar con el servidor.');
+                mostrarToast(error.message || 'No se pudo comunicar con el servidor.', true);
                 if (error.estadoHttp === 409) {
                     try {
                         await cargarProductos();
                     } catch (cargaError) {
-                        alert(cargaError.message || 'No se pudo actualizar el inventario.');
+                        mostrarToast(cargaError.message || 'No se pudo actualizar el inventario.', true);
                     }
                 }
             } finally {
@@ -422,9 +774,23 @@
         });
 
         ticketResultado.addEventListener('click', evento => {
+            if (evento.target === ticketResultado || evento.target.closest('[data-cerrar-ticket]')) {
+                ticketResultado.close();
+                return;
+            }
             if (evento.target.closest('[data-imprimir-ticket]')) {
                 window.print();
             }
+        });
+        ticketResultado.addEventListener('keydown', evento => {
+            if (evento.key === 'Escape' && ticketResultado.open) {
+                evento.preventDefault();
+                ticketResultado.close();
+            }
+        });
+        ticketResultado.addEventListener('cancel', evento => {
+            evento.preventDefault();
+            ticketResultado.close();
         });
 
         const inicializar = async () => {
@@ -433,7 +799,7 @@
                 if (!contextoCargado) return;
                 await cargarProductos();
             } catch (error) {
-                alert(error.message || 'No se pudo comunicar con el servidor.');
+                mostrarToast(error.message || 'No se pudo comunicar con el servidor.', true);
             }
         };
 
