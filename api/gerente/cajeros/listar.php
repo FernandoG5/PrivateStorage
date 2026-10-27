@@ -52,7 +52,7 @@ $sucursalId = obtenerSucursalSesion();
 try {
     require_once __DIR__ . '/../../../config/database.php';
     $consulta = $conexion->prepare(
-        'SELECT id, nombre, usuario, activo, fecha_creacion
+        'SELECT id, nombre, usuario, correo, activo, fecha_creacion
          FROM usuarios
          WHERE rol_id = 3
            AND sucursal_id = :sucursal_id

@@ -39,20 +39,26 @@ $sucursalId = obtenerSucursalSesion();
 $idRecibido = $_POST['id'] ?? '';
 $nombre = $_POST['nombre'] ?? null;
 $usuario = $_POST['usuario'] ?? null;
+$correo = $_POST['correo'] ?? null;
 $passwordUsuario = $_POST['password'] ?? null;
 $activo = $_POST['activo'] ?? null;
 
-if (!is_string($idRecibido) || !is_string($nombre) || !is_string($usuario) || !is_string($passwordUsuario) || !is_string($activo)) {
+if (!is_string($idRecibido) || !is_string($nombre) || !is_string($usuario) || !is_string($correo) || !is_string($passwordUsuario) || !is_string($activo)) {
     responderJson(['success' => false, 'message' => 'Los datos del cajero no son válidos.'], 400);
 }
 
 $idRecibido = trim($idRecibido);
 $nombre = trim($nombre);
 $usuario = trim($usuario);
+$correo = mb_strtolower(trim($correo));
 
 if ($nombre === '' || $usuario === '') {
     responderJson(['success' => false, 'message' => 'Nombre y usuario son obligatorios.'], 400);
 }
+if ($correo === '' || mb_strlen($correo) > 150 || !filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+    responderJson(['success' => false, 'message' => 'El correo electrónico no es válido.'], 400);
+}
+
 if (!in_array($activo, ['0', '1'], true)) {
     responderJson(['success' => false, 'message' => 'El estado del cajero no es válido.'], 400);
 }
@@ -75,12 +81,13 @@ try {
     if ($id === null) {
         $passwordHash = password_hash($passwordUsuario, PASSWORD_DEFAULT);
         $consulta = $conexion->prepare(
-            'INSERT INTO usuarios (nombre, usuario, password_hash, rol_id, sucursal_id, activo)
-             VALUES (:nombre, :usuario, :password_hash, 3, :sucursal_id, :activo)'
+            'INSERT INTO usuarios (nombre, usuario, correo, password_hash, rol_id, sucursal_id, activo)
+             VALUES (:nombre, :usuario, :correo, :password_hash, 3, :sucursal_id, :activo)'
         );
         $consulta->execute([
             'nombre' => $nombre,
             'usuario' => $usuario,
+            'correo' => $correo,
             'password_hash' => $passwordHash,
             'sucursal_id' => $sucursalId,
             'activo' => (int) $activo
@@ -103,12 +110,14 @@ try {
             'UPDATE usuarios
              SET nombre = :nombre,
                  usuario = :usuario,
+                 correo = :correo,
                  activo = :activo
              WHERE id = :id AND rol_id = 3 AND sucursal_id = :sucursal_id'
         );
         $parametros = [
             'nombre' => $nombre,
             'usuario' => $usuario,
+            'correo' => $correo,
             'activo' => (int) $activo,
             'id' => $id,
             'sucursal_id' => $sucursalId
@@ -119,6 +128,7 @@ try {
             'UPDATE usuarios
              SET nombre = :nombre,
                  usuario = :usuario,
+                 correo = :correo,
                  password_hash = :password_hash,
                  activo = :activo
              WHERE id = :id AND rol_id = 3 AND sucursal_id = :sucursal_id'
@@ -126,6 +136,7 @@ try {
         $parametros = [
             'nombre' => $nombre,
             'usuario' => $usuario,
+            'correo' => $correo,
             'password_hash' => $passwordHash,
             'activo' => (int) $activo,
             'id' => $id,
@@ -137,6 +148,9 @@ try {
     responderJson(['success' => true, 'message' => 'Cajero guardado correctamente.']);
 } catch (PDOException $e) {
     if (($e->errorInfo[1] ?? null) === 1062) {
+        if (str_contains($e->getMessage(), 'uq_usuarios_correo')) {
+            responderJson(['success' => false, 'message' => 'Ya existe un usuario con ese correo electrónico.'], 409);
+        }
         responderJson(['success' => false, 'message' => 'Ya existe un usuario con ese nombre de acceso.'], 409);
     }
     responderJson(['success' => false, 'message' => 'No se pudo guardar el cajero.'], 500);
