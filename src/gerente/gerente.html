@@ -810,6 +810,10 @@
                             <input id="cajero-usuario" name="usuario" maxlength="50" required>
                         </div>
                         <div class="campo">
+                            <label for="cajero-correo">Correo electrónico</label>
+                            <input id="cajero-correo" name="correo" type="email" maxlength="150" autocomplete="off" required>
+                        </div>
+                        <div class="campo">
                             <label for="cajero-password">Contraseña</label>
                             <input id="cajero-password" name="password" type="password" autocomplete="new-password" required>
                             <button type="button" class="mostrar-password" data-toggle-password="cajero-password" aria-label="Mostrar contraseña" title="Mostrar contraseña">
@@ -859,6 +863,9 @@
                             <label for="editar-cajero-usuario">Usuario</label>
                             <input id="editar-cajero-usuario" name="usuario" maxlength="50" required>
                         </div>
+                        <div class="campo">
+                            <label for="editar-cajero-correo">Correo electrónico</label>
+                            <input id="editar-cajero-correo" name="correo" type="email" maxlength="150" autocomplete="off" required>
                         <div class="campo">
                             <label for="editar-cajero-password">Nueva contraseña</label>
                             <input id="editar-cajero-password" name="password" type="password" autocomplete="new-password" placeholder="Déjalo vacío para conservar la actual">
@@ -1477,6 +1484,7 @@
                     document.getElementById('editar-cajero-id').value = cajero.id;
                     document.getElementById('editar-cajero-nombre').value = cajero.nombre;
                     document.getElementById('editar-cajero-usuario').value = cajero.usuario;
+                    document.getElementById('editar-cajero-correo').value = cajero.correo ?? '';
                     document.getElementById('editar-cajero-password').value = '';
                     document.getElementById('editar-cajero-activo').value = String(cajero.activo);
                     formularioCrearCajero.hidden = true;
@@ -1496,7 +1504,7 @@
                 try {
                     const endpoint = activar ? '../../api/gerente/cajeros/guardar.php' : '../../api/gerente/cajeros/desactivar.php';
                     const cuerpo = activar
-                        ? new URLSearchParams({ id: String(cajero.id), nombre: cajero.nombre, usuario: cajero.usuario, password: '', activo: '1' })
+                        ? new URLSearchParams({ id: String(cajero.id), nombre: cajero.nombre, usuario: cajero.usuario, correo: cajero.correo ?? '', password: '', activo: '1' })
                         : new URLSearchParams({ id: String(cajero.id) });
                     const respuesta = await fetch(endpoint, {
                         method: 'POST',
@@ -1510,7 +1518,7 @@
                     mostrarEstado(datos.message || `Cajero ${activar ? 'activado' : 'desactivado'} correctamente.`);
                 } catch (error) {
                     mostrarEstado(error.message || 'No se pudo comunicar con el servidor. Intenta nuevamente.', true);
-                }
+                }   
             });
 
             document.querySelectorAll('[data-toggle-password]').forEach(boton => {
@@ -1661,6 +1669,7 @@
                         body: new URLSearchParams({
                             nombre: document.getElementById('cajero-nombre').value,
                             usuario: document.getElementById('cajero-usuario').value,
+                            correo: document.getElementById('cajero-correo').value,
                             password: document.getElementById('cajero-password').value,
                             activo: document.getElementById('cajero-activo').value
                         })
@@ -1688,6 +1697,7 @@
                             id: document.getElementById('editar-cajero-id').value,
                             nombre: document.getElementById('editar-cajero-nombre').value,
                             usuario: document.getElementById('editar-cajero-usuario').value,
+                            correo: document.getElementById('editar-cajero-correo').value,
                             password: document.getElementById('editar-cajero-password').value,
                             activo: document.getElementById('editar-cajero-activo').value
                         })
