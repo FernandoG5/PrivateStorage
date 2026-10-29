@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="src/inicio_sesion/inicioSesion.css">
+    <link rel="stylesheet" href="inicioSesion.css">
 </head>
 
 <body>
@@ -129,11 +129,6 @@
             establecerTema(temaOscuro);
             localStorage.setItem('private-storage-tema', temaOscuro ? 'oscuro' : 'claro');
         });
-
-        // Esta página también se sirve desde la raíz del proyecto (DirectoryIndex), así que el enlace se ajusta a la ruta actual.
-        if (!window.location.pathname.includes('/src/inicio_sesion/')) {
-            document.querySelector('#enlace-recuperar').href = 'src/inicio_sesion/recuperar.html';
-        }
 
         const formularioLogin = document.querySelector('.login-form');
         const campoUsuario = document.querySelector('#numeroTrabajador');
