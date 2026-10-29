@@ -1,5 +1,8 @@
 <?php
 
+require_once __DIR__ . '/../../config/app.php';
+
+session_start();
 header('Content-Type: application/json; charset=utf-8');
 
 function responderJson(array $respuesta, int $codigoHttp = 200): never
@@ -7,6 +10,21 @@ function responderJson(array $respuesta, int $codigoHttp = 200): never
     http_response_code($codigoHttp);
     echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
     exit;
+}
+
+if (($_SESSION['autenticado'] ?? false) !== true) {
+    responderJson([
+        'success' => false,
+        'message' => 'La sesión ha expirado.',
+        'redirect' => privateStorageUrl('/src/inicio_sesion/inicioSesion.html')
+    ], 401);
+}
+
+if ((int) ($_SESSION['rol_id'] ?? 0) !== 1) {
+    responderJson([
+        'success' => false,
+        'message' => 'No tienes permiso para acceder a este módulo.'
+    ], 403);
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
@@ -20,7 +38,7 @@ try {
     require_once __DIR__ . '/../../config/database.php';
 
     $consulta = $conexion->prepare(
-        'SELECT u.id, u.nombre, u.usuario, u.sucursal_id, u.activo, u.fecha_creacion,
+        'SELECT u.id, u.nombre, u.usuario, u.correo, u.sucursal_id, u.activo, u.fecha_creacion,
                 s.nombre AS sucursal
          FROM usuarios u
          LEFT JOIN sucursales s ON s.id = u.sucursal_id

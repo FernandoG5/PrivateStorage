@@ -100,6 +100,8 @@
                             </div>
                         </div>
 
+                        <a class="form-link" id="enlace-recuperar" href="recuperar.html">¿Olvidaste tu contraseña?</a>
+
                         <p class="login-message" role="alert" aria-live="polite"></p>
 
                         <button class="login-button" type="submit">Iniciar Sesión</button>
@@ -127,6 +129,11 @@
             establecerTema(temaOscuro);
             localStorage.setItem('private-storage-tema', temaOscuro ? 'oscuro' : 'claro');
         });
+
+        // Esta página también se sirve desde la raíz del proyecto (DirectoryIndex), así que el enlace se ajusta a la ruta actual.
+        if (!window.location.pathname.includes('/src/inicio_sesion/')) {
+            document.querySelector('#enlace-recuperar').href = 'src/inicio_sesion/recuperar.html';
+        }
 
         const formularioLogin = document.querySelector('.login-form');
         const campoUsuario = document.querySelector('#numeroTrabajador');

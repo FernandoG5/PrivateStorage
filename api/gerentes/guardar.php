@@ -1,5 +1,8 @@
 <?php
 
+require_once __DIR__ . '/../../config/app.php';
+
+session_start();
 header('Content-Type: application/json; charset=utf-8');
 
 function responderJson(array $respuesta, int $codigoHttp = 200): never
@@ -7,6 +10,21 @@ function responderJson(array $respuesta, int $codigoHttp = 200): never
     http_response_code($codigoHttp);
     echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
     exit;
+}
+
+if (($_SESSION['autenticado'] ?? false) !== true) {
+    responderJson([
+        'success' => false,
+        'message' => 'La sesión ha expirado.',
+        'redirect' => privateStorageUrl('/src/inicio_sesion/inicioSesion.html')
+    ], 401);
+}
+
+if ((int) ($_SESSION['rol_id'] ?? 0) !== 1) {
+    responderJson([
+        'success' => false,
+        'message' => 'No tienes permiso para acceder a este módulo.'
+    ], 403);
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -19,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $idRecibido = $_POST['id'] ?? '';
 $nombre = $_POST['nombre'] ?? null;
 $usuario = $_POST['usuario'] ?? null;
+$correo = $_POST['correo'] ?? null;
 $password = $_POST['password'] ?? null;
 $sucursalIdRecibido = $_POST['sucursal_id'] ?? null;
 $activo = $_POST['activo'] ?? null;
@@ -27,6 +46,7 @@ if (
     !is_string($idRecibido) ||
     !is_string($nombre) ||
     !is_string($usuario) ||
+    !is_string($correo) ||
     !is_string($password) ||
     !is_string($sucursalIdRecibido) ||
     !is_string($activo)
@@ -40,12 +60,20 @@ if (
 $idRecibido = trim($idRecibido);
 $nombre = trim($nombre);
 $usuario = trim($usuario);
+$correo = mb_strtolower(trim($correo));
 $sucursalIdRecibido = trim($sucursalIdRecibido);
 
 if ($nombre === '' || $usuario === '') {
     responderJson([
         'success' => false,
         'message' => 'Nombre y usuario son obligatorios.'
+    ], 400);
+}
+
+if ($correo === '' || mb_strlen($correo) > 150 || !filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+    responderJson([
+        'success' => false,
+        'message' => 'El correo electrónico no es válido.'
     ], 400);
 }
 
@@ -102,12 +130,13 @@ try {
     if ($id === null) {
         $hash = password_hash($password, PASSWORD_DEFAULT);
         $consulta = $conexion->prepare(
-            'INSERT INTO usuarios (nombre, usuario, password_hash, rol_id, sucursal_id, activo)
-             VALUES (:nombre, :usuario, :password_hash, 2, :sucursal_id, :activo)'
+            'INSERT INTO usuarios (nombre, usuario, correo, password_hash, rol_id, sucursal_id, activo)
+             VALUES (:nombre, :usuario, :correo, :password_hash, 2, :sucursal_id, :activo)'
         );
         $consulta->execute([
             'nombre' => $nombre,
             'usuario' => $usuario,
+            'correo' => $correo,
             'password_hash' => $hash,
             'sucursal_id' => $sucursalId,
             'activo' => (int) $activo
@@ -130,6 +159,7 @@ try {
                 'UPDATE usuarios
                  SET nombre = :nombre,
                      usuario = :usuario,
+                     correo = :correo,
                      sucursal_id = :sucursal_id,
                      activo = :activo
                  WHERE id = :id
@@ -138,6 +168,7 @@ try {
             $parametros = [
                 'nombre' => $nombre,
                 'usuario' => $usuario,
+                'correo' => $correo,
                 'sucursal_id' => $sucursalId,
                 'activo' => (int) $activo,
                 'id' => $id
@@ -148,6 +179,7 @@ try {
                 'UPDATE usuarios
                  SET nombre = :nombre,
                      usuario = :usuario,
+                     correo = :correo,
                      password_hash = :password_hash,
                      sucursal_id = :sucursal_id,
                      activo = :activo
@@ -157,6 +189,7 @@ try {
             $parametros = [
                 'nombre' => $nombre,
                 'usuario' => $usuario,
+                'correo' => $correo,
                 'password_hash' => $hash,
                 'sucursal_id' => $sucursalId,
                 'activo' => (int) $activo,
@@ -175,6 +208,13 @@ try {
     $codigoMysql = $e->errorInfo[1] ?? null;
 
     if ($codigoMysql === 1062) {
+        if (str_contains($e->getMessage(), 'uq_usuarios_correo')) {
+            responderJson([
+                'success' => false,
+                'message' => 'Ya existe un usuario con ese correo electrónico.'
+            ], 409);
+        }
+
         responderJson([
             'success' => false,
             'message' => 'Ya existe un usuario con ese nombre de acceso.'

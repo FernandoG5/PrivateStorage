@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Nueva contraseña</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="inicioSesion.css">
+</head>
+
+<body>
+    <main class="login-page">
+        <section class="login-card" aria-label="Restablecer contraseña">
+            <button
+                class="theme-toggle"
+                id="boton-tema"
+                type="button"
+                aria-label="Activar modo oscuro"
+                aria-pressed="false"
+            >
+                <span class="theme-toggle-icon" aria-hidden="true">◐</span>
+                <span class="theme-toggle-text">Tema oscuro</span>
+            </button>
+
+            <div class="login-layout">
+                <div class="brand-panel">
+                    <div class="brand-panel-orb brand-panel-orb-one" aria-hidden="true"></div>
+                    <div class="brand-panel-orb brand-panel-orb-two" aria-hidden="true"></div>
+                    <div class="brand-panel-content">
+                        <img class="login-logo" src="../../recursos/LogoBlancoPS.png" alt="PrivateStorage">
+                        <p class="brand-kicker">Sistema de gestión</p>
+                        <h1>PrivateStorage</h1>
+                        <p class="brand-description">Elige una contraseña nueva para tu cuenta.</p>
+                    </div>
+                    <div class="brand-panel-line" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+
+                <div class="form-panel">
+                    <div class="form-heading">
+                        <p class="form-kicker">PrivateStorage</p>
+                        <h2>Nueva contraseña</h2>
+                        <p>Debe tener al menos 8 caracteres.</p>
+                    </div>
+
+                    <form class="login-form" id="formulario-restablecer" novalidate>
+                        <div class="form-group">
+                            <label class="form-label" for="password">Nueva contraseña</label>
+                            <div class="input-shell">
+                                <svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="4" y="10" width="16" height="11" rx="2"></rect>
+                                    <path d="M8 10V7a4 4 0 1 1 8 0v3m-4 5v2"></path>
+                                </svg>
+                                <input
+                                    class="form-input"
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    minlength="8"
+                                    placeholder="Escribe tu nueva contraseña"
+                                    autocomplete="new-password"
+                                >
+                                <button
+                                    class="password-toggle"
+                                    type="button"
+                                    aria-label="Mostrar contraseña"
+                                    aria-controls="password"
+                                    aria-pressed="false"
+                                >
+                                    <svg class="eye-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <svg class="eye-off-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"></path>
+                                        <path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a15.7 15.7 0 0 1-3.1 3.8M6.2 6.2C3.5 8 2 12 2 12s3.5 7 10 7a10.6 10.6 0 0 0 4.1-.8"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="password-confirmacion">Confirmar contraseña</label>
+                            <div class="input-shell">
+                                <svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="4" y="10" width="16" height="11" rx="2"></rect>
+                                    <path d="M8 10V7a4 4 0 1 1 8 0v3m-4 5v2"></path>
+                                </svg>
+                                <input
+                                    class="form-input"
+                                    type="password"
+                                    id="password-confirmacion"
+                                    name="password_confirmacion"
+                                    minlength="8"
+                                    placeholder="Repite tu nueva contraseña"
+                                    autocomplete="new-password"
+                                >
+                                <button
+                                    class="password-toggle"
+                                    type="button"
+                                    aria-label="Mostrar contraseña"
+                                    aria-controls="password-confirmacion"
+                                    aria-pressed="false"
+                                >
+                                    <svg class="eye-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <svg class="eye-off-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"></path>
+                                        <path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a15.7 15.7 0 0 1-3.1 3.8M6.2 6.2C3.5 8 2 12 2 12s3.5 7 10 7a10.6 10.6 0 0 0 4.1-.8"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <p class="login-message" role="alert" aria-live="polite"></p>
+
+                        <button class="login-button" type="submit">Guardar contraseña</button>
+
+                        <a class="form-link form-link-centrado" href="recuperar.html">Solicitar un enlace nuevo</a>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const botonTema = document.querySelector('#boton-tema');
+        const temaGuardado = localStorage.getItem('private-storage-tema');
+
+        const establecerTema = temaOscuro => {
+            document.documentElement.dataset.tema = temaOscuro ? 'oscuro' : '';
+            botonTema.setAttribute('aria-pressed', String(temaOscuro));
+            botonTema.setAttribute('aria-label', temaOscuro ? 'Activar modo claro' : 'Activar modo oscuro');
+            botonTema.querySelector('.theme-toggle-text').textContent = temaOscuro ? 'Tema claro' : 'Tema oscuro';
+        };
+
+        establecerTema(temaGuardado === 'oscuro');
+
+        botonTema.addEventListener('click', () => {
+            const temaOscuro = document.documentElement.dataset.tema !== 'oscuro';
+            establecerTema(temaOscuro);
+            localStorage.setItem('private-storage-tema', temaOscuro ? 'oscuro' : 'claro');
+        });
+
+        document.querySelectorAll('.password-toggle').forEach(boton => {
+            const campo = document.getElementById(boton.getAttribute('aria-controls'));
+
+            boton.addEventListener('click', () => {
+                const mostrarPassword = campo.type === 'password';
+                campo.type = mostrarPassword ? 'text' : 'password';
+                boton.setAttribute('aria-pressed', String(mostrarPassword));
+                boton.setAttribute('aria-label', mostrarPassword ? 'Ocultar contraseña' : 'Mostrar contraseña');
+            });
+        });
+
+        const formularioRestablecer = document.querySelector('#formulario-restablecer');
+        const campoPassword = document.querySelector('#password');
+        const campoConfirmacion = document.querySelector('#password-confirmacion');
+        const botonGuardar = document.querySelector('.login-button');
+        const mensaje = document.querySelector('.login-message');
+        const token = new URLSearchParams(window.location.search).get('token') ?? '';
+
+        const mostrarMensaje = (texto, exito = false) => {
+            mensaje.textContent = texto;
+            mensaje.classList.toggle('es-exito', exito);
+        };
+
+        if (!/^[a-f0-9]{64}$/.test(token)) {
+            mostrarMensaje('El enlace no es válido o ya expiró. Solicita uno nuevo.');
+            botonGuardar.disabled = true;
+        }
+
+        formularioRestablecer.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const password = campoPassword.value;
+            const passwordConfirmacion = campoConfirmacion.value;
+
+            if (password.length < 8) {
+                mostrarMensaje('La contraseña debe tener al menos 8 caracteres.');
+                return;
+            }
+
+            if (password !== passwordConfirmacion) {
+                mostrarMensaje('Las contraseñas no coinciden.');
+                return;
+            }
+
+            botonGuardar.disabled = true;
+            mostrarMensaje('');
+            let redirigiendo = false;
+
+            try {
+                const respuesta = await fetch('../../auth/restablecer_password.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        token,
+                        password,
+                        password_confirmacion: passwordConfirmacion
+                    })
+                });
+                const datos = await respuesta.json();
+
+                if (datos.success === true) {
+                    redirigiendo = true;
+                    formularioRestablecer.reset();
+                    mostrarMensaje(`${datos.message} Redirigiendo al inicio de sesión...`, true);
+                    window.setTimeout(() => {
+                        window.location.href = datos.redirect || 'inicioSesion.html';
+                    }, 2500);
+                    return;
+                }
+
+                mostrarMensaje(datos.message || 'No se pudo actualizar la contraseña.');
+            } catch (error) {
+                console.log('No se pudo restablecer la contraseña:', error);
+                mostrarMensaje('No se pudo conectar con el servidor. Intenta nuevamente.');
+            } finally {
+                if (!redirigiendo) {
+                    botonGuardar.disabled = false;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

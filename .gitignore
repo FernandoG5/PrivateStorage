@@ -1,1 +1,2 @@
-
+# Credenciales locales y del servidor: cada entorno tiene su propio config.php
+config/config.php

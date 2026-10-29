@@ -710,6 +710,10 @@
                                     <input id="gerente-usuario" type="text" required>
                                 </div>
                                 <div class="campo">
+                                    <label for="gerente-correo">Correo electrónico</label>
+                                    <input id="gerente-correo" type="email" maxlength="150" autocomplete="off" required>
+                                </div>
+                                <div class="campo">
                                     <label for="gerente-password">Contraseña</label>
                                     <div class="gerente-password-campo">
                                         <input id="gerente-password" type="password" autocomplete="new-password" required>
@@ -1037,6 +1041,7 @@
             document.getElementById('gerente-id').value = gerente ? gerente.id : '';
             document.getElementById('gerente-nombre').value = gerente ? gerente.nombre : '';
             document.getElementById('gerente-usuario').value = gerente ? gerente.usuario : '';
+            document.getElementById('gerente-correo').value = gerente ? (gerente.correo ?? '') : '';
             gerentePassword.value = '';
             gerentePassword.type = 'password';
             gerentePassword.required = !gerente;
@@ -1183,6 +1188,7 @@
                 id,
                 nombre: document.getElementById('gerente-nombre').value,
                 usuario: document.getElementById('gerente-usuario').value,
+                correo: document.getElementById('gerente-correo').value,
                 password: document.getElementById('gerente-password').value,
                 sucursal_id: document.getElementById('gerente-sucursal').value,
                 activo: document.getElementById('gerente-activo').value
