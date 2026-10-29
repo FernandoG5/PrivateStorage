@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar contraseña</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="inicioSesion.css">
+</head>
+
+<body>
+    <main class="login-page">
+        <section class="login-card" aria-label="Recuperar contraseña">
+            <button
+                class="theme-toggle"
+                id="boton-tema"
+                type="button"
+                aria-label="Activar modo oscuro"
+                aria-pressed="false"
+            >
+                <span class="theme-toggle-icon" aria-hidden="true">◐</span>
+                <span class="theme-toggle-text">Tema oscuro</span>
+            </button>
+
+            <div class="login-layout">
+                <div class="brand-panel">
+                    <div class="brand-panel-orb brand-panel-orb-one" aria-hidden="true"></div>
+                    <div class="brand-panel-orb brand-panel-orb-two" aria-hidden="true"></div>
+                    <div class="brand-panel-content">
+                        <img class="login-logo" src="../../recursos/LogoBlancoPS.png" alt="PrivateStorage">
+                        <p class="brand-kicker">Sistema de gestión</p>
+                        <h1>PrivateStorage</h1>
+                        <p class="brand-description">Te enviaremos un enlace para elegir una nueva contraseña.</p>
+                    </div>
+                    <div class="brand-panel-line" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+
+                <div class="form-panel">
+                    <div class="form-heading">
+                        <p class="form-kicker">PrivateStorage</p>
+                        <h2>Recuperar contraseña</h2>
+                        <p>Escribe el correo electrónico registrado en tu cuenta.</p>
+                    </div>
+
+                    <form class="login-form" id="formulario-recuperar" novalidate>
+                        <div class="form-group">
+                            <label class="form-label" for="correo">Correo electrónico</label>
+                            <div class="input-shell">
+                                <svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                                    <path d="m3 7 9 6 9-6"></path>
+                                </svg>
+                                <input
+                                    class="form-input"
+                                    type="email"
+                                    id="correo"
+                                    name="correo"
+                                    maxlength="150"
+                                    placeholder="nombre@correo.com"
+                                    autocomplete="email"
+                                >
+                            </div>
+                        </div>
+
+                        <p class="login-message" role="alert" aria-live="polite"></p>
+
+                        <button class="login-button" type="submit">Enviar enlace</button>
+
+                        <a class="form-link form-link-centrado" href="inicioSesion.html">Volver a iniciar sesión</a>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const botonTema = document.querySelector('#boton-tema');
+        const temaGuardado = localStorage.getItem('private-storage-tema');
+
+        const establecerTema = temaOscuro => {
+            document.documentElement.dataset.tema = temaOscuro ? 'oscuro' : '';
+            botonTema.setAttribute('aria-pressed', String(temaOscuro));
+            botonTema.setAttribute('aria-label', temaOscuro ? 'Activar modo claro' : 'Activar modo oscuro');
+            botonTema.querySelector('.theme-toggle-text').textContent = temaOscuro ? 'Tema claro' : 'Tema oscuro';
+        };
+
+        establecerTema(temaGuardado === 'oscuro');
+
+        botonTema.addEventListener('click', () => {
+            const temaOscuro = document.documentElement.dataset.tema !== 'oscuro';
+            establecerTema(temaOscuro);
+            localStorage.setItem('private-storage-tema', temaOscuro ? 'oscuro' : 'claro');
+        });
+
+        const formularioRecuperar = document.querySelector('#formulario-recuperar');
+        const campoCorreo = document.querySelector('#correo');
+        const botonEnviar = document.querySelector('.login-button');
+        const mensaje = document.querySelector('.login-message');
+
+        const mostrarMensaje = (texto, exito = false) => {
+            mensaje.textContent = texto;
+            mensaje.classList.toggle('es-exito', exito);
+        };
+
+        formularioRecuperar.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const correo = campoCorreo.value.trim();
+
+            if (!correo || !campoCorreo.checkValidity()) {
+                mostrarMensaje('Escribe un correo electrónico válido.');
+                return;
+            }
+
+            botonEnviar.disabled = true;
+            mostrarMensaje('');
+
+            try {
+                const respuesta = await fetch('../../auth/solicitar_reset.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({ correo })
+                });
+                const datos = await respuesta.json();
+
+                if (datos.success === true) {
+                    mostrarMensaje(datos.message, true);
+                    formularioRecuperar.reset();
+                    return;
+                }
+
+                mostrarMensaje(datos.message || 'No se pudo procesar la solicitud.');
+            } catch (error) {
+                console.log('No se pudo solicitar el restablecimiento:', error);
+                mostrarMensaje('No se pudo conectar con el servidor. Intenta nuevamente.');
+            } finally {
+                botonEnviar.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

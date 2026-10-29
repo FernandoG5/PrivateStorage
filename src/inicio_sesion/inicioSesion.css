@@ -13,6 +13,7 @@
     --sombra: rgb(52 29 84 / 15%);
     --halo: rgb(133 91 218 / 23%);
     --error: #b42332;
+    --exito: #1d7a46;
     --font-ui: "Inter", "Segoe UI", Arial, sans-serif;
 }
 
@@ -28,6 +29,7 @@
     --sombra: rgb(0 0 0 / 42%);
     --halo: rgb(177 139 250 / 30%);
     --error: #ffb4ab;
+    --exito: #8fdcad;
 }
 
 *,
@@ -462,6 +464,38 @@ button {
 
 .login-message:empty {
     display: none;
+}
+
+.login-message.es-exito {
+    color: var(--exito);
+}
+
+.form-link {
+    align-self: flex-end;
+    margin-top: -12px;
+    color: var(--morado-principal);
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.form-link:hover {
+    text-decoration: underline;
+}
+
+.form-link:focus-visible {
+    outline: 2px solid var(--morado-principal);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+:root[data-tema="oscuro"] .form-link {
+    color: var(--violeta);
+}
+
+.form-link-centrado {
+    align-self: center;
+    margin-top: -6px;
 }
 
 .login-button {
