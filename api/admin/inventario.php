@@ -12,6 +12,70 @@ function responderJson(array $respuesta, int $codigoHttp = 200): never
     exit;
 }
 
+const IMAGEN_PRODUCTO_TAMANO_MAXIMO = 2 * 1024 * 1024;
+const IMAGEN_PRODUCTO_EXTENSIONES = [
+    IMAGETYPE_JPEG => 'jpg',
+    IMAGETYPE_PNG => 'png',
+    IMAGETYPE_WEBP => 'webp'
+];
+
+function validarImagenProducto(mixed $archivo): ?string
+{
+    if ($archivo === null) {
+        return null;
+    }
+    if (!is_array($archivo) || !is_int($archivo['error'] ?? null) || !is_string($archivo['tmp_name'] ?? null)) {
+        return 'La imagen no es válida.';
+    }
+    if ($archivo['error'] === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+    if ($archivo['error'] === UPLOAD_ERR_INI_SIZE || $archivo['error'] === UPLOAD_ERR_FORM_SIZE) {
+        return 'La imagen no debe pesar más de 2 MB.';
+    }
+    if ($archivo['error'] !== UPLOAD_ERR_OK) {
+        return 'No se pudo subir la imagen.';
+    }
+    if (filesize($archivo['tmp_name']) > IMAGEN_PRODUCTO_TAMANO_MAXIMO) {
+        return 'La imagen no debe pesar más de 2 MB.';
+    }
+
+    $informacion = is_uploaded_file($archivo['tmp_name']) ? @getimagesize($archivo['tmp_name']) : false;
+    if ($informacion === false || !isset(IMAGEN_PRODUCTO_EXTENSIONES[$informacion[2]])) {
+        return 'La imagen debe ser JPG, PNG o WEBP.';
+    }
+
+    return null;
+}
+
+function guardarImagenProducto(mixed $archivo): ?string
+{
+    if ($archivo === null || $archivo['error'] === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+
+    $tipo = getimagesize($archivo['tmp_name'])[2];
+    $nombre = bin2hex(random_bytes(16)) . '.' . IMAGEN_PRODUCTO_EXTENSIONES[$tipo];
+
+    if (!move_uploaded_file($archivo['tmp_name'], __DIR__ . '/../../uploads/productos/' . $nombre)) {
+        throw new RuntimeException('No se pudo guardar la imagen del producto.');
+    }
+
+    return $nombre;
+}
+
+function eliminarImagenProducto(?string $nombre): void
+{
+    if ($nombre === null || $nombre === '') {
+        return;
+    }
+
+    $ruta = __DIR__ . '/../../uploads/productos/' . basename($nombre);
+    if (is_file($ruta)) {
+        unlink($ruta);
+    }
+}
+
 if (($_SESSION['autenticado'] ?? false) !== true) {
     responderJson([
         'success' => false,
@@ -26,6 +90,8 @@ if ((int) ($_SESSION['rol_id'] ?? 0) !== 1) {
         'message' => 'No tienes permiso para acceder a este módulo.'
     ], 403);
 }
+
+$imagenNueva = null;
 
 try {
     require_once __DIR__ . '/../../config/database.php';
@@ -47,7 +113,7 @@ try {
         $consultaSucursales->execute();
 
         $consultaProductos = $conexion->prepare(
-            "SELECT p.id, p.codigo, p.nombre, p.precio, p.categoria_id,
+            "SELECT p.id, p.codigo, p.nombre, p.precio, p.imagen, p.categoria_id,
                     COALESCE(c.nombre, 'Sin categoría') AS categoria,
                     i.sucursal_id, COALESCE(s.nombre, 'Sin sucursal') AS sucursal,
                     i.existencias, i.stock_minimo
@@ -120,6 +186,11 @@ try {
         responderJson(['success' => false, 'message' => 'El stock mínimo no es válido.'], 400);
     }
 
+    $errorImagen = validarImagenProducto($_FILES['imagen'] ?? null);
+    if ($errorImagen !== null) {
+        responderJson(['success' => false, 'message' => $errorImagen], 400);
+    }
+
     $id = null;
     if ($idRecibido !== '') {
         if (!ctype_digit($idRecibido) || (int) $idRecibido <= 0) {
@@ -161,14 +232,16 @@ try {
             responderJson(['success' => false, 'message' => 'Ya existe un producto con ese código.'], 409);
         }
 
+        $imagenNueva = guardarImagenProducto($_FILES['imagen'] ?? null);
         $insertarProducto = $conexion->prepare(
-            'INSERT INTO productos (codigo, nombre, precio, categoria_id, activo)
-             VALUES (:codigo, :nombre, :precio, :categoria_id, 1)'
+            'INSERT INTO productos (codigo, nombre, precio, imagen, categoria_id, activo)
+             VALUES (:codigo, :nombre, :precio, :imagen, :categoria_id, 1)'
         );
         $insertarProducto->execute([
             'codigo' => $codigo,
             'nombre' => $nombre,
             'precio' => $precio,
+            'imagen' => $imagenNueva,
             'categoria_id' => $categoriaId
         ]);
         $id = (int) $conexion->lastInsertId();
@@ -186,10 +259,11 @@ try {
         $mensaje = 'Producto agregado correctamente.';
     } else {
         $consultaProducto = $conexion->prepare(
-            'SELECT id FROM productos WHERE id = :id AND activo = 1 LIMIT 1 FOR UPDATE'
+            'SELECT id, imagen FROM productos WHERE id = :id AND activo = 1 LIMIT 1 FOR UPDATE'
         );
         $consultaProducto->execute(['id' => $id]);
-        if ($consultaProducto->fetchColumn() === false) {
+        $productoActual = $consultaProducto->fetch();
+        if ($productoActual === false) {
             $conexion->rollBack();
             responderJson(['success' => false, 'message' => 'El producto no existe o está inactivo.'], 404);
         }
@@ -203,15 +277,17 @@ try {
             responderJson(['success' => false, 'message' => 'Ya existe otro producto con ese código.'], 409);
         }
 
+        $imagenNueva = guardarImagenProducto($_FILES['imagen'] ?? null);
         $actualizarProducto = $conexion->prepare(
             'UPDATE productos
-             SET codigo = :codigo, nombre = :nombre, precio = :precio, categoria_id = :categoria_id
+             SET codigo = :codigo, nombre = :nombre, precio = :precio, imagen = :imagen, categoria_id = :categoria_id
              WHERE id = :id'
         );
         $actualizarProducto->execute([
             'codigo' => $codigo,
             'nombre' => $nombre,
             'precio' => $precio,
+            'imagen' => $imagenNueva ?? $productoActual['imagen'],
             'categoria_id' => $categoriaId,
             'id' => $id
         ]);
@@ -238,6 +314,7 @@ try {
             $consultaInventario->execute(['producto_id' => $id, 'sucursal_id' => $sucursalId]);
             if ($consultaInventario->fetchColumn() === false) {
                 $conexion->rollBack();
+                eliminarImagenProducto($imagenNueva);
                 responderJson(['success' => false, 'message' => 'No se encontró la existencia de esta sucursal.'], 404);
             }
         }
@@ -245,11 +322,15 @@ try {
     }
 
     $conexion->commit();
+    if ($imagenNueva !== null && isset($productoActual)) {
+        eliminarImagenProducto($productoActual['imagen']);
+    }
     responderJson(['success' => true, 'message' => $mensaje]);
 } catch (PDOException $e) {
     if (isset($conexion) && $conexion->inTransaction()) {
         $conexion->rollBack();
     }
+    eliminarImagenProducto($imagenNueva);
     if (($e->errorInfo[1] ?? null) === 1062) {
         responderJson(['success' => false, 'message' => 'Ya existe un producto con ese código en la sucursal.'], 409);
     }
@@ -259,6 +340,7 @@ try {
     if (isset($conexion) && $conexion->inTransaction()) {
         $conexion->rollBack();
     }
+    eliminarImagenProducto($imagenNueva);
     error_log('Error al guardar el inventario del administrador: ' . $e->getMessage());
     responderJson(['success' => false, 'message' => 'No se pudo guardar el producto.'], 500);
 }

@@ -1870,6 +1870,7 @@ body {
 }
 
 #formulario-producto-admin.formulario-sucursal {
+    grid-template-columns: minmax(0, 1fr);
     margin: 0;
     padding: 0;
     border: 0;

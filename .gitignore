@@ -1,2 +1,7 @@
 # Credenciales locales y del servidor: cada entorno tiene su propio config.php
 config/config.php
+
+# Imágenes de productos: viven solo en el servidor donde se subieron
+uploads/productos/*
+!uploads/productos/.htaccess
+

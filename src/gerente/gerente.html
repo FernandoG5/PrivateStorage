@@ -866,6 +866,7 @@
                         <div class="campo">
                             <label for="editar-cajero-correo">Correo electrónico</label>
                             <input id="editar-cajero-correo" name="correo" type="email" maxlength="150" autocomplete="off" required>
+                        </div>
                         <div class="campo">
                             <label for="editar-cajero-password">Nueva contraseña</label>
                             <input id="editar-cajero-password" name="password" type="password" autocomplete="new-password" placeholder="Déjalo vacío para conservar la actual">
@@ -1062,6 +1063,10 @@
                 currency: 'MXN'
             }).format(Number(valor));
 
+            const miniaturaProducto = producto => producto.imagen
+                ? `<img class="producto-miniatura" src="../../uploads/productos/${escaparHtml(encodeURIComponent(producto.imagen))}" alt="" loading="lazy">`
+                : '<span class="producto-miniatura producto-miniatura-vacia" aria-hidden="true"><i class="fa-solid fa-box"></i></span>';
+
             const mostrarDialogo = dialogo => {
                 if (!dialogo.open) dialogo.showModal();
                 const focoInicial = dialogo.querySelector('form:not([hidden]) input:not([type="hidden"]), form:not([hidden]) select') ||
@@ -1254,7 +1259,7 @@
                 document.getElementById('tabla-productos-nuevo').innerHTML = visibles.length ? visibles.map(producto => `
                     <tr>
                         <td class="codigo-producto" title="${escaparHtml(producto.codigo)}">${escaparHtml(producto.codigo)}</td>
-                        <td title="${escaparHtml(producto.nombre)}">${escaparHtml(producto.nombre)}</td>
+                        <td title="${escaparHtml(producto.nombre)}"><span class="producto-identidad">${miniaturaProducto(producto)}<span>${escaparHtml(producto.nombre)}</span></span></td>
                         <td class="celda-numero">${formatearMoneda(producto.precio)}</td>
                         <td class="celda-numero"><span class="existencia${Number(producto.existencias) <= Number(producto.stock_minimo) ? ' bajo' : ''}">${Number(producto.existencias)}</span></td>
                         <td class="celda-numero">${Number(producto.stock_minimo)}</td>

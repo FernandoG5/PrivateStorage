@@ -40,7 +40,7 @@ $sucursalId = obtenerSucursalSesion();
 try {
     require_once __DIR__ . '/../../../config/database.php';
     $consulta = $conexion->prepare(
-        'SELECT p.id, p.codigo, p.nombre, p.precio, p.activo,
+        'SELECT p.id, p.codigo, p.nombre, p.precio, p.imagen, p.activo,
                 i.existencias, i.stock_minimo, i.fecha_actualizacion
          FROM inventario_sucursal i
          INNER JOIN productos p ON p.id = i.producto_id

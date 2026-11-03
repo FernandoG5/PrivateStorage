@@ -270,6 +270,11 @@
                                     <label for="producto-admin-stock-minimo">Stock mínimo</label>
                                     <input id="producto-admin-stock-minimo" type="number" min="0" max="1000000" step="1" required>
                                 </div>
+                                <div class="campo campo-completo">
+                                    <label for="producto-admin-imagen">Imagen (JPG, PNG o WEBP, máximo 2 MB)</label>
+                                    <input id="producto-admin-imagen" type="file" accept="image/jpeg,image/png,image/webp">
+                                    <img class="imagen-previa" id="producto-admin-imagen-previa" alt="Vista previa de la imagen del producto" hidden>
+                                </div>
                             </div>
                             <p class="inventario-modal-error" id="error-formulario-producto-admin" role="alert" aria-live="assertive" hidden></p>
                             <div class="acciones-formulario">
