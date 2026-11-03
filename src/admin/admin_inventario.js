@@ -14,6 +14,10 @@
     const selectorPorPagina = paginacion.querySelector('select');
     const resumenPaginacion = paginacion.querySelector('.inventario-paginacion-resumen');
     const controlesPaginacion = paginacion.querySelector('.inventario-paginacion-controles');
+    const campoImagen = document.getElementById('producto-admin-imagen');
+    const imagenPrevia = document.getElementById('producto-admin-imagen-previa');
+    const tiposImagen = ['image/jpeg', 'image/png', 'image/webp'];
+    const tamanoMaximoImagen = 2 * 1024 * 1024;
     const clavePorPagina = 'privateStorage.inventario.productosPorPagina';
     const opcionesPorPagina = [5, 10, 20, 30];
     let productos = [];
@@ -22,6 +26,7 @@
     let paginaActual = 1;
     let productosPorPagina = 10;
     let elementoEnfoqueAnterior = null;
+    let imagenActual = null;
     let temporizadorToast;
 
     const escaparHtml = valor => String(valor ?? '').replace(/[&<>"']/g, caracter => ({
@@ -36,6 +41,18 @@
         style: 'currency',
         currency: 'MXN'
     });
+
+    const rutaImagen = nombre => `../../uploads/productos/${encodeURIComponent(nombre)}`;
+
+    const miniaturaProducto = producto => producto.imagen
+        ? `<img class="producto-miniatura" src="${escaparHtml(rutaImagen(producto.imagen))}" alt="" loading="lazy">`
+        : '<span class="producto-miniatura producto-miniatura-vacia" aria-hidden="true"><i class="fa-solid fa-box"></i></span>';
+
+    const mostrarImagenPrevia = ruta => {
+        imagenPrevia.hidden = !ruta;
+        if (ruta) imagenPrevia.src = ruta;
+        else imagenPrevia.removeAttribute('src');
+    };
 
     const opciones = (items, textoInicial, etiqueta) => {
         return `<option value="">${textoInicial}</option>` + items.map(item => `
@@ -152,7 +169,7 @@
             <tr>
                 <td class="col-centro">${producto.sucursal_id === null ? '—' : Number(producto.sucursal_id)}</td>
                 <td class="codigo-producto">${escaparHtml(producto.codigo)}</td>
-                <td><strong>${escaparHtml(producto.nombre)}</strong></td>
+                <td><span class="producto-identidad">${miniaturaProducto(producto)}<strong>${escaparHtml(producto.nombre)}</strong></span></td>
                 <td>${escaparHtml(producto.categoria || 'Sin categoría')}</td>
                 <td class="dinero-producto col-derecha">${moneda.format(Number(producto.precio ?? 0))}</td>
                 <td class="col-centro">${producto.existencias === null ? '—' : Number(producto.existencias)}</td>
@@ -232,6 +249,8 @@
             producto && producto.existencias !== null ? String(producto.existencias) : '0';
         document.getElementById('producto-admin-stock-minimo').value =
             producto && producto.stock_minimo !== null ? String(producto.stock_minimo) : '0';
+        imagenActual = producto?.imagen ? rutaImagen(producto.imagen) : null;
+        mostrarImagenPrevia(imagenActual);
         sucursales.disabled = Boolean(producto);
         formulario.classList.remove('oculto');
         modal.hidden = false;
@@ -266,6 +285,21 @@
             toast.hidden = true;
         }, 3500);
     };
+
+    campoImagen.addEventListener('change', () => {
+        const archivo = campoImagen.files[0];
+        errorFormulario.hidden = true;
+        if (archivo && (!tiposImagen.includes(archivo.type) || archivo.size > tamanoMaximoImagen)) {
+            campoImagen.value = '';
+            mostrarImagenPrevia(imagenActual);
+            mostrarErrorFormulario('La imagen debe ser JPG, PNG o WEBP y pesar máximo 2 MB.');
+            return;
+        }
+        mostrarImagenPrevia(archivo ? URL.createObjectURL(archivo) : imagenActual);
+    });
+    imagenPrevia.addEventListener('load', () => {
+        if (imagenPrevia.src.startsWith('blob:')) URL.revokeObjectURL(imagenPrevia.src);
+    });
 
     selectorCategoria.addEventListener('change', () => {
         paginaActual = 1;
@@ -352,24 +386,21 @@
             return;
         }
 
-        const datosFormulario = new URLSearchParams({
-            id: document.getElementById('producto-admin-id').value,
-            codigo: document.getElementById('producto-admin-codigo').value,
-            nombre: document.getElementById('producto-admin-nombre').value,
-            precio: document.getElementById('producto-admin-precio').value,
-            categoria_id: categorias.value,
-            sucursal_id: sucursales.value,
-            sucursal_anterior_id: document.getElementById('producto-admin-sucursal-anterior').value,
-            existencias: document.getElementById('producto-admin-existencias').value,
-            stock_minimo: document.getElementById('producto-admin-stock-minimo').value
-        });
+        const datosFormulario = new FormData();
+        datosFormulario.append('id', document.getElementById('producto-admin-id').value);
+        datosFormulario.append('codigo', document.getElementById('producto-admin-codigo').value);
+        datosFormulario.append('nombre', document.getElementById('producto-admin-nombre').value);
+        datosFormulario.append('precio', document.getElementById('producto-admin-precio').value);
+        datosFormulario.append('categoria_id', categorias.value);
+        datosFormulario.append('sucursal_id', sucursales.value);
+        datosFormulario.append('sucursal_anterior_id', document.getElementById('producto-admin-sucursal-anterior').value);
+        datosFormulario.append('existencias', document.getElementById('producto-admin-existencias').value);
+        datosFormulario.append('stock_minimo', document.getElementById('producto-admin-stock-minimo').value);
+        if (campoImagen.files[0]) datosFormulario.append('imagen', campoImagen.files[0]);
 
         try {
             const respuesta = await fetch('../../api/admin/inventario.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
                 body: datosFormulario
             });
             const datos = await respuesta.json();

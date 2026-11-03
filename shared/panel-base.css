@@ -1677,3 +1677,46 @@ dialog::backdrop {
         animation-iteration-count: 1 !important;
     }
 }
+
+.producto-identidad {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 10px;
+}
+
+.producto-identidad > :last-child {
+    overflow: hidden;
+    min-width: 0;
+    text-overflow: ellipsis;
+}
+
+.producto-miniatura {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    background: #fff;
+    object-fit: contain;
+}
+
+.producto-miniatura-vacia {
+    display: inline-grid;
+    place-items: center;
+    color: var(--texto-secundario);
+    background: var(--superficie-control);
+}
+
+.imagen-previa {
+    width: 120px;
+    height: 120px;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    background: #fff;
+    object-fit: contain;
+}
+
+.imagen-previa[hidden] {
+    display: none;
+}

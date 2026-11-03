@@ -314,6 +314,8 @@
             return datos;
         };
 
+        const rutaImagen = nombre => `../../uploads/productos/${escaparHtml(encodeURIComponent(nombre))}`;
+
         const normalizarProductos = lista => lista.map(producto => ({
             ...producto,
             id: Number(producto.id),
@@ -482,7 +484,9 @@
                 const textoStock = disponible <= 0 ? 'Agotado' : pocoStock ? `${disponible} · Poco stock` : `${disponible} disponibles`;
                 return `
                     <article class="producto-item">
-                        <div class="producto-icono"><i class="fa-solid fa-box" aria-hidden="true"></i></div>
+                        <div class="producto-icono">${producto.imagen
+                            ? `<img src="${rutaImagen(producto.imagen)}" alt="" loading="lazy">`
+                            : '<i class="fa-solid fa-box" aria-hidden="true"></i>'}</div>
                         <div class="producto-datos">
                             <span class="producto-codigo">${escaparHtml(producto.codigo)}</span>
                             <h3>${escaparHtml(producto.nombre)}</h3>
@@ -515,7 +519,9 @@
                 const claseEstado = agotado ? 'estado-agotado' : pocoStock ? 'estado-poco-stock' : 'estado-disponible';
                 return `
                 <tr>
-                    <td class="inventario-producto"><strong>${escaparHtml(producto.nombre)}</strong></td>
+                    <td class="inventario-producto"><span class="producto-identidad">${producto.imagen
+                        ? `<img class="producto-miniatura" src="${rutaImagen(producto.imagen)}" alt="" loading="lazy">`
+                        : '<span class="producto-miniatura producto-miniatura-vacia" aria-hidden="true"><i class="fa-solid fa-box"></i></span>'}<strong>${escaparHtml(producto.nombre)}</strong></span></td>
                     <td class="codigo-inventario">${escaparHtml(producto.codigo)}</td>
                     <td class="celda-numero">${moneda(producto.precio)}</td>
                     <td class="celda-numero">${producto.existencias}</td>

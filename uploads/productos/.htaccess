@@ -1,0 +1,10 @@
+# Esta carpeta recibe archivos de los usuarios: solo se sirven imágenes y nunca se ejecuta código.
+Options -Indexes
+
+<FilesMatch ".*">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "^[a-f0-9]{32}\.(jpg|png|webp)$">
+    Require all granted
+</FilesMatch>

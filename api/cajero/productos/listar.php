@@ -60,7 +60,7 @@ try {
     $consultaCategorias->execute();
 
     $consulta = $conexion->prepare(
-        'SELECT p.id, p.codigo, p.nombre, p.precio, p.categoria_id,
+        'SELECT p.id, p.codigo, p.nombre, p.precio, p.imagen, p.categoria_id,
                 COALESCE(c.nombre, \'Sin categoría\') AS categoria,
                 i.existencias, i.stock_minimo
          FROM inventario_sucursal i
