@@ -131,6 +131,12 @@ button {
     box-shadow: 0 5px 15px rgb(91 33 182 / 12%);
 }
 
+.language-toggle {
+    right: 145px;
+    min-width: 42px;
+    justify-content: center;
+}
+
 .theme-toggle:focus-visible,
 .login-button:focus-visible,
 .form-input:focus-visible,
@@ -620,6 +626,10 @@ button {
         right: 13px;
         min-height: 35px;
         padding: 7px 10px;
+    }
+
+    .language-toggle {
+        right: 64px;
     }
 
     .theme-toggle-text {

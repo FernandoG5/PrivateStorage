@@ -429,6 +429,12 @@ textarea:focus-visible {
     font-size: 1.25rem;
 }
 
+.ajustes-tema.boton-idioma {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
 .ajustes-tema[aria-label="Actualizar datos"] > i::before {
     content: "\f021";
 }

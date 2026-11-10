@@ -98,7 +98,8 @@
     const formatearFecha = fecha => {
         const valor = new Date(String(fecha).replace(' ', 'T'));
         if (Number.isNaN(valor.getTime())) return String(fecha);
-        return new Intl.DateTimeFormat('es-MX', {
+        const idioma = localStorage.getItem('private-storage-idioma') === 'en' ? 'en-US' : 'es-MX';
+        return new Intl.DateTimeFormat(idioma, {
             dateStyle: 'short',
             timeStyle: 'short'
         }).format(valor);
@@ -109,9 +110,10 @@
         if (Number.isNaN(valor.getTime())) {
             return { fecha: String(fecha), hora: '' };
         }
+        const idioma = localStorage.getItem('private-storage-idioma') === 'en' ? 'en-US' : 'es-MX';
         return {
-            fecha: new Intl.DateTimeFormat('es-MX', { dateStyle: 'short' }).format(valor),
-            hora: new Intl.DateTimeFormat('es-MX', { timeStyle: 'short' }).format(valor)
+            fecha: new Intl.DateTimeFormat(idioma, { dateStyle: 'short' }).format(valor),
+            hora: new Intl.DateTimeFormat(idioma, { timeStyle: 'short' }).format(valor)
         };
     };
 
@@ -466,4 +468,5 @@
     });
 
     actualizarVentas();
+    window.addEventListener('private-storage-language-changed', actualizarVentas);
 })();

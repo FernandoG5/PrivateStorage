@@ -23,7 +23,8 @@
     const formatearFecha = fecha => {
         const valor = new Date(String(fecha).replace(' ', 'T'));
         if (Number.isNaN(valor.getTime())) return String(fecha);
-        return new Intl.DateTimeFormat('es-MX', {
+        const idioma = localStorage.getItem('private-storage-idioma') === 'en' ? 'en-US' : 'es-MX';
+        return new Intl.DateTimeFormat(idioma, {
             dateStyle: 'short',
             timeStyle: 'short'
         }).format(valor);
@@ -135,4 +136,5 @@
     };
 
     cargarDashboard();
+    window.addEventListener('private-storage-language-changed', cargarDashboard);
 })();
