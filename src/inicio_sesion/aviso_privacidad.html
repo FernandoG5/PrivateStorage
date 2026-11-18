@@ -30,6 +30,15 @@
             background: linear-gradient(145deg, #6b3cb4 0%, #51218f 48%, #35115f 100%);
         }
 
+        .legal-encabezado {
+            padding-right: 96px;
+        }
+
+        .legal-encabezado .language-toggle {
+            top: 16px;
+            right: 16px;
+        }
+
         .legal-encabezado img {
             width: 64px;
             height: 64px;
@@ -138,6 +147,10 @@
                 padding-left: 20px;
             }
 
+            .legal-encabezado {
+                padding-right: 76px;
+            }
+
             .legal-encabezado img {
                 width: 48px;
                 height: 48px;
@@ -149,6 +162,7 @@
 <body>
     <main class="legal-page">
         <header class="legal-encabezado">
+            <button class="theme-toggle language-toggle" id="boton-idioma" type="button" aria-label="Cambiar idioma">ES</button>
             <img src="../../recursos/LogoBlancoPS.png" alt="PrivateStorage">
             <div>
                 <p>PrivateStorage</p>
@@ -157,48 +171,33 @@
         </header>
 
         <article class="legal-contenido">
-            <nav class="legal-indice" aria-label="Contenido">
+            <nav class="legal-indice" aria-label="Índice del documento">
                 <a href="#terminos">Términos de uso</a> · <a href="#privacidad">Aviso de privacidad</a>
             </nav>
 
             <h2 id="terminos">Términos de uso</h2>
 
             <h3>1. Uso del sistema</h3>
-            <p>
-                PrivateStorage es un sistema destinado a la gestión de productos, inventarios, sucursales y ventas.
-                El usuario se compromete a utilizarlo únicamente para las actividades autorizadas.
-            </p>
+            <p>PrivateStorage es un sistema destinado a la gestión de productos, inventarios, sucursales y ventas. El usuario se compromete a utilizarlo únicamente para las actividades autorizadas.</p>
 
             <h3>2. Responsabilidad del usuario</h3>
-            <p>
-                El usuario es responsable del uso de su cuenta y de mantener la confidencialidad de sus credenciales.
-                No debe compartir su contraseña con otras personas.
-            </p>
+            <p>El usuario es responsable del uso de su cuenta y de mantener la confidencialidad de sus credenciales. No debe compartir su contraseña con otras personas.</p>
 
             <h3>3. Uso adecuado de la información</h3>
-            <p>
-                La información registrada en el sistema debe ser verdadera y utilizarse únicamente para los fines
-                correspondientes a las actividades de la empresa.
-            </p>
+            <p>La información registrada en el sistema debe ser verdadera y utilizarse únicamente para los fines correspondientes a las actividades de la empresa.</p>
 
             <h3>4. Seguridad</h3>
-            <p>
-                El usuario debe informar sobre cualquier actividad sospechosa o acceso no autorizado a su cuenta.
-            </p>
+            <p>El usuario debe informar sobre cualquier actividad sospechosa o acceso no autorizado a su cuenta.</p>
 
             <h2 id="privacidad">Aviso de privacidad</h2>
 
             <h3>Responsable de tus datos personales</h3>
-            <p>
-                <strong>PrivateStorage Soluciones Tecnológicas, S.A. de C.V.</strong>, con domicilio en Av. México 245, Col. Centro, C.P. 28200, Manzanillo, Colima, México, es responsable del tratamiento de
-                los datos personales que nos proporcionas como persona usuaria de PrivateStorage, conforme a la Ley Federal
-                de Protección de Datos Personales en Posesión de los Particulares.
-            </p>
+            <p><strong>PrivateStorage Soluciones Tecnológicas, S.A. de C.V.</strong>, con domicilio en Av. México 245, Col. Centro, C.P. 28200, Manzanillo, Colima, México, es responsable del tratamiento de los datos personales que nos proporcionas como persona usuaria de PrivateStorage, conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
 
             <h3>Datos que recabamos</h3>
             <ul>
                 <li>Nombre completo.</li>
-                <li>Número de trabajador.</li>
+                <li>Usuario de acceso.</li>
                 <li>Correo electrónico.</li>
                 <li>Puesto (gerente o cajero) y sucursal asignada.</li>
                 <li>Registros de actividad en el sistema, como ventas, movimientos de inventario y fechas de acceso.</li>
@@ -214,24 +213,13 @@
             </ul>
 
             <h3>Transferencias</h3>
-            <p>
-                Tus datos no se comparten con terceros. Solo los conocen los proveedores de alojamiento web y de correo
-                electrónico que prestan el servicio a PrivateStorage, y únicamente para ese fin, o las autoridades
-                competentes cuando la ley lo exija.
-            </p>
+            <p>Tus datos no se comparten con terceros. Solo los conocen los proveedores de alojamiento web y de correo electrónico que prestan el servicio a PrivateStorage, y únicamente para ese fin, o las autoridades competentes cuando la ley lo exija.</p>
 
             <h3>Tus derechos (ARCO)</h3>
-            <p>
-                Puedes acceder a tus datos, rectificarlos, cancelarlos u oponerte a su uso, así como revocar tu
-                consentimiento, enviando una solicitud a <a href="mailto:privacidad@hiddenstage.io">privacidad@hiddenstage.io</a>. Incluye tu nombre, tu número de
-                trabajador, una descripción clara de lo que solicitas y una copia de una identificación oficial.
-                Te responderemos en un plazo máximo de 20 días hábiles.
-            </p>
+            <p>Puedes acceder a tus datos, rectificarlos, cancelarlos u oponerte a su uso, así como revocar tu consentimiento, enviando una solicitud a <a href="mailto:privacidad@hiddenstage.io">privacidad@hiddenstage.io</a>. Incluye tu nombre, tu usuario, una descripción clara de lo que solicitas y una copia de una identificación oficial. Te responderemos en un plazo máximo de 20 días hábiles.</p>
 
             <h3>Cambios a este aviso</h3>
-            <p>
-                Cualquier cambio a estos términos o a este aviso de privacidad se publicará en esta misma página.
-            </p>
+            <p>Cualquier cambio a estos términos o a este aviso de privacidad se publicará en esta misma página.</p>
 
             <p class="legal-actualizacion">Última actualización: 18 de noviembre de 2026.</p>
 
@@ -248,6 +236,7 @@
             // Sin almacenamiento disponible: se usa el tema claro.
         }
     </script>
+    <script src="../../shared/i18n.js?v=20261118" defer></script>
 </body>
 
 </html>

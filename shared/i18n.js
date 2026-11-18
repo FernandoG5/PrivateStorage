@@ -138,17 +138,6 @@
         'Hoy': 'Today',
         'Últimos 7 días': 'Last 7 days',
         'Este mes': 'This month',
-        'Esta semana': 'This week',
-        'RENDIMIENTO DE LA SUCURSAL': 'BRANCH PERFORMANCE',
-        'Venta total': 'Total sales',
-        'Ventas realizadas': 'Completed sales',
-        'Promedio por venta': 'Average per sale',
-        'Ventas por hora': 'Sales by hour',
-        'Ventas por día de la semana': 'Sales by day of week',
-        'Ventas por día del mes': 'Sales by day of month',
-        'Importe vendido': 'Sales amount',
-        'Cargando resumen...': 'Loading summary...',
-        'No hay ventas registradas en este periodo.': 'No sales recorded in this period.',
         'Todo': 'All time',
         'Limpiar filtros': 'Clear filters',
         'Folio o cajero': 'Receipt or cashier',
@@ -304,13 +293,8 @@
         ,'Cajas': 'Cash registers'
         ,'Cajas de la sucursal': 'Branch cash registers'
         ,'Nombre de la caja': 'Cash register name'
-        ,'Asignar cajero': 'Assign cashier'
-        ,'Selecciona un cajero activo': 'Select an active cashier'
-        ,'Cajero asignado': 'Assigned cashier'
         ,'Guardar caja': 'Save cash register'
         ,'Aún no hay cajas registradas.': 'No cash registers have been added yet.'
-        ,'Caja guardada correctamente.': 'Cash register saved successfully.'
-        ,'No se pudieron cargar las cajas.': 'Could not load cash registers.'
         ,'Aún no hay ventas en esta sucursal.': 'There are no sales at this branch yet.'
         ,'Historial de ventas': 'Sales history'
         ,'Folio': 'Receipt'
@@ -367,6 +351,7 @@
         ,'Selecciona un producto': 'Select a product'
         ,'Eliminar producto del catálogo': 'Remove product from catalog'
         ,'Se desactivará para conservar sus registros de ventas.': 'It will be deactivated to preserve its sales records.'
+        ,'El registro de cajas estará disponible próximamente.': 'Cash register management will be available soon.'
         ,'CONFIRMAR ACCIÓN': 'CONFIRM ACTION'
         ,'¿Continuar?': 'Continue?'
         ,'Desactivar producto': 'Deactivate product'
@@ -387,6 +372,7 @@
         ,'Filas por página': 'Rows per page'
         ,'Mostrando ': 'Showing '
         ,'No hay ventas en este periodo': 'There are no sales in this period'
+        ,'No hay ventas en este periodo.': 'There are no sales in this period.'
         ,'No se pudieron cargar las sucursales.': 'Branches could not be loaded.'
         ,'No se pudo cargar el contexto.': 'The context could not be loaded.'
         ,'No se pudo confirmar la venta.': 'Could not confirm the sale.'
@@ -440,57 +426,100 @@
         ,'Paginación de gerentes': 'Manager pagination'
         ,'Artículos': 'Items'
         ,'El servidor respondió con un formato inválido. Consulta la consola para más detalles.': 'The server returned an invalid format. Check the console for details.'
-        ,'nombre@correo.com': 'name@email.com'
-        ,'Modo oscuro': 'Dark mode'
-        ,'Modo claro': 'Light mode'
-        ,'PrivateStorage - Panel': 'PrivateStorage - Panel'
-        ,'Private Storage, panel del gerente': 'Private Storage, manager panel'
-        ,'Private Storage, panel': 'Private Storage, panel'
-        ,'Menú del cajero': 'Cashier menu'
-        ,'Buscar en el panel': 'Search panel'
-        ,'ACTIVIDAD': 'ACTIVITY'
-        ,'Cerrar notificaciones': 'Close notifications'
-        ,'Completa los datos del producto y sus existencias.': 'Fill in the product details and stock.'
-        ,'Modificar producto': 'Modify product'
-        ,'Consultar productos': 'View products'
-        ,'La nueva cantidad reemplaza el total actual.': 'The new quantity replaces the current total.'
-        ,'Categorías de productos': 'Product categories'
-        ,'Precio vendido': 'Sale price'
-        ,'con stock bajo': 'low-stock products'
-        ,'HISTORIAL': 'HISTORY'
-        ,'COMPROBANTE': 'RECEIPT'
-        ,'Resumen del periodo': 'Period summary'
-        ,'Detalle de venta': 'Sale details'
-        ,'Resumen de sucursales': 'Branches summary'
-        ,'Eliminar sucursal': 'Delete branch'
-        ,'¿Eliminar definitivamente la sucursal ': 'Permanently delete branch '
-        ,'El registro de cajas estará disponible próximamente.': 'Cash register management will be available soon.'
-        ,'Resumen de gerentes': 'Managers summary'
-        ,'? El registro y sus referencias se conservarán; el gerente ya no podrá acceder.': '? The record and its references will be kept; the manager will no longer be able to log in.'
-        ,'¿Desactivar a ': 'Deactivate '
-        ,'Sus ventas anteriores se conservarán.': 'Their previous sales will be kept.'
-        ,'Filas': 'Rows'
-        ,'Análisis de ventas': 'Sales analysis'
-        ,'Ventas por método de pago': 'Sales by payment method'
-        ,'Distribución del periodo': 'Period distribution'
-        ,'venta': 'sale'
-        ,'ventas': 'sales'
-        ,'No hay notificaciones de inventario.': 'There are no inventory notifications.'
-        ,'Abrir notificaciones, ': 'Open notifications, '
-        ,' sin leer': ' unread'
-        ,'Quedan ': 'There are '
-        ,' unidades; el mínimo es ': ' units left; the minimum is '
-        ,' unidades disponibles en el inventario.': ' units available in inventory.'
-        ,'Producto agregado: ': 'Product added: '
-        ,'Se agregó stock: ': 'Stock added: '
-        ,'Existencias actualizadas (': 'Stock updated ('
-        ,'lun.': 'Mon'
-        ,'mar.': 'Tue'
-        ,'mié.': 'Wed'
-        ,'jue.': 'Thu'
-        ,'vie.': 'Fri'
-        ,'sáb.': 'Sat'
-        ,'dom.': 'Sun'
+
+        // Inicio de sesión
+        ,'Ingresa tu usuario': 'Enter your username'
+        ,'Tu contraseña temporal venció. Pide que te reenvíen el acceso o usa "¿Olvidaste tu contraseña?".': 'Your temporary password has expired. Ask for your access to be resent or use "Forgot your password?".'
+
+        // Alta de usuarios con contraseña temporal
+        ,'Se generará una contraseña temporal y se enviará al correo del gerente junto con su usuario.': 'A temporary password will be generated and sent to the manager\'s email along with their username.'
+        ,'Se generará una contraseña temporal y se enviará al correo del cajero junto con su usuario.': 'A temporary password will be generated and sent to the cashier\'s email along with their username.'
+        ,'Gerente creado. Le enviamos su contraseña temporal por correo.': 'Manager created. We emailed them their temporary password.'
+        ,'Gerente creado, pero no se pudo enviar el correo con su contraseña temporal.': 'Manager created, but the email with their temporary password could not be sent.'
+        ,'Cajero creado. Le enviamos su contraseña temporal por correo.': 'Cashier created. We emailed them their temporary password.'
+        ,'Cajero creado, pero no se pudo enviar el correo con su contraseña temporal.': 'Cashier created, but the email with their temporary password could not be sent.'
+        ,'Cajero creado, pero no recibió su correo de acceso.': 'Cashier created, but they did not receive their access email.'
+        ,'No se pudo enviar el correo': 'The email could not be sent'
+        ,': la cuenta se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. Puedes intentarlo de nuevo; se generará una contraseña temporal nueva.': ': the account was created successfully, but we could not send the email with their temporary password. You can try again; a new temporary password will be generated.'
+        ,'El cajero se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. ¿Quieres intentarlo de nuevo? Se generará una contraseña temporal nueva.': 'The cashier was created successfully, but we could not send the email with their temporary password. Do you want to try again? A new temporary password will be generated.'
+        ,'¿Quieres intentarlo otra vez?': 'Do you want to try again?'
+        ,'No se pudo comunicar con el servidor.': 'Could not communicate with the server.'
+        ,'Reenviar correo': 'Resend email'
+        ,'Cerrar aviso': 'Close notice'
+        ,'AVISO': 'NOTICE'
+        ,'Correo reenviado con una nueva contraseña temporal.': 'Email resent with a new temporary password.'
+        ,'Correo reenviado correctamente.': 'Email resent successfully.'
+        ,'Correo reenviado correctamente': 'Email resent successfully'
+        ,'No se pudo reenviar el correo.': 'The email could not be resent.'
+        ,'No se pudo enviar el correo. Intenta de nuevo en unos minutos.': 'The email could not be sent. Try again in a few minutes.'
+        ,'No se pudo reenviar el acceso.': 'Access could not be resent.'
+        ,'El gerente está inactivo. Actívalo antes de reenviar el acceso.': 'The manager is inactive. Activate them before resending access.'
+        ,'El cajero está inactivo. Actívalo antes de reenviar el acceso.': 'The cashier is inactive. Activate them before resending access.'
+        ,'Este gerente ya activó su cuenta. Si olvidó su contraseña, puede usar "¿Olvidaste tu contraseña?".': 'This manager has already activated their account. If they forgot their password, they can use "Forgot your password?".'
+        ,'Este cajero ya activó su cuenta. Si olvidó su contraseña, puede usar "¿Olvidaste tu contraseña?".': 'This cashier has already activated their account. If they forgot their password, they can use "Forgot your password?".'
+        ,'El gerente no tiene un correo electrónico válido.': 'The manager does not have a valid email address.'
+        ,'El cajero no tiene un correo electrónico válido.': 'The cashier does not have a valid email address.'
+        ,'El gerente no existe.': 'The manager does not exist.'
+        ,'No se encontró el cajero.': 'The cashier was not found.'
+
+        // Cambio obligatorio de contraseña
+        ,'Crea tu contraseña': 'Create your password'
+        ,'Crear contraseña': 'Create password'
+        ,'Primer inicio de sesión': 'First login'
+        ,'Por tu seguridad, reemplaza la contraseña temporal por una que solo tú conozcas.': 'For your security, replace the temporary password with one that only you know.'
+        ,'Debe tener al menos 8 caracteres y ser distinta a la temporal.': 'It must have at least 8 characters and be different from the temporary one.'
+        ,'He leído y acepto los ': 'I have read and accept the '
+        ,'términos de uso y el aviso de privacidad': 'terms of use and privacy notice'
+        ,'Guardar y entrar': 'Save and continue'
+        ,'Volver al inicio de sesión': 'Back to log in'
+        ,'Debes aceptar los términos de uso y el aviso de privacidad para continuar.': 'You must accept the terms of use and privacy notice to continue.'
+        ,'Contraseña guardada.': 'Password saved.'
+        ,'Entrando al sistema...': 'Signing in...'
+        ,'No se pudo guardar la contraseña.': 'The password could not be saved.'
+        ,'¡Listo! Tu contraseña se guardó correctamente.': 'Done! Your password was saved successfully.'
+        ,'Tu sesión expiró. Inicia sesión de nuevo con tu contraseña temporal.': 'Your session expired. Log in again with your temporary password.'
+        ,'La solicitud no es válida. Recarga la página.': 'The request is not valid. Reload the page.'
+        ,'Tu contraseña temporal ya no es válida. Inicia sesión de nuevo o pide que te reenvíen el acceso.': 'Your temporary password is no longer valid. Log in again or ask for your access to be resent.'
+        ,'La nueva contraseña debe ser distinta a la contraseña temporal.': 'The new password must be different from the temporary password.'
+        ,'Tu contraseña se actualizó. Inicia sesión de nuevo.': 'Your password was updated. Log in again.'
+
+        // Términos de uso y aviso de privacidad
+        ,'Términos y privacidad': 'Terms and privacy'
+        ,'Términos de uso y aviso de privacidad': 'Terms of use and privacy notice'
+        ,'Términos de uso': 'Terms of use'
+        ,'Aviso de privacidad': 'Privacy notice'
+        ,'Índice del documento': 'Table of contents'
+        ,'1. Uso del sistema': '1. Use of the system'
+        ,'PrivateStorage es un sistema destinado a la gestión de productos, inventarios, sucursales y ventas. El usuario se compromete a utilizarlo únicamente para las actividades autorizadas.': 'PrivateStorage is a system for managing products, inventory, branches and sales. Users agree to use it only for authorized activities.'
+        ,'2. Responsabilidad del usuario': '2. User responsibility'
+        ,'El usuario es responsable del uso de su cuenta y de mantener la confidencialidad de sus credenciales. No debe compartir su contraseña con otras personas.': 'Users are responsible for the use of their account and for keeping their credentials confidential. They must not share their password with anyone else.'
+        ,'3. Uso adecuado de la información': '3. Proper use of information'
+        ,'La información registrada en el sistema debe ser verdadera y utilizarse únicamente para los fines correspondientes a las actividades de la empresa.': 'Information recorded in the system must be truthful and used only for purposes related to the company\'s activities.'
+        ,'4. Seguridad': '4. Security'
+        ,'El usuario debe informar sobre cualquier actividad sospechosa o acceso no autorizado a su cuenta.': 'Users must report any suspicious activity or unauthorized access to their account.'
+        ,'Responsable de tus datos personales': 'Data controller'
+        ,', con domicilio en Av. México 245, Col. Centro, C.P. 28200, Manzanillo, Colima, México, es responsable del tratamiento de los datos personales que nos proporcionas como persona usuaria de PrivateStorage, conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.': ', located at Av. México 245, Col. Centro, C.P. 28200, Manzanillo, Colima, Mexico, is responsible for processing the personal data you provide as a PrivateStorage user, in accordance with the Federal Law on the Protection of Personal Data Held by Private Parties.'
+        ,'Datos que recabamos': 'Data we collect'
+        ,'Nombre completo.': 'Full name.'
+        ,'Usuario de acceso.': 'Login username.'
+        ,'Correo electrónico.': 'Email address.'
+        ,'Puesto (gerente o cajero) y sucursal asignada.': 'Position (manager or cashier) and assigned branch.'
+        ,'Registros de actividad en el sistema, como ventas, movimientos de inventario y fechas de acceso.': 'Activity records in the system, such as sales, inventory movements and login dates.'
+        ,'No recabamos datos personales sensibles.': 'We do not collect sensitive personal data.'
+        ,'Para qué usamos tus datos': 'How we use your data'
+        ,'Crear y administrar tu cuenta de acceso a PrivateStorage.': 'To create and manage your PrivateStorage account.'
+        ,'Enviarte tus datos de acceso, contraseñas temporales y avisos de seguridad, como el restablecimiento de contraseña.': 'To send you your login details, temporary passwords and security notices, such as password resets.'
+        ,'Registrar las operaciones de venta e inventario que realizas en tu sucursal.': 'To record the sales and inventory operations you perform at your branch.'
+        ,'Mantener la seguridad del sistema y llevar un control de las operaciones realizadas.': 'To keep the system secure and maintain a record of the operations performed.'
+        ,'Transferencias': 'Transfers'
+        ,'Tus datos no se comparten con terceros. Solo los conocen los proveedores de alojamiento web y de correo electrónico que prestan el servicio a PrivateStorage, y únicamente para ese fin, o las autoridades competentes cuando la ley lo exija.': 'Your data is not shared with third parties. It is only accessible to the web hosting and email providers that serve PrivateStorage, solely for that purpose, or to the competent authorities when required by law.'
+        ,'Tus derechos (ARCO)': 'Your rights (ARCO)'
+        ,'Puedes acceder a tus datos, rectificarlos, cancelarlos u oponerte a su uso, así como revocar tu consentimiento, enviando una solicitud a ': 'You can access, rectify or cancel your data, or object to its use, and you can also withdraw your consent, by sending a request to '
+        ,'. Incluye tu nombre, tu usuario, una descripción clara de lo que solicitas y una copia de una identificación oficial. Te responderemos en un plazo máximo de 20 días hábiles.': '. Include your name, your username, a clear description of your request and a copy of an official ID. We will reply within 20 business days at most.'
+        ,'Cambios a este aviso': 'Changes to this notice'
+        ,'Cualquier cambio a estos términos o a este aviso de privacidad se publicará en esta misma página.': 'Any changes to these terms or to this privacy notice will be published on this page.'
+        ,'Última actualización: 18 de noviembre de 2026.': 'Last updated: November 18, 2026.'
+        ,'← Volver al inicio de sesión': '← Back to log in'
     };
 
     const atributos = ['aria-label', 'aria-valuetext', 'placeholder', 'title'];
@@ -508,72 +537,39 @@
     const traducirInterfaz = idioma => {
         if (traduciendo) return;
         traduciendo = true;
-        try {
-            if (document.documentElement.lang !== idioma) document.documentElement.lang = idioma;
-            const tituloTraducido = traducirDesdeEspanol(tituloOriginal, idioma);
-            if (document.title !== tituloTraducido) document.title = tituloTraducido;
-            const recorrido = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-            let nodo;
-            while ((nodo = recorrido.nextNode())) {
-                if (nodo.parentElement && !['SCRIPT', 'STYLE'].includes(nodo.parentElement.tagName)) {
-                    if (!textosOriginales.has(nodo)) {
-                        textosOriginales.set(nodo, nodo.nodeValue);
-                    } else if (idioma === 'en') {
-                        const esperado = traducirDesdeEspanol(textosOriginales.get(nodo), 'en');
-                        if (nodo.nodeValue !== esperado) {
-                            textosOriginales.set(nodo, nodo.nodeValue);
-                        }
-                    } else {
-                        const original = textosOriginales.get(nodo);
-                        const esperadoEn = traducirDesdeEspanol(original, 'en');
-                        if (nodo.nodeValue !== original && nodo.nodeValue !== esperadoEn) {
-                            textosOriginales.set(nodo, nodo.nodeValue);
-                        }
-                    }
-
-                    const textoTraducido = traducirDesdeEspanol(textosOriginales.get(nodo), idioma);
-                    if (nodo.nodeValue !== textoTraducido) nodo.nodeValue = textoTraducido;
-                }
+        if (document.documentElement.lang !== idioma) document.documentElement.lang = idioma;
+        const tituloTraducido = traducirDesdeEspanol(tituloOriginal, idioma);
+        if (document.title !== tituloTraducido) document.title = tituloTraducido;
+        const recorrido = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        let nodo;
+        while ((nodo = recorrido.nextNode())) {
+            if (nodo.parentElement && !['SCRIPT', 'STYLE'].includes(nodo.parentElement.tagName)) {
+                if (!textosOriginales.has(nodo)) textosOriginales.set(nodo, nodo.nodeValue);
+                const textoTraducido = traducirDesdeEspanol(textosOriginales.get(nodo), idioma);
+                if (nodo.nodeValue !== textoTraducido) nodo.nodeValue = textoTraducido;
             }
-
-            document.querySelectorAll('*').forEach(elemento => {
-                if (elemento.id === 'boton-idioma') return;
-                if (!atributosOriginales.has(elemento)) atributosOriginales.set(elemento, new Map());
-                const originales = atributosOriginales.get(elemento);
-                atributos.forEach(atributo => {
-                    const valor = elemento.getAttribute(atributo);
-                    if (!valor) return;
-
-                    if (!originales.has(atributo)) {
-                        originales.set(atributo, valor);
-                    } else if (idioma === 'en') {
-                        const esperado = traducirDesdeEspanol(originales.get(atributo), 'en');
-                        if (valor !== esperado) {
-                            originales.set(atributo, valor);
-                        }
-                    } else {
-                        const original = originales.get(atributo);
-                        const esperadoEn = traducirDesdeEspanol(original, 'en');
-                        if (valor !== original && valor !== esperadoEn) {
-                            originales.set(atributo, valor);
-                        }
-                    }
-
+        }
+        document.querySelectorAll('*').forEach(elemento => {
+            if (!atributosOriginales.has(elemento)) atributosOriginales.set(elemento, new Map());
+            const originales = atributosOriginales.get(elemento);
+            atributos.forEach(atributo => {
+                const valor = elemento.getAttribute(atributo);
+                if (valor) {
+                    if (!originales.has(atributo)) originales.set(atributo, valor);
                     const valorTraducido = traducirDesdeEspanol(originales.get(atributo), idioma);
                     if (valor !== valorTraducido) elemento.setAttribute(atributo, valorTraducido);
-                });
+                }
             });
-            const boton = document.getElementById('boton-idioma');
-            if (boton) {
-                const etiqueta = idioma === 'en' ? 'Change language to Spanish' : 'Cambiar idioma a inglés';
-                const textoBoton = idioma === 'en' ? 'EN' : 'ES';
-                if (boton.textContent !== textoBoton) boton.textContent = textoBoton;
-                if (boton.getAttribute('aria-label') !== etiqueta) boton.setAttribute('aria-label', etiqueta);
-                if (boton.title !== etiqueta) boton.title = etiqueta;
-            }
-        } finally {
-            traduciendo = false;
+        });
+        const boton = document.getElementById('boton-idioma');
+        if (boton) {
+            const etiqueta = idioma === 'en' ? 'Change language to Spanish' : 'Cambiar idioma a inglés';
+            const textoBoton = idioma === 'en' ? 'EN' : 'ES';
+            if (boton.textContent !== textoBoton) boton.textContent = textoBoton;
+            if (boton.getAttribute('aria-label') !== etiqueta) boton.setAttribute('aria-label', etiqueta);
+            if (boton.title !== etiqueta) boton.title = etiqueta;
         }
+        traduciendo = false;
     };
 
     let idiomaActual = 'es';
@@ -603,9 +599,6 @@
 
     new MutationObserver(() => traducirInterfaz(idiomaActual)).observe(document.body, {
         childList: true,
-        subtree: true,
-        characterData: true,
-        attributes: true,
-        attributeFilter: atributos
+        subtree: true
     });
 })();

@@ -859,7 +859,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <p class="gerente-password-ayuda" id="gerente-aviso-password-temporal" hidden><i class="fa-solid fa-envelope" aria-hidden="true"></i> Se generará una contraseña temporal y se enviará al correo del gerente junto con su número de trabajador.</p>
+                            <p class="gerente-password-ayuda" id="gerente-aviso-password-temporal" hidden><i class="fa-solid fa-envelope" aria-hidden="true"></i> Se generará una contraseña temporal y se enviará al correo del gerente junto con su usuario.</p>
                             <p class="inventario-modal-error" id="error-formulario-gerente" role="alert" aria-live="assertive" hidden></p>
                             <div class="acciones-formulario">
                                 <button class="boton-guardar" type="submit"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Guardar gerente</button>
@@ -899,7 +899,7 @@
                                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                             </button>
                         </header>
-                        <p class="gerentes-confirmacion-texto">El gerente <strong id="nombre-correo-no-enviado-gerente"></strong> se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. Puedes intentarlo de nuevo; se generará una contraseña temporal nueva.</p>
+                        <p class="gerentes-confirmacion-texto"><strong id="nombre-correo-no-enviado-gerente"></strong>: la cuenta se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. Puedes intentarlo de nuevo; se generará una contraseña temporal nueva.</p>
                         <p class="inventario-modal-error" id="error-correo-no-enviado-gerente" role="alert" aria-live="assertive" hidden></p>
                         <div class="gerentes-confirmacion-acciones">
                             <button class="boton-secundario" id="boton-omitir-reenvio-gerente" type="button">Cerrar</button>
@@ -2048,6 +2048,6 @@
     <script src="admin_inventario.js?v=20261115" defer></script>
     <script src="admin_ventas.js?v=20261115" defer></script>
     <script src="admin_visual.js?v=20261115" defer></script>
-    <script src="../../shared/i18n.js?v=20261118-merge" defer></script>
+    <script src="../../shared/i18n.js?v=20261118" defer></script>
 </body>
 </html>
