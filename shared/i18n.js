@@ -1,5 +1,6 @@
 (() => {
     const traducciones = {
+        // Autenticación y recuperación
         'Inicio de sesión': 'Log in',
         'Iniciar sesión': 'Log in',
         'Iniciar Sesión': 'Log In',
@@ -171,6 +172,7 @@
         'Sin categoría': 'Uncategorized',
         'Precio unitario': 'Unit price',
         'Precio de venta': 'Sale price',
+        'Precio vendido': 'Sale price',
         'Precio': 'Price',
         'Existencias iniciales': 'Initial stock',
         'Existencias totales': 'Total stock',
@@ -181,7 +183,7 @@
         'Valor stock': 'Stock value',
         'Stock bajo': 'Low stock',
         'Poco stock': 'Low stock',
-        ' con stock bajo': ' low-stock products',
+        'con stock bajo': 'low-stock products',
         'Imagen (JPG, PNG o WEBP, máximo 2 MB)': 'Image (JPG, PNG or WEBP, maximum 2 MB)',
         'Vista previa de la imagen del producto': 'Product image preview',
         'Buscar productos por nombre o código...': 'Search products by name or code...',
@@ -391,7 +393,6 @@
         'CONFIRMACIÓN': 'CONFIRMATION',
         'CONFIRMAR ACCIÓN': 'CONFIRM ACTION',
         '¿Continuar?': 'Continue?',
-        '¿Desactivar ': 'Deactivate ',
         ' del catálogo?': ' from the catalog?',
         'Desactivar': 'Deactivate',
         'Activar': 'Activate',
@@ -420,6 +421,7 @@
         'Paginación de sucursales': 'Branch pagination',
         'Paginación de gerentes': 'Manager pagination',
         'Filas por página': 'Rows per page',
+        'Filas': 'Rows',
         'Página anterior': 'Previous page',
         'Página siguiente': 'Next page',
         'Anterior': 'Previous',
@@ -454,7 +456,6 @@
     const traducirDesdeEspanol = (texto, idioma) => {
         if (idioma === 'es' || !texto) return texto;
         let resultado = texto.replace(regexTraducciones, coincidencia => traducciones[coincidencia] ?? coincidencia);
-        // Corrige rangos de paginación tipo "Showing 1-10 de 25" -> "Showing 1-10 of 25"
         resultado = resultado.replace(/(\b\d+\s*-\s*\d+\s+)de(\s+\d+)/g, '$1of$2');
         return resultado;
     };
@@ -555,6 +556,7 @@
     new MutationObserver(() => traducirInterfaz(idiomaActual)).observe(document.body, {
         childList: true,
         subtree: true,
+        characterData: true,
         attributes: true,
         attributeFilter: atributos
     });
