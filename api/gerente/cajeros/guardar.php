@@ -40,7 +40,7 @@ $idRecibido = $_POST['id'] ?? '';
 $nombre = $_POST['nombre'] ?? null;
 $usuario = $_POST['usuario'] ?? null;
 $correo = $_POST['correo'] ?? null;
-$passwordUsuario = $_POST['password'] ?? null;
+$passwordUsuario = $_POST['password'] ?? ''; // Solo se usa al editar; al crear se genera una temporal.
 $activo = $_POST['activo'] ?? null;
 
 if (!is_string($idRecibido) || !is_string($nombre) || !is_string($usuario) || !is_string($correo) || !is_string($passwordUsuario) || !is_string($activo)) {
@@ -71,28 +71,48 @@ if ($idRecibido !== '') {
     $id = (int) $idRecibido;
 }
 
-if ($id === null && $passwordUsuario === '') {
-    responderJson(['success' => false, 'message' => 'La contraseña es obligatoria para crear un cajero.'], 400);
-}
-
 try {
     require_once __DIR__ . '/../../../config/database.php';
 
     if ($id === null) {
-        $passwordHash = password_hash($passwordUsuario, PASSWORD_DEFAULT);
+        // Al crear, la contraseña la genera el sistema y se envía por correo.
+        require_once __DIR__ . '/../../../auth/acceso_temporal.php';
+
+        $passwordTemporal = generarPasswordTemporal();
         $consulta = $conexion->prepare(
-            'INSERT INTO usuarios (nombre, usuario, correo, password_hash, rol_id, sucursal_id, activo)
-             VALUES (:nombre, :usuario, :correo, :password_hash, 3, :sucursal_id, :activo)'
+            'INSERT INTO usuarios
+                (nombre, usuario, correo, password_hash, rol_id, sucursal_id, activo,
+                 debe_cambiar_password, password_expira)
+             VALUES
+                (:nombre, :usuario, :correo, :password_hash, 3, :sucursal_id, :activo,
+                 1, DATE_ADD(NOW(), INTERVAL ' . HORAS_VIGENCIA_PASSWORD_TEMPORAL . ' HOUR))'
         );
         $consulta->execute([
             'nombre' => $nombre,
             'usuario' => $usuario,
             'correo' => $correo,
-            'password_hash' => $passwordHash,
+            'password_hash' => password_hash($passwordTemporal, PASSWORD_DEFAULT),
             'sucursal_id' => $sucursalId,
             'activo' => (int) $activo
         ]);
-        responderJson(['success' => true, 'message' => 'Cajero creado correctamente.']);
+        $nuevoId = (int) $conexion->lastInsertId();
+
+        $correoEnviado = enviarCorreoBienvenida([
+            'nombre' => $nombre,
+            'usuario' => $usuario,
+            'correo' => $correo,
+            'rol_id' => 3
+        ], $passwordTemporal);
+        unset($passwordTemporal);
+
+        responderJson([
+            'success' => true,
+            'id' => $nuevoId,
+            'correo_enviado' => $correoEnviado,
+            'message' => $correoEnviado
+                ? 'Cajero creado. Le enviamos su contraseña temporal por correo.'
+                : 'Cajero creado, pero no se pudo enviar el correo con su contraseña temporal.'
+        ]);
     }
 
     $consultaPropiedad = $conexion->prepare(

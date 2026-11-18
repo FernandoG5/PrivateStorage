@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos y privacidad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="inicioSesion.css">
+    <style>
+        .legal-page {
+            width: min(860px, 100%);
+            margin: 0 auto;
+            padding: 32px 16px 56px;
+            font-family: var(--font-ui);
+            color: var(--texto);
+        }
+
+        .legal-encabezado {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            overflow: hidden;
+            padding: 32px 32px;
+            border-radius: 20px 20px 0 0;
+            color: #ffffff;
+            background: linear-gradient(145deg, #6b3cb4 0%, #51218f 48%, #35115f 100%);
+        }
+
+        .legal-encabezado img {
+            width: 64px;
+            height: 64px;
+            flex: 0 0 auto;
+        }
+
+        .legal-encabezado p {
+            margin: 0 0 4px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .legal-encabezado h1 {
+            margin: 0;
+            font-size: clamp(22px, 4vw, 30px);
+            line-height: 1.2;
+        }
+
+        .legal-contenido {
+            padding: 12px 32px 32px;
+            border: 1px solid var(--borde);
+            border-top: 0;
+            border-radius: 0 0 20px 20px;
+            background: var(--superficie);
+            box-shadow: 0 24px 60px var(--sombra);
+            line-height: 1.7;
+        }
+
+        .legal-contenido h2 {
+            margin: 32px 0 6px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--borde);
+            color: var(--morado-principal);
+            font-size: 21px;
+        }
+
+        :root[data-tema="oscuro"] .legal-contenido h2 {
+            color: var(--violeta);
+        }
+
+        .legal-contenido h3 {
+            margin: 22px 0 4px;
+            font-size: 16px;
+        }
+
+        .legal-contenido p,
+        .legal-contenido li {
+            color: var(--texto-secundario);
+        }
+
+        .legal-contenido p {
+            margin: 0 0 10px;
+        }
+
+        .legal-contenido ul {
+            margin: 0 0 10px;
+            padding-left: 22px;
+        }
+
+        .legal-contenido strong {
+            color: var(--texto);
+        }
+
+        .legal-contenido mark {
+            padding: 0 4px;
+            border-radius: 4px;
+            color: #5c4400;
+            background: #ffe9a8;
+        }
+
+        .legal-indice {
+            margin: 20px 0 0;
+            padding: 14px 18px;
+            border-radius: 12px;
+            background: var(--superficie-suave);
+        }
+
+        .legal-indice a,
+        .legal-contenido a {
+            color: var(--morado-principal);
+            font-weight: 600;
+        }
+
+        :root[data-tema="oscuro"] .legal-indice a,
+        :root[data-tema="oscuro"] .legal-contenido a {
+            color: var(--violeta);
+        }
+
+        .legal-actualizacion {
+            margin-top: 28px !important;
+            font-size: 13px;
+        }
+
+        .legal-volver {
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 560px) {
+            .legal-encabezado,
+            .legal-contenido {
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+
+            .legal-encabezado img {
+                width: 48px;
+                height: 48px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="legal-page">
+        <header class="legal-encabezado">
+            <img src="../../recursos/LogoBlancoPS.png" alt="PrivateStorage">
+            <div>
+                <p>PrivateStorage</p>
+                <h1>Términos de uso y aviso de privacidad</h1>
+            </div>
+        </header>
+
+        <article class="legal-contenido">
+            <nav class="legal-indice" aria-label="Contenido">
+                <a href="#terminos">Términos de uso</a> · <a href="#privacidad">Aviso de privacidad</a>
+            </nav>
+
+            <h2 id="terminos">Términos de uso</h2>
+
+            <h3>1. Uso del sistema</h3>
+            <p>
+                PrivateStorage es un sistema destinado a la gestión de productos, inventarios, sucursales y ventas.
+                El usuario se compromete a utilizarlo únicamente para las actividades autorizadas.
+            </p>
+
+            <h3>2. Responsabilidad del usuario</h3>
+            <p>
+                El usuario es responsable del uso de su cuenta y de mantener la confidencialidad de sus credenciales.
+                No debe compartir su contraseña con otras personas.
+            </p>
+
+            <h3>3. Uso adecuado de la información</h3>
+            <p>
+                La información registrada en el sistema debe ser verdadera y utilizarse únicamente para los fines
+                correspondientes a las actividades de la empresa.
+            </p>
+
+            <h3>4. Seguridad</h3>
+            <p>
+                El usuario debe informar sobre cualquier actividad sospechosa o acceso no autorizado a su cuenta.
+            </p>
+
+            <h2 id="privacidad">Aviso de privacidad</h2>
+
+            <h3>Responsable de tus datos personales</h3>
+            <p>
+                <strong>PrivateStorage Soluciones Tecnológicas, S.A. de C.V.</strong>, con domicilio en Av. México 245, Col. Centro, C.P. 28200, Manzanillo, Colima, México, es responsable del tratamiento de
+                los datos personales que nos proporcionas como persona usuaria de PrivateStorage, conforme a la Ley Federal
+                de Protección de Datos Personales en Posesión de los Particulares.
+            </p>
+
+            <h3>Datos que recabamos</h3>
+            <ul>
+                <li>Nombre completo.</li>
+                <li>Número de trabajador.</li>
+                <li>Correo electrónico.</li>
+                <li>Puesto (gerente o cajero) y sucursal asignada.</li>
+                <li>Registros de actividad en el sistema, como ventas, movimientos de inventario y fechas de acceso.</li>
+            </ul>
+            <p>No recabamos datos personales sensibles.</p>
+
+            <h3>Para qué usamos tus datos</h3>
+            <ul>
+                <li>Crear y administrar tu cuenta de acceso a PrivateStorage.</li>
+                <li>Enviarte tus datos de acceso, contraseñas temporales y avisos de seguridad, como el restablecimiento de contraseña.</li>
+                <li>Registrar las operaciones de venta e inventario que realizas en tu sucursal.</li>
+                <li>Mantener la seguridad del sistema y llevar un control de las operaciones realizadas.</li>
+            </ul>
+
+            <h3>Transferencias</h3>
+            <p>
+                Tus datos no se comparten con terceros. Solo los conocen los proveedores de alojamiento web y de correo
+                electrónico que prestan el servicio a PrivateStorage, y únicamente para ese fin, o las autoridades
+                competentes cuando la ley lo exija.
+            </p>
+
+            <h3>Tus derechos (ARCO)</h3>
+            <p>
+                Puedes acceder a tus datos, rectificarlos, cancelarlos u oponerte a su uso, así como revocar tu
+                consentimiento, enviando una solicitud a <a href="mailto:privacidad@hiddenstage.io">privacidad@hiddenstage.io</a>. Incluye tu nombre, tu número de
+                trabajador, una descripción clara de lo que solicitas y una copia de una identificación oficial.
+                Te responderemos en un plazo máximo de 20 días hábiles.
+            </p>
+
+            <h3>Cambios a este aviso</h3>
+            <p>
+                Cualquier cambio a estos términos o a este aviso de privacidad se publicará en esta misma página.
+            </p>
+
+            <p class="legal-actualizacion">Última actualización: 18 de noviembre de 2026.</p>
+
+            <a class="form-link legal-volver" href="inicioSesion.html">← Volver al inicio de sesión</a>
+        </article>
+    </main>
+
+    <script>
+        try {
+            if (localStorage.getItem('private-storage-tema') === 'oscuro') {
+                document.documentElement.dataset.tema = 'oscuro';
+            }
+        } catch (error) {
+            // Sin almacenamiento disponible: se usa el tema claro.
+        }
+    </script>
+</body>
+
+</html>

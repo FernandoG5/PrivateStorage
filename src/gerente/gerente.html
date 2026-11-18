@@ -823,11 +823,11 @@
                             <input id="cajero-correo" name="correo" type="email" maxlength="150" autocomplete="off" required>
                         </div>
                         <div class="campo">
-                            <label for="cajero-password">Contraseña</label>
-                            <input id="cajero-password" name="password" type="password" autocomplete="new-password" required>
-                            <button type="button" class="mostrar-password" data-toggle-password="cajero-password" aria-label="Mostrar contraseña" title="Mostrar contraseña">
-                                <i class="fa-solid fa-eye" aria-hidden="true"></i>
-                            </button>
+                            <label>Contraseña</label>
+                            <p style="margin:0;font-size:13px;line-height:1.5;color:var(--texto-secundario, #70697d);">
+                                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                                Se generará una contraseña temporal y se enviará al correo del cajero junto con su número de trabajador.
+                            </p>
                         </div>
                         <div class="campo">
                             <label for="cajero-activo">Estado</label>
@@ -1674,6 +1674,37 @@
                 }
             });
 
+            // Si el correo de bienvenida falla, el cajero ya existe: se ofrece reenviarlo con una contraseña nueva.
+            const ofrecerReenvioCorreoCajero = async (idCajero, nombreCajero) => {
+                const botonConfirmar = document.getElementById('confirmar-accion');
+                let mensaje = `El cajero ${nombreCajero} se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. ¿Quieres intentarlo de nuevo? Se generará una contraseña temporal nueva.`;
+
+                botonConfirmar.classList.remove('boton-peligro');
+                try {
+                    while (await confirmarAccion('No se pudo enviar el correo', mensaje, 'Reenviar correo')) {
+                        try {
+                            const respuesta = await fetch('../../api/gerente/cajeros/reenviar_acceso.php', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                body: new URLSearchParams({ id: String(idCajero) })
+                            });
+                            const datos = await procesarRespuesta(respuesta);
+                            if (!datos) return;
+                            if (datos.success === true) {
+                                mostrarEstado(datos.message || 'Correo reenviado correctamente.');
+                                return;
+                            }
+                            mensaje = `${datos.message || 'No se pudo reenviar el correo.'} ¿Quieres intentarlo otra vez?`;
+                        } catch (error) {
+                            mensaje = 'No se pudo comunicar con el servidor. ¿Quieres intentarlo otra vez?';
+                        }
+                    }
+                    mostrarEstado('Cajero creado, pero no recibió su correo de acceso.', true);
+                } finally {
+                    botonConfirmar.classList.add('boton-peligro');
+                }
+            };
+
             formularioCrearCajero.addEventListener('submit', async evento => {
                 evento.preventDefault();
                 try {
@@ -1684,17 +1715,21 @@
                             nombre: document.getElementById('cajero-nombre').value,
                             usuario: document.getElementById('cajero-usuario').value,
                             correo: document.getElementById('cajero-correo').value,
-                            password: document.getElementById('cajero-password').value,
                             activo: document.getElementById('cajero-activo').value
                         })
                     });
                     const datos = await procesarRespuesta(respuesta);
                     if (!datos) return;
                     if (datos.success !== true) throw new Error(datos.message || 'No se pudo crear el cajero.');
+                    const nombreCajero = document.getElementById('cajero-nombre').value.trim();
                     formularioCrearCajero.reset();
                     document.getElementById('cajero-activo').value = '1';
                     await cargarCajeros();
                     dialogoCajero.close();
+                    if (datos.correo_enviado === false && datos.id) {
+                        await ofrecerReenvioCorreoCajero(Number(datos.id), nombreCajero);
+                        return;
+                    }
                     mostrarEstado(datos.message || 'Cajero creado correctamente.');
                 } catch (error) {
                     mostrarEstado(error.message || 'No se pudo comunicar con el servidor. Intenta nuevamente.', true);
