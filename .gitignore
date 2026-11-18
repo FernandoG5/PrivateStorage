@@ -5,3 +5,7 @@ config/config.php
 uploads/productos/*
 !uploads/productos/.htaccess
 
+
+# Logs del servidor (errores de correo)
+logs/*
+!logs/.htaccess
