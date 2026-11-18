@@ -6,6 +6,7 @@
     const listaNotificaciones = document.getElementById('lista-notificaciones-stock');
     const notificacionesVacias = document.getElementById('notificaciones-vacias');
     const indicadorNotificaciones = document.querySelector('.indicador-notificaciones');
+    let solicitudDashboard = 0;
 
     const escaparHtml = valor => String(valor ?? '').replace(/[&<>"']/g, caracter => ({
         '&': '&amp;',
@@ -103,9 +104,122 @@
         }).join('');
     };
 
-    const cargarDashboard = async () => {
+    const renderizarGraficasVentas = datos => {
+        const resumen = datos.resumen_ventas;
+        const intervalos = datos.intervalos_ventas;
+        const periodo = datos.periodo;
+        const dinero = valor => moneda.format(Number(valor) || 0);
+
+        document.getElementById('dashboard-ventas-total').textContent = dinero(resumen.total);
+        document.getElementById('dashboard-ventas-cantidad').textContent = String(resumen.cantidad);
+        document.getElementById('dashboard-ventas-promedio').textContent = dinero(resumen.promedio);
+
+        const formatoFecha = fecha => {
+            const [anio, mes, dia] = fecha.split('-').map(Number);
+            return new Intl.DateTimeFormat('es-MX', {
+                day: 'numeric',
+                month: 'short',
+                timeZone: 'UTC'
+            }).format(new Date(Date.UTC(anio, mes - 1, dia, 12)));
+        };
+        const desde = formatoFecha(datos.desde);
+        const hasta = formatoFecha(datos.hasta);
+        document.getElementById('dashboard-ventas-fecha').textContent =
+            datos.desde === datos.hasta ? desde : `${desde} – ${hasta}`;
+
+        const titulos = {
+            hoy: 'Ventas por hora',
+            semana: 'Ventas por día de la semana',
+            mes: 'Ventas por día del mes'
+        };
+        document.getElementById('dashboard-titulo-grafica').textContent = titulos[periodo];
+        const maximo = Math.max(...intervalos.map(intervalo => Number(intervalo.total) || 0), 0);
+        document.getElementById('dashboard-grafica-ventas').innerHTML = intervalos.map((intervalo, indice) => {
+            const total = Number(intervalo.total) || 0;
+            const cantidad = Number(intervalo.cantidad) || 0;
+            const alto = maximo > 0 ? Math.max(total / maximo * 100, total > 0 ? 3 : 0) : 0;
+            const etiqueta = periodo === 'semana'
+                ? new Intl.DateTimeFormat('es-MX', { weekday: 'short', timeZone: 'UTC' }).format(
+                    new Date(`${intervalo.fecha}T12:00:00Z`)
+                )
+                : intervalo.etiqueta;
+            const mostrarEtiqueta = periodo === 'hoy'
+                ? indice % 4 === 0
+                : periodo === 'mes'
+                    ? indice % 5 === 0 || indice === intervalos.length - 1
+                    : true;
+            const descripcion = `${etiqueta}: ${dinero(total)}, ${cantidad} ${cantidad === 1 ? 'venta' : 'ventas'}`;
+            return `
+                <div class="dashboard-grafica-columna" title="${escaparHtml(descripcion)}" aria-label="${escaparHtml(descripcion)}">
+                    <span class="dashboard-grafica-valor">${total > 0 ? escaparHtml(dinero(total)) : ''}</span>
+                    <div class="dashboard-grafica-barra-contenedor">
+                        <span class="dashboard-grafica-barra" style="height:${alto}%"></span>
+                    </div>
+                    <span class="dashboard-grafica-etiqueta">${mostrarEtiqueta ? escaparHtml(etiqueta) : ''}</span>
+                </div>
+            `;
+        }).join('');
+        document.getElementById('dashboard-grafica-ventas').setAttribute(
+            'aria-label',
+            `${titulos[periodo]}. Total vendido: ${dinero(resumen.total)} en ${resumen.cantidad} ventas.`
+        );
+        document.getElementById('dashboard-grafica-vacia').hidden = Number(resumen.cantidad) > 0;
+
+        const metodos = datos.metodos_pago;
+        const totalMetodos = metodos.reduce((total, metodo) => total + (Number(metodo.cantidad) || 0), 0);
+        const colores = {
+            efectivo: '#7040c0',
+            tarjeta: '#168aad',
+            transferencia: '#e69b24'
+        };
+        const coloresAlternos = ['#d4668d', '#5676c5', '#4e9b72', '#d47a3c'];
+        let angulo = 0;
+        const segmentos = metodos.map((metodo, indice) => {
+            const cantidad = Number(metodo.cantidad) || 0;
+            const fin = totalMetodos > 0 ? angulo + cantidad / totalMetodos * 360 : angulo;
+            const color = colores[String(metodo.metodo).toLocaleLowerCase('es-MX')]
+                || coloresAlternos[indice % coloresAlternos.length];
+            const segmento = `${color} ${angulo}deg ${fin}deg`;
+            angulo = fin;
+            return {
+                ...metodo,
+                cantidad,
+                color,
+                porcentaje: totalMetodos > 0 ? cantidad / totalMetodos * 100 : 0,
+                segmento
+            };
+        });
+        const dona = document.getElementById('dashboard-grafica-metodos');
+        dona.style.background = totalMetodos > 0
+            ? `conic-gradient(${segmentos.map(metodo => metodo.segmento).join(', ')})`
+            : 'conic-gradient(var(--borde) 0deg 360deg)';
+        dona.setAttribute(
+            'aria-label',
+            totalMetodos > 0
+                ? `Distribución de ${totalMetodos} ventas por método de pago.`
+                : 'No hay ventas registradas en este periodo.'
+        );
+        document.getElementById('dashboard-metodos-cantidad').textContent = String(totalMetodos);
+        document.getElementById('dashboard-leyenda-metodos').innerHTML = segmentos.map(metodo => `
+            <div class="dashboard-metodo-fila">
+                <span class="dashboard-metodo-nombre">
+                    <i aria-hidden="true" style="--color-metodo:${metodo.color}"></i>
+                    ${escaparHtml(metodo.metodo)}
+                </span>
+                <span>${metodo.cantidad} · ${metodo.porcentaje.toFixed(0)}%</span>
+            </div>
+        `).join('');
+        document.getElementById('dashboard-metodos-vacio').hidden = totalMetodos > 0;
+    };
+
+    const cargarDashboard = async (periodo = 'mes') => {
+        const solicitud = ++solicitudDashboard;
+        document.getElementById('dashboard-ventas-error').hidden = true;
         try {
-            const respuesta = await fetch('../../api/admin/dashboard.php');
+            const respuesta = await fetch(
+                `../../api/admin/dashboard.php?periodo=${encodeURIComponent(periodo)}`,
+                { cache: 'no-store' }
+            );
             const datos = await respuesta.json();
 
             if (respuesta.status === 401 && datos.redirect) {
@@ -115,6 +229,7 @@
             if (datos.success !== true) {
                 throw new Error(datos.message || 'No se pudo cargar el dashboard.');
             }
+            if (solicitud !== solicitudDashboard) return;
 
             elementoProductos.textContent = Number(datos.total_productos_activos);
             document.getElementById('resumen-inventario').textContent = 'Productos activos';
@@ -122,7 +237,9 @@
             renderizarNotificaciones(datos.stock_bajo);
             renderizarVentas(datos.ultimas_ventas);
             renderizarTopSucursales(datos.ventas_por_sucursal);
+            renderizarGraficasVentas(datos);
         } catch (error) {
+            if (solicitud !== solicitudDashboard) return;
             console.error('No se pudo cargar el dashboard:', error);
             elementoProductos.textContent = '—';
             tablaStock.innerHTML = '<tr><td colspan="3" class="nota-panel">No se pudo cargar el inventario.</td></tr>';
@@ -132,8 +249,32 @@
             notificacionesVacias.hidden = false;
             notificacionesVacias.textContent = 'No se pudieron cargar las alertas de inventario.';
             indicadorNotificaciones.hidden = true;
+            document.getElementById('dashboard-ventas-error').textContent =
+                error.message || 'No se pudieron cargar las gráficas de ventas.';
+            document.getElementById('dashboard-ventas-error').hidden = false;
+            document.getElementById('dashboard-ventas-total').textContent = '—';
+            document.getElementById('dashboard-ventas-cantidad').textContent = '—';
+            document.getElementById('dashboard-ventas-promedio').textContent = '—';
+            document.getElementById('dashboard-grafica-ventas').replaceChildren();
+            document.getElementById('dashboard-grafica-vacia').hidden = true;
+            document.getElementById('dashboard-grafica-metodos').style.background =
+                'conic-gradient(var(--borde) 0deg 360deg)';
+            document.getElementById('dashboard-metodos-cantidad').textContent = '—';
+            document.getElementById('dashboard-leyenda-metodos').replaceChildren();
+            document.getElementById('dashboard-metodos-vacio').hidden = true;
         }
     };
+
+    document.querySelectorAll('[data-dashboard-periodo]').forEach(boton => {
+        boton.addEventListener('click', () => {
+            document.querySelectorAll('[data-dashboard-periodo]').forEach(opcion => {
+                const seleccionado = opcion === boton;
+                opcion.classList.toggle('activo', seleccionado);
+                opcion.setAttribute('aria-pressed', String(seleccionado));
+            });
+            cargarDashboard(boton.dataset.dashboardPeriodo);
+        });
+    });
 
     cargarDashboard();
     window.addEventListener('private-storage-language-changed', cargarDashboard);

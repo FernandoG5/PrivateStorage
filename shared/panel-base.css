@@ -817,10 +817,16 @@ textarea:focus-visible {
 #estado-app {
     position: fixed;
     z-index: 21;
+    top: auto;
     right: 24px;
     bottom: 24px;
     width: max-content;
     max-width: min(420px, calc(100vw - 32px));
+    height: auto;
+    min-height: 0;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    box-sizing: border-box;
     margin: 0;
     padding: 14px 18px;
     border: 1px solid var(--borde);

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="cajero_estilos.css?v=20261103">
+    <link rel="stylesheet" href="cajero_estilos.css?v=20261118-notificaciones">
     <link rel="stylesheet" href="../../shared/panel-base.css?v=20261103">
 </head>
 
@@ -65,9 +65,36 @@
                     <i class="fa-solid fa-sun" aria-hidden="true"></i>
                     <i class="fa-solid fa-moon" aria-hidden="true"></i>
                 </button>
-                <button class="campana-control" type="button" aria-label="Notificaciones" title="Notificaciones">
-                    <i class="fa-solid fa-bell campana" aria-hidden="true"></i>
-                </button>
+                <div class="notificaciones-cajero">
+                    <button
+                        class="campana-control"
+                        id="boton-notificaciones"
+                        type="button"
+                        aria-label="Abrir notificaciones"
+                        aria-expanded="false"
+                        aria-controls="panel-notificaciones-cajero"
+                        title="Notificaciones"
+                    >
+                        <i class="fa-solid fa-bell campana" aria-hidden="true"></i>
+                        <span class="indicador-notificaciones-cajero" id="indicador-notificaciones-cajero" hidden></span>
+                    </button>
+                    <section
+                        class="panel-notificaciones-cajero"
+                        id="panel-notificaciones-cajero"
+                        aria-label="Notificaciones de inventario"
+                        hidden
+                    >
+                        <div class="notificaciones-cajero-cabecera">
+                            <h2>Notificaciones</h2>
+                            <button class="cerrar-notificaciones-cajero" id="cerrar-notificaciones-cajero" type="button" aria-label="Cerrar notificaciones">
+                                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="lista-notificaciones-cajero" id="lista-notificaciones-cajero" aria-live="polite">
+                            <p class="notificaciones-cajero-vacias">No hay notificaciones de inventario.</p>
+                        </div>
+                    </section>
+                </div>
             </div>
         </header>
 
@@ -297,6 +324,13 @@
         }
         let categoriaSeleccionada = null;
         let resolverConfirmacion;
+        const botonNotificaciones = document.getElementById('boton-notificaciones');
+        const panelNotificaciones = document.getElementById('panel-notificaciones-cajero');
+        const listaNotificaciones = document.getElementById('lista-notificaciones-cajero');
+        const indicadorNotificaciones = document.getElementById('indicador-notificaciones-cajero');
+        const notificacionesInventario = [];
+        let inventarioAnteriorNotificaciones = null;
+        let consultaNotificacionesEnProceso = true;
 
         const solicitarConfirmacion = mensaje => new Promise(resolve => {
             resolverConfirmacion = resolve;
@@ -312,6 +346,99 @@
             '"': '&quot;',
             "'": '&#039;'
         }[caracter]));
+
+        const actualizarIndicadorNotificaciones = () => {
+            const pendientes = notificacionesInventario.filter(notificacion => !notificacion.leida).length;
+            indicadorNotificaciones.hidden = pendientes === 0;
+            indicadorNotificaciones.textContent = pendientes > 9 ? '9+' : String(pendientes);
+            botonNotificaciones.setAttribute(
+                'aria-label',
+                pendientes ? `Abrir notificaciones, ${pendientes} sin leer` : 'Abrir notificaciones'
+            );
+        };
+
+        const renderizarNotificaciones = () => {
+            listaNotificaciones.innerHTML = notificacionesInventario.length
+                ? notificacionesInventario.map(notificacion => `
+                    <article class="notificacion-cajero notificacion-cajero-${notificacion.tipo}${notificacion.leida ? '' : ' sin-leer'}">
+                        <span class="notificacion-cajero-icono" aria-hidden="true">
+                            <i class="fa-solid ${notificacion.tipo === 'stock-bajo' ? 'fa-triangle-exclamation' : 'fa-box-open'}"></i>
+                        </span>
+                        <div>
+                            <h3>${escaparHtml(notificacion.titulo)}</h3>
+                            <p>${escaparHtml(notificacion.detalle)}</p>
+                            <time datetime="${escaparHtml(notificacion.fecha.toISOString())}">${escaparHtml(notificacion.fecha.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }))}</time>
+                        </div>
+                    </article>
+                `).join('')
+                : '<p class="notificaciones-cajero-vacias">No hay notificaciones de inventario.</p>';
+            actualizarIndicadorNotificaciones();
+        };
+
+        const agregarNotificacion = (tipo, titulo, detalle) => {
+            notificacionesInventario.unshift({
+                tipo,
+                titulo,
+                detalle,
+                fecha: new Date(),
+                leida: !panelNotificaciones.hidden
+            });
+            notificacionesInventario.splice(30);
+            renderizarNotificaciones();
+        };
+
+        const detectarCambiosInventario = productosActuales => {
+            const actuales = new Map(productosActuales.map(producto => [producto.id, producto]));
+            if (inventarioAnteriorNotificaciones === null) {
+                productosActuales.forEach(producto => {
+                    if (producto.existencias <= producto.stock_minimo) {
+                        agregarNotificacion(
+                            'stock-bajo',
+                            `Stock bajo: ${producto.nombre}`,
+                            `Quedan ${producto.existencias} unidades; el mínimo es ${producto.stock_minimo}.`
+                        );
+                    }
+                });
+            } else {
+                productosActuales.forEach(producto => {
+                    const anterior = inventarioAnteriorNotificaciones.get(producto.id);
+                    if (!anterior) {
+                        agregarNotificacion(
+                            'producto-agregado',
+                            `Producto agregado: ${producto.nombre}`,
+                            `${producto.existencias} unidades disponibles en el inventario.`
+                        );
+                        if (producto.existencias <= producto.stock_minimo) {
+                            agregarNotificacion(
+                                'stock-bajo',
+                                `Stock bajo: ${producto.nombre}`,
+                                `Quedan ${producto.existencias} unidades; el mínimo es ${producto.stock_minimo}.`
+                            );
+                        }
+                        return;
+                    }
+
+                    if (producto.existencias > anterior.existencias) {
+                        agregarNotificacion(
+                            'stock-agregado',
+                            `Se agregó stock: ${producto.nombre}`,
+                            `Existencias actualizadas (${anterior.existencias} -> ${producto.existencias}).`
+                        );
+                    }
+                    if (
+                        producto.existencias <= producto.stock_minimo
+                        && anterior.existencias > anterior.stock_minimo
+                    ) {
+                        agregarNotificacion(
+                            'stock-bajo',
+                            `Stock bajo: ${producto.nombre}`,
+                            `Quedan ${producto.existencias} unidades; el mínimo es ${producto.stock_minimo}.`
+                        );
+                    }
+                });
+            }
+            inventarioAnteriorNotificaciones = actuales;
+        };
 
         const procesarRespuesta = async respuesta => {
             const datos = await respuesta.json();
@@ -371,7 +498,7 @@
         };
 
         const cargarProductos = async () => {
-            const respuesta = await fetch('../../api/cajero/productos/listar.php');
+            const respuesta = await fetch('../../api/cajero/productos/listar.php', { cache: 'no-store' });
             const datos = await procesarRespuesta(respuesta);
             if (!datos) return false;
             if (datos.success !== true) throw new Error(datos.message || 'No se pudieron cargar los productos.');
@@ -382,6 +509,7 @@
                 }))
                 : [];
             productos = normalizarProductos(Array.isArray(datos.productos) ? datos.productos : []);
+            detectarCambiosInventario(productos);
             sincronizarCarritoConInventario();
             actualizarCategorias();
             renderizarProductos(busquedaProductos.value);
@@ -576,7 +704,17 @@
                         </div>
                         <div class="cantidad-control">
                             <button type="button" data-carrito-accion="restar" data-producto-id="${item.id}" aria-label="Disminuir cantidad"><i class="fa-solid fa-minus"></i></button>
-                            <span>${item.cantidad}</span>
+                            <input
+                                type="number"
+                                data-carrito-cantidad
+                                data-producto-id="${item.id}"
+                                value="${item.cantidad}"
+                                min="1"
+                                max="${item.existencias}"
+                                step="1"
+                                inputmode="numeric"
+                                aria-label="Cantidad de ${escaparHtml(item.nombre)}"
+                            >
                             <button type="button" data-carrito-accion="sumar" data-producto-id="${item.id}" aria-label="Aumentar cantidad"><i class="fa-solid fa-plus"></i></button>
                         </div>
                         <strong>${moneda(item.precio * item.cantidad)}</strong>
@@ -666,12 +804,66 @@
             }
             renderizarCarrito();
         });
+        carritoItems.addEventListener('change', evento => {
+            const campo = evento.target.closest('[data-carrito-cantidad]');
+            if (!campo) return;
+            const id = Number(campo.dataset.productoId);
+            const item = carrito.find(elemento => elemento.id === id);
+            const producto = productos.find(elemento => elemento.id === id);
+            const cantidad = Number(campo.value);
+            if (!item || !producto) return;
+            if (!Number.isInteger(cantidad) || cantidad < 1) {
+                mostrarToast('La cantidad debe ser un número entero mayor que cero.', true);
+                renderizarCarrito();
+                return;
+            }
+            if (cantidad > producto.existencias) {
+                item.cantidad = producto.existencias;
+                mostrarToast(`Solo hay ${producto.existencias} unidades disponibles.`, true);
+            } else {
+                item.cantidad = cantidad;
+            }
+            renderizarCarrito();
+        });
 
         busquedaProductos.addEventListener('input', evento => renderizarProductos(evento.target.value));
         document.getElementById('volver-categorias').addEventListener('click', () => {
             categoriaSeleccionada = null;
             busquedaProductos.value = '';
             renderizarProductos();
+        });
+        botonNotificaciones.addEventListener('click', () => {
+            const abierto = botonNotificaciones.getAttribute('aria-expanded') === 'true';
+            panelNotificaciones.hidden = abierto;
+            botonNotificaciones.setAttribute('aria-expanded', String(!abierto));
+            if (!abierto) {
+                notificacionesInventario.forEach(notificacion => {
+                    notificacion.leida = true;
+                });
+                renderizarNotificaciones();
+            }
+        });
+        document.getElementById('cerrar-notificaciones-cajero').addEventListener('click', () => {
+            panelNotificaciones.hidden = true;
+            botonNotificaciones.setAttribute('aria-expanded', 'false');
+            botonNotificaciones.focus();
+        });
+        document.addEventListener('click', evento => {
+            if (
+                !panelNotificaciones.hidden
+                && !panelNotificaciones.contains(evento.target)
+                && !botonNotificaciones.contains(evento.target)
+            ) {
+                panelNotificaciones.hidden = true;
+                botonNotificaciones.setAttribute('aria-expanded', 'false');
+            }
+        });
+        document.addEventListener('keydown', evento => {
+            if (evento.key === 'Escape' && !panelNotificaciones.hidden) {
+                panelNotificaciones.hidden = true;
+                botonNotificaciones.setAttribute('aria-expanded', 'false');
+                botonNotificaciones.focus();
+            }
         });
         filtroCategoriaInventario.addEventListener('change', () => {
             paginaInventario = 1;
@@ -814,10 +1006,23 @@
                 await cargarProductos();
             } catch (error) {
                 mostrarToast(error.message || 'No se pudo comunicar con el servidor.', true);
+            } finally {
+                consultaNotificacionesEnProceso = false;
             }
         };
 
         inicializar();
+        window.setInterval(async () => {
+            if (document.hidden || ventaEnProceso || consultaNotificacionesEnProceso) return;
+            consultaNotificacionesEnProceso = true;
+            try {
+                await cargarProductos();
+            } catch (error) {
+                console.error('No se pudo actualizar el inventario para las notificaciones:', error);
+            } finally {
+                consultaNotificacionesEnProceso = false;
+            }
+        }, 30000);
     </script>
     <script src="../../shared/i18n.js?v=20261118" defer></script>
 </body>

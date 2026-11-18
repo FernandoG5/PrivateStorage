@@ -25,6 +25,14 @@ const UMBRAL_STOCK_DASHBOARD = 20;
 const UMBRAL_STOCK_MUY_BAJO = 5;
 const UMBRAL_STOCK_BAJO = 10;
 
+$periodo = $_GET['periodo'] ?? 'mes';
+if (!is_string($periodo) || !in_array($periodo, ['hoy', 'semana', 'mes'], true)) {
+    responderJson([
+        'success' => false,
+        'message' => 'El periodo seleccionado no es válido.'
+    ], 400);
+}
+
 set_error_handler(
     static function (int $severity, string $message, string $file, int $line): bool {
         if (!(error_reporting() & $severity)) {
@@ -180,8 +188,105 @@ try {
         $consultaUltimasVentas->fetchAll()
     );
 
+    $fechaBase = $conexion->query('SELECT CURDATE()')->fetchColumn();
+    $zonaUtc = new DateTimeZone('UTC');
+    $fechaHoy = DateTimeImmutable::createFromFormat('!Y-m-d', (string) $fechaBase, $zonaUtc);
+    if ($fechaHoy === false) {
+        throw new RuntimeException('MySQL devolvió una fecha no válida para el rendimiento de ventas.');
+    }
+
+    if ($periodo === 'hoy') {
+        $inicio = $fechaHoy;
+        $fin = $inicio->modify('+1 day');
+        $cantidadIntervalos = 24;
+    } elseif ($periodo === 'semana') {
+        $inicio = $fechaHoy->modify('monday this week');
+        $fin = $inicio->modify('+1 week');
+        $cantidadIntervalos = 7;
+    } else {
+        $inicio = $fechaHoy->modify('first day of this month');
+        $fin = $fechaHoy->modify('+1 day');
+        $cantidadIntervalos = (int) $inicio->diff($fin)->format('%a');
+    }
+
+    $consultaVentasPeriodo = $conexion->prepare(
+        'SELECT ' . ($periodo === 'hoy'
+            ? "DATE_FORMAT(fecha_venta, '%H')"
+            : "DATE_FORMAT(fecha_venta, '%Y-%m-%d')") . ' AS intervalo,
+                COUNT(*) AS cantidad, COALESCE(SUM(total), 0) AS total
+         FROM ventas
+         WHERE fecha_venta >= :fecha_inicio
+           AND fecha_venta < :fecha_fin
+         GROUP BY intervalo
+         ORDER BY intervalo ASC'
+    );
+    $consultaVentasPeriodo->execute([
+        'fecha_inicio' => $inicio->format('Y-m-d'),
+        'fecha_fin' => $fin->format('Y-m-d')
+    ]);
+
+    $resultadosPeriodo = [];
+    foreach ($consultaVentasPeriodo->fetchAll() as $fila) {
+        $resultadosPeriodo[$fila['intervalo']] = [
+            'cantidad' => (int) $fila['cantidad'],
+            'total' => (float) $fila['total']
+        ];
+    }
+
+    $intervalosVentas = [];
+    $totalPeriodo = 0.0;
+    $cantidadPeriodo = 0;
+    for ($indice = 0; $indice < $cantidadIntervalos; $indice++) {
+        $fechaIntervalo = $inicio->modify("+{$indice} " . ($periodo === 'hoy' ? 'hours' : 'days'));
+        $clave = $periodo === 'hoy' ? $fechaIntervalo->format('H') : $fechaIntervalo->format('Y-m-d');
+        $valores = $resultadosPeriodo[$clave] ?? ['cantidad' => 0, 'total' => 0.0];
+        $etiqueta = $periodo === 'hoy'
+            ? $fechaIntervalo->format('H:00')
+            : ($periodo === 'semana' ? ucfirst($fechaIntervalo->format('D')) : $fechaIntervalo->format('j'));
+
+        $intervalosVentas[] = [
+            'fecha' => $clave,
+            'etiqueta' => $etiqueta,
+            'cantidad' => $valores['cantidad'],
+            'total' => $valores['total']
+        ];
+        $cantidadPeriodo += $valores['cantidad'];
+        $totalPeriodo += $valores['total'];
+    }
+
+    $consultaMetodosPago = $conexion->prepare(
+        'SELECT metodo_pago, COUNT(*) AS cantidad, COALESCE(SUM(total), 0) AS total
+         FROM ventas
+         WHERE fecha_venta >= :fecha_inicio
+           AND fecha_venta < :fecha_fin
+         GROUP BY metodo_pago
+         ORDER BY total DESC, metodo_pago ASC'
+    );
+    $consultaMetodosPago->execute([
+        'fecha_inicio' => $inicio->format('Y-m-d'),
+        'fecha_fin' => $fin->format('Y-m-d')
+    ]);
+    $metodosPago = array_map(
+        static fn (array $fila): array => [
+            'metodo' => $fila['metodo_pago'],
+            'cantidad' => (int) $fila['cantidad'],
+            'total' => (float) $fila['total']
+        ],
+        $consultaMetodosPago->fetchAll()
+    );
+
     responderJson([
         'success' => true,
+        'periodo' => $periodo,
+        'desde' => $inicio->format('Y-m-d'),
+        'hasta' => $fin->modify('-1 day')->format('Y-m-d'),
+        'resumen_ventas' => [
+            'cantidad' => $cantidadPeriodo,
+            'total' => round($totalPeriodo, 2),
+            'promedio' => $cantidadPeriodo === 0 ? 0 : round($totalPeriodo / $cantidadPeriodo, 2)
+        ],
+        'intervalos_ventas' => $intervalosVentas,
+        'metodos_pago' => $metodosPago,
         'umbral_stock' => UMBRAL_STOCK_DASHBOARD,
         'total_productos_activos' => $totalProductos,
         'cantidad_stock_bajo' => $cantidadStockBajo,

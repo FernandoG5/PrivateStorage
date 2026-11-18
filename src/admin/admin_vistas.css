@@ -2474,6 +2474,352 @@ body.inventario-modal-abierto {
     margin-bottom: 20px;
 }
 
+.dashboard-ventas {
+    display: grid;
+    gap: 18px;
+    margin-top: 24px;
+    padding: 24px;
+    border: 1px solid var(--borde);
+    border-radius: 17px;
+    background: var(--superficie);
+    box-shadow: var(--sombra-suave);
+}
+
+.dashboard-ventas-cabecera {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.dashboard-ventas-cabecera h2 {
+    margin: 0;
+    color: var(--texto);
+    font-size: 21px;
+    letter-spacing: -0.035em;
+}
+
+.dashboard-ventas-cabecera .etiqueta-seccion {
+    margin: 0 0 5px;
+}
+
+.dashboard-ventas-fecha {
+    margin: 5px 0 0;
+    color: var(--texto-secundario);
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.dashboard-ventas-periodos {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    background: var(--superficie-control);
+}
+
+.dashboard-ventas-periodos button {
+    min-height: 34px;
+    padding: 7px 11px;
+    border: 0;
+    border-radius: 7px;
+    color: var(--texto-secundario);
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.dashboard-ventas-periodos button:hover {
+    color: var(--texto);
+    background: var(--morado-claro);
+}
+
+.dashboard-ventas-periodos button.activo {
+    color: #fff;
+    background: var(--morado);
+}
+
+.dashboard-ventas-periodos button:focus-visible {
+    outline: 3px solid var(--halo);
+    outline-offset: 2px;
+}
+
+.dashboard-ventas-error {
+    margin: 0;
+    padding: 11px 13px;
+    border: 1px solid color-mix(in srgb, var(--error-texto) 40%, var(--borde));
+    border-radius: 9px;
+    color: var(--error-texto);
+    background: var(--error-fondo);
+    font-size: 12px;
+}
+
+.dashboard-ventas-error[hidden],
+.dashboard-grafica-vacia[hidden] {
+    display: none;
+}
+
+.dashboard-ventas-resumen {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.dashboard-ventas-resumen article {
+    display: grid;
+    min-width: 0;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background: var(--superficie-elevada);
+}
+
+.dashboard-ventas-resumen article > span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--texto-secundario);
+    font-size: 11px;
+}
+
+.dashboard-ventas-resumen article > span i {
+    color: var(--morado);
+}
+
+.dashboard-ventas-resumen article > strong {
+    overflow: hidden;
+    color: var(--texto);
+    font-size: clamp(18px, 2vw, 24px);
+    font-variant-numeric: tabular-nums;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dashboard-graficas-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.9fr);
+    gap: 14px;
+}
+
+.dashboard-grafica-panel {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background: var(--superficie-elevada);
+}
+
+.dashboard-grafica-titulo {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.dashboard-grafica-titulo h3 {
+    margin: 0;
+    color: var(--texto);
+    font-size: 13px;
+}
+
+.dashboard-grafica-titulo > span {
+    color: var(--texto-secundario);
+    font-size: 10px;
+}
+
+.dashboard-grafica-barras {
+    display: grid;
+    height: 210px;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    gap: clamp(2px, 0.6vw, 8px);
+    margin-top: 18px;
+    padding: 0 3px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.dashboard-grafica-columna {
+    display: grid;
+    min-width: 0;
+    grid-template-rows: 18px minmax(0, 1fr) 20px;
+    justify-items: center;
+}
+
+.dashboard-grafica-valor {
+    max-width: 100%;
+    overflow: hidden;
+    color: var(--texto-secundario);
+    font-size: 8px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dashboard-grafica-barra-contenedor {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.dashboard-grafica-barra {
+    width: min(72%, 28px);
+    min-height: 0;
+    border-radius: 5px 5px 2px 2px;
+    background: linear-gradient(180deg, #9a6be6, #7040c0);
+    transition: height 220ms ease;
+}
+
+.dashboard-grafica-columna:hover .dashboard-grafica-barra {
+    background: linear-gradient(180deg, #b18cf0, #8052ce);
+}
+
+.dashboard-grafica-etiqueta {
+    align-self: end;
+    overflow: hidden;
+    max-width: 100%;
+    color: var(--texto-secundario);
+    font-size: 9px;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.dashboard-metodos {
+    display: grid;
+    min-height: 210px;
+    grid-template-columns: minmax(120px, 0.9fr) minmax(115px, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding-top: 8px;
+}
+
+.dashboard-dona {
+    display: grid;
+    width: min(100%, 175px);
+    aspect-ratio: 1;
+    justify-self: center;
+    place-items: center;
+    border-radius: 50%;
+    background: conic-gradient(var(--borde) 0deg 360deg);
+    transition: background 250ms ease;
+}
+
+.dashboard-dona > span {
+    display: grid;
+    width: 68%;
+    aspect-ratio: 1;
+    align-content: center;
+    justify-items: center;
+    border-radius: 50%;
+    color: var(--texto);
+    background: var(--superficie-elevada);
+    box-shadow: inset 0 0 0 1px var(--borde);
+}
+
+.dashboard-dona strong {
+    font-size: 27px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+}
+
+.dashboard-dona small {
+    margin-top: 4px;
+    color: var(--texto-secundario);
+    font-size: 10px;
+}
+
+.dashboard-metodos-leyenda {
+    display: grid;
+    gap: 12px;
+    align-content: center;
+}
+
+.dashboard-metodo-fila,
+.dashboard-metodo-nombre {
+    display: flex;
+    align-items: center;
+}
+
+.dashboard-metodo-fila {
+    justify-content: space-between;
+    gap: 7px;
+    color: var(--texto-secundario);
+    font-size: 10px;
+    font-variant-numeric: tabular-nums;
+}
+
+.dashboard-metodo-nombre {
+    min-width: 0;
+    gap: 6px;
+    color: var(--texto);
+}
+
+.dashboard-metodo-nombre i {
+    width: 8px;
+    height: 8px;
+    flex: 0 0 8px;
+    border-radius: 50%;
+    background: var(--color-metodo);
+}
+
+.dashboard-grafica-vacia {
+    margin: 10px 0 0;
+    color: var(--texto-secundario);
+    font-size: 11px;
+    text-align: center;
+}
+
+@media (max-width: 1050px) {
+    .dashboard-graficas-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-metodos {
+        min-height: 180px;
+        grid-template-columns: minmax(140px, 0.7fr) minmax(150px, 1fr);
+    }
+}
+
+@media (max-width: 720px) {
+    .dashboard-ventas {
+        gap: 14px;
+        margin-top: 17px;
+        padding: 16px;
+    }
+
+    .dashboard-ventas-cabecera {
+        flex-direction: column;
+    }
+
+    .dashboard-ventas-periodos {
+        width: 100%;
+    }
+
+    .dashboard-ventas-periodos button {
+        flex: 1;
+    }
+
+    .dashboard-ventas-resumen {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-grafica-barras {
+        height: 180px;
+        gap: 2px;
+    }
+
+    .dashboard-metodos {
+        min-height: 160px;
+        grid-template-columns: minmax(110px, 0.85fr) minmax(120px, 1fr);
+        gap: 8px;
+    }
+}
+
 .ventas-resumen-grid .tarjeta-borde,
 .ventas-resumen-grid .tarjeta-interior {
     min-width: 0;
@@ -3789,6 +4135,109 @@ body.inventario-modal-abierto {
     border-radius: 10px;
 }
 
+.gestion-cajas:not(.oculto) {
+    display: grid;
+    gap: 16px;
+}
+
+.gestion-cajas-sucursal-nombre {
+    margin: -4px 0 0;
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+.gestion-cajas-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.gestion-cajas-encabezado h3,
+.formulario-caja h3 {
+    margin: 0;
+    color: var(--texto);
+    font-size: 16px;
+}
+
+.gestion-cajas-encabezado p {
+    margin: 5px 0 0;
+    color: var(--texto-secundario);
+    font-size: 12px;
+}
+
+.cajas-error {
+    margin: 0;
+    color: var(--estado-inactivo);
+    font-size: 13px;
+}
+
+.cajas-tabla-contenedor {
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+}
+
+.tabla-cajas {
+    width: 100%;
+    min-width: 460px;
+    border-collapse: collapse;
+    color: var(--texto);
+    font-size: 13px;
+    text-align: left;
+}
+
+.tabla-cajas th,
+.tabla-cajas td {
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--borde-suave);
+}
+
+.tabla-cajas th {
+    color: var(--texto-secundario);
+    background: var(--superficie-control);
+    font-size: 11px;
+}
+
+.tabla-cajas td:last-child {
+    width: 70px;
+    text-align: center;
+}
+
+.tabla-cajas tr:last-child td {
+    border-bottom: 0;
+}
+
+#formulario-caja.formulario-caja:not(.oculto) {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+    padding: 16px;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    background: var(--superficie);
+    box-shadow: none;
+}
+
+.campos-caja {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+#formulario-caja .campo label {
+    font-size: 13px;
+}
+
+#formulario-caja .campo input,
+#formulario-caja .campo select {
+    min-height: 42px;
+}
+
+#formulario-caja .acciones-formulario {
+    justify-content: flex-end;
+    margin: 0;
+}
+
 .tabla-sucursales tbody tr:hover {
     background: var(--morado-claro);
 }
@@ -3956,6 +4405,15 @@ body.inventario-modal-abierto {
 
     .sucursales-modal-dialog {
         padding: 22px;
+    }
+
+    .gestion-cajas-encabezado {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .campos-caja {
+        grid-template-columns: 1fr;
     }
 
     #formulario-sucursal .acciones-formulario,
