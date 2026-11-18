@@ -1,6 +1,6 @@
 <?php
 // Correo de bienvenida con contraseña temporal.
-// Variables: $nombre, $usuario (No. de trabajador), $passwordTemporal, $rol, $urlInicioSesion,
+// Variables: $nombre, $usuario, $passwordTemporal, $rol, $urlInicioSesion,
 //            $urlAviso, $horasVigencia
 
 require_once __DIR__ . '/_base.php';
@@ -29,7 +29,7 @@ $contenido = <<<HTML
 <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="{$c['fondo']}" style="background-color:{$c['fondo']};border:1px solid {$c['borde']};border-radius:12px;">
   <tr>
     <td style="padding:20px 24px 8px;font-family:{$c['fuente']};">
-      <p style="margin:0;font-size:12px;line-height:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:{$c['secundario']};">No. de trabajador</p>
+      <p style="margin:0;font-size:12px;line-height:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:{$c['secundario']};">Usuario</p>
       <p style="margin:4px 0 0;font-family:Consolas,'Courier New',monospace;font-size:22px;line-height:30px;font-weight:700;letter-spacing:2px;color:{$c['texto']};">{$usuarioHtml}</p>
     </td>
   </tr>
@@ -57,7 +57,7 @@ $contenido = <<<HTML
 
 <p style="margin:16px 0 0;font-size:12px;line-height:18px;color:{$c['secundario']};">
   <strong style="color:{$c['texto']};">Términos de uso y aviso de privacidad.</strong>
-  PrivateStorage usa tu nombre, número de trabajador y correo electrónico únicamente para darte acceso al sistema y para las actividades de tu puesto.
+  PrivateStorage usa tu nombre, usuario y correo electrónico únicamente para darte acceso al sistema y para las actividades de tu puesto.
   Al iniciar sesión deberás aceptar los términos y el aviso de privacidad, que puedes consultar completos en
   <a href="{$urlAvisoHtml}" target="_blank" style="color:{$c['principal']};text-decoration:underline;">este enlace</a>.
 </p>
@@ -65,18 +65,18 @@ HTML;
 
 $texto = "¡Te damos la bienvenida, {$nombre}!\n\n"
     . "Se creó tu cuenta de {$rol} en PrivateStorage. Estos son tus datos para iniciar sesión:\n\n"
-    . "No. de trabajador: {$usuario}\n"
+    . "Usuario: {$usuario}\n"
     . "Contraseña temporal: {$passwordTemporal}\n\n"
     . "Inicia sesión aquí: {$urlInicioSesion}\n\n"
     . "IMPORTANTE: al iniciar sesión por primera vez se te pedirá cambiar esta contraseña por una propia. "
     . "La contraseña temporal vence en {$horas} horas.\n\n"
     . "No compartas tus datos de acceso con nadie. Si no esperabas este correo, avisa al administrador de tu sucursal.\n\n"
-    . "Términos de uso y aviso de privacidad: PrivateStorage usa tu nombre, número de trabajador y correo electrónico "
+    . "Términos de uso y aviso de privacidad: PrivateStorage usa tu nombre, usuario y correo electrónico "
     . "únicamente para darte acceso al sistema y para las actividades de tu puesto. Consúltalos completos en: {$urlAviso}\n\n"
     . "Este es un correo automático, por favor no lo respondas.";
 
 return [
     'asunto' => 'Tu acceso a PrivateStorage',
-    'html' => envolverCorreo('Tu acceso a PrivateStorage', "Tu número de trabajador y tu contraseña temporal para entrar a PrivateStorage.", $contenido),
+    'html' => envolverCorreo('Tu acceso a PrivateStorage', "Tu usuario y tu contraseña temporal para entrar a PrivateStorage.", $contenido),
     'texto' => $texto,
 ];

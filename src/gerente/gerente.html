@@ -826,7 +826,7 @@
                             <label>Contraseña</label>
                             <p style="margin:0;font-size:13px;line-height:1.5;color:var(--texto-secundario, #70697d);">
                                 <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-                                Se generará una contraseña temporal y se enviará al correo del cajero junto con su número de trabajador.
+                                Se generará una contraseña temporal y se enviará al correo del cajero junto con su usuario.
                             </p>
                         </div>
                         <div class="campo">
@@ -1677,7 +1677,7 @@
             // Si el correo de bienvenida falla, el cajero ya existe: se ofrece reenviarlo con una contraseña nueva.
             const ofrecerReenvioCorreoCajero = async (idCajero, nombreCajero) => {
                 const botonConfirmar = document.getElementById('confirmar-accion');
-                let mensaje = `El cajero ${nombreCajero} se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. ¿Quieres intentarlo de nuevo? Se generará una contraseña temporal nueva.`;
+                let mensaje = `El cajero se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. ¿Quieres intentarlo de nuevo? Se generará una contraseña temporal nueva.`;
 
                 botonConfirmar.classList.remove('boton-peligro');
                 try {
@@ -1840,6 +1840,6 @@
             inicializar();
         })();
     </script>
-    <script src="../../shared/i18n.js?v=20261112" defer></script>
+    <script src="../../shared/i18n.js?v=20261118" defer></script>
 </body>
 </html>

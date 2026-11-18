@@ -71,6 +71,7 @@ $csrf = htmlspecialchars($_SESSION['csrf_cambio_password'], ENT_QUOTES, 'UTF-8')
                 <span class="theme-toggle-icon" aria-hidden="true">◐</span>
                 <span class="theme-toggle-text">Tema oscuro</span>
             </button>
+            <button class="theme-toggle language-toggle" id="boton-idioma" type="button" aria-label="Cambiar idioma">ES</button>
 
             <div class="login-layout">
                 <div class="brand-panel">
@@ -273,7 +274,7 @@ $csrf = htmlspecialchars($_SESSION['csrf_cambio_password'], ENT_QUOTES, 'UTF-8')
                 if (datos.success === true) {
                     redirigiendo = true;
                     formulario.reset();
-                    mostrarMensaje(`${datos.message || 'Contraseña guardada.'} Entrando...`, true);
+                    mostrarMensaje(`${datos.message || 'Contraseña guardada.'} Entrando al sistema...`, true);
                     window.setTimeout(() => {
                         window.location.href = datos.redirect || 'inicioSesion.html';
                     }, 1200);
@@ -297,6 +298,7 @@ $csrf = htmlspecialchars($_SESSION['csrf_cambio_password'], ENT_QUOTES, 'UTF-8')
             }
         });
     </script>
+    <script src="../../shared/i18n.js?v=20261118" defer></script>
 </body>
 
 </html>
