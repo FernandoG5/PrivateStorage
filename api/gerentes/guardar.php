@@ -38,7 +38,7 @@ $idRecibido = $_POST['id'] ?? '';
 $nombre = $_POST['nombre'] ?? null;
 $usuario = $_POST['usuario'] ?? null;
 $correo = $_POST['correo'] ?? null;
-$password = $_POST['password'] ?? null;
+$password = $_POST['password'] ?? ''; // Solo se usa al editar; al crear se genera una temporal.
 $sucursalIdRecibido = $_POST['sucursal_id'] ?? null;
 $activo = $_POST['activo'] ?? null;
 
@@ -105,13 +105,6 @@ if ($idRecibido !== '') {
     $id = (int) $idRecibido;
 }
 
-if ($id === null && $password === '') {
-    responderJson([
-        'success' => false,
-        'message' => 'La contraseña es obligatoria para crear un gerente.'
-    ], 400);
-}
-
 try {
     require_once __DIR__ . '/../../config/database.php';
 
@@ -128,18 +121,43 @@ try {
     }
 
     if ($id === null) {
-        $hash = password_hash($password, PASSWORD_DEFAULT);
+        // Al crear, la contraseña la genera el sistema y se envía por correo.
+        require_once __DIR__ . '/../../auth/acceso_temporal.php';
+
+        $passwordTemporal = generarPasswordTemporal();
         $consulta = $conexion->prepare(
-            'INSERT INTO usuarios (nombre, usuario, correo, password_hash, rol_id, sucursal_id, activo)
-             VALUES (:nombre, :usuario, :correo, :password_hash, 2, :sucursal_id, :activo)'
+            'INSERT INTO usuarios
+                (nombre, usuario, correo, password_hash, rol_id, sucursal_id, activo,
+                 debe_cambiar_password, password_expira)
+             VALUES
+                (:nombre, :usuario, :correo, :password_hash, 2, :sucursal_id, :activo,
+                 1, DATE_ADD(NOW(), INTERVAL ' . HORAS_VIGENCIA_PASSWORD_TEMPORAL . ' HOUR))'
         );
         $consulta->execute([
             'nombre' => $nombre,
             'usuario' => $usuario,
             'correo' => $correo,
-            'password_hash' => $hash,
+            'password_hash' => password_hash($passwordTemporal, PASSWORD_DEFAULT),
             'sucursal_id' => $sucursalId,
             'activo' => (int) $activo
+        ]);
+        $nuevoId = (int) $conexion->lastInsertId();
+
+        $correoEnviado = enviarCorreoBienvenida([
+            'nombre' => $nombre,
+            'usuario' => $usuario,
+            'correo' => $correo,
+            'rol_id' => 2
+        ], $passwordTemporal);
+        unset($passwordTemporal);
+
+        responderJson([
+            'success' => true,
+            'id' => $nuevoId,
+            'correo_enviado' => $correoEnviado,
+            'message' => $correoEnviado
+                ? 'Gerente creado. Le enviamos su contraseña temporal por correo.'
+                : 'Gerente creado, pero no se pudo enviar el correo con su contraseña temporal.'
         ]);
     } else {
         $consultaGerente = $conexion->prepare(

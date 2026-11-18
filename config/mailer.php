@@ -77,8 +77,15 @@ function registrarErrorCorreo(string $contexto, string $detalle, ?string $destin
 }
 
 // Lanza PHPMailer\PHPMailer\Exception si el correo no se pudo enviar.
-function enviarCorreo(string $para, string $nombre, string $asunto, string $html, string $texto): void
-{
+// $imagenesIncrustadas: ['cid' => 'ruta/al/archivo.png'], se usan en el HTML como src="cid:cid".
+function enviarCorreo(
+    string $para,
+    string $nombre,
+    string $asunto,
+    string $html,
+    string $texto,
+    array $imagenesIncrustadas = []
+): void {
     $mail = obtenerConfiguracionApp()['mail'] ?? null;
     $clavesRequeridas = ['host', 'port', 'user', 'pass', 'from', 'from_name'];
 
@@ -124,6 +131,14 @@ function enviarCorreo(string $para, string $nombre, string $asunto, string $html
         $mailer->Subject = $asunto;
         $mailer->Body = $html;
         $mailer->AltBody = $texto;
+
+        foreach ($imagenesIncrustadas as $cid => $ruta) {
+            if (is_file($ruta)) {
+                $mailer->addEmbeddedImage($ruta, (string) $cid, basename($ruta));
+            } else {
+                registrarErrorCorreo('plantilla', "No existe la imagen incrustada {$cid}: " . basename($ruta), $para);
+            }
+        }
 
         $mailer->send();
     } catch (PHPMailerException $e) {

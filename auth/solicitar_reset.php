@@ -142,26 +142,25 @@ try {
     ]);
     $conexion->commit();
 
+    require_once __DIR__ . '/../plantillas/correo/_base.php';
+
     $enlace = obtenerUrlAplicacion() . '/src/inicio_sesion/restablecer.html?token=' . $token;
     $nombre = (string) $usuarioEncontrado['nombre'];
-    $nombreHtml = htmlspecialchars($nombre, ENT_QUOTES, 'UTF-8');
-    $enlaceHtml = htmlspecialchars($enlace, ENT_QUOTES, 'UTF-8');
 
     try {
+        $plantilla = renderizarPlantillaCorreo('restablecer', [
+            'nombre' => $nombre,
+            'enlace' => $enlace,
+            'minutosVigencia' => MINUTOS_EXPIRACION_RESET,
+        ]);
+
         enviarCorreo(
             $usuarioEncontrado['correo'],
             $nombre,
-            'Restablece tu contraseña de PrivateStorage',
-            '<p>Hola ' . $nombreHtml . ',</p>'
-                . '<p>Recibimos una solicitud para restablecer tu contraseña de PrivateStorage.</p>'
-                . '<p><a href="' . $enlaceHtml . '">Restablecer contraseña</a></p>'
-                . '<p>El enlace vence en ' . MINUTOS_EXPIRACION_RESET . ' minutos y solo puede usarse una vez. '
-                . 'Si no solicitaste este cambio, ignora este correo.</p>',
-            "Hola {$nombre},\n\n"
-                . "Recibimos una solicitud para restablecer tu contraseña de PrivateStorage.\n"
-                . "Abre este enlace para elegir una nueva: {$enlace}\n\n"
-                . 'El enlace vence en ' . MINUTOS_EXPIRACION_RESET . " minutos y solo puede usarse una vez.\n"
-                . 'Si no solicitaste este cambio, ignora este correo.'
+            $plantilla['asunto'],
+            $plantilla['html'],
+            $plantilla['texto'],
+            imagenesCorreo()
         );
     } catch (Throwable $e) {
         // El token no sirve si el correo nunca llegó; se elimina para permitir otro intento.

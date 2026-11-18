@@ -837,7 +837,7 @@
                                     <label for="gerente-correo">Correo electrónico</label>
                                     <input id="gerente-correo" type="email" maxlength="150" autocomplete="off" required>
                                 </div>
-                                <div class="campo">
+                                <div class="campo" id="campo-password-gerente">
                                     <label for="gerente-password">Contraseña</label>
                                     <div class="gerente-password-campo">
                                         <input id="gerente-password" type="password" autocomplete="new-password" required>
@@ -859,6 +859,7 @@
                                     </select>
                                 </div>
                             </div>
+                            <p class="gerente-password-ayuda" id="gerente-aviso-password-temporal" hidden><i class="fa-solid fa-envelope" aria-hidden="true"></i> Se generará una contraseña temporal y se enviará al correo del gerente junto con su número de trabajador.</p>
                             <p class="inventario-modal-error" id="error-formulario-gerente" role="alert" aria-live="assertive" hidden></p>
                             <div class="acciones-formulario">
                                 <button class="boton-guardar" type="submit"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Guardar gerente</button>
@@ -883,6 +884,27 @@
                             <button class="boton-secundario" id="boton-cancelar-desactivacion-gerente" type="button">Cancelar</button>
                             <button class="gerente-boton-confirmar-desactivacion" id="boton-confirmar-desactivacion-gerente" type="button">
                                 <i class="fa-solid fa-user-slash" aria-hidden="true"></i> Desactivar gerente
+                            </button>
+                        </div>
+                    </section>
+                </div>
+                <div class="inventario-modal-overlay gerentes-modal" id="modal-correo-no-enviado-gerente" hidden>
+                    <section class="inventario-modal-dialog gerentes-confirmacion-dialog" role="dialog" aria-modal="true" aria-labelledby="titulo-correo-no-enviado-gerente" tabindex="-1">
+                        <header class="inventario-modal-encabezado">
+                            <div>
+                                <p class="etiqueta-seccion">AVISO</p>
+                                <h2 id="titulo-correo-no-enviado-gerente">No se pudo enviar el correo</h2>
+                            </div>
+                            <button class="inventario-modal-cerrar" id="boton-cerrar-correo-no-enviado-gerente" type="button" aria-label="Cerrar aviso">
+                                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                            </button>
+                        </header>
+                        <p class="gerentes-confirmacion-texto">El gerente <strong id="nombre-correo-no-enviado-gerente"></strong> se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. Puedes intentarlo de nuevo; se generará una contraseña temporal nueva.</p>
+                        <p class="inventario-modal-error" id="error-correo-no-enviado-gerente" role="alert" aria-live="assertive" hidden></p>
+                        <div class="gerentes-confirmacion-acciones">
+                            <button class="boton-secundario" id="boton-omitir-reenvio-gerente" type="button">Cerrar</button>
+                            <button class="boton-guardar" id="boton-reenviar-correo-gerente" type="button">
+                                <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Reenviar correo
                             </button>
                         </div>
                     </section>
@@ -913,6 +935,12 @@
         const toastGerentes = document.getElementById('toast-gerentes');
         const gerentePassword = document.getElementById('gerente-password');
         const gerentePasswordAyuda = document.getElementById('gerente-password-ayuda');
+        const campoPasswordGerente = document.getElementById('campo-password-gerente');
+        const avisoPasswordTemporalGerente = document.getElementById('gerente-aviso-password-temporal');
+        const gerentesCorreoNoEnviadoModal = document.getElementById('modal-correo-no-enviado-gerente');
+        const errorCorreoNoEnviadoGerente = document.getElementById('error-correo-no-enviado-gerente');
+        const botonReenviarCorreoGerente = document.getElementById('boton-reenviar-correo-gerente');
+        let gerentePendienteReenvioId = null;
         const claveGerentesPorPagina = 'privateStorage.gerentes.porPagina';
         const opcionesGerentesPorPagina = [5, 10, 20, 30];
         let gerentes = [];
@@ -1130,7 +1158,7 @@
 
         const cerrarModalGerente = (modal, devolverFoco = true) => {
             modal.hidden = true;
-            if (gerentesModal.hidden && gerentesConfirmacionModal.hidden) {
+            if (gerentesModal.hidden && gerentesConfirmacionModal.hidden && gerentesCorreoNoEnviadoModal.hidden) {
                 document.body.classList.remove('inventario-modal-abierto');
             }
             if (devolverFoco && elementoEnfoqueGerenteAnterior?.isConnected) {
@@ -1177,9 +1205,12 @@
             document.getElementById('gerente-correo').value = gerente ? (gerente.correo ?? '') : '';
             gerentePassword.value = '';
             gerentePassword.type = 'password';
-            gerentePassword.required = !gerente;
+            // Al crear, la contraseña la genera el sistema y se envía por correo.
+            gerentePassword.required = false;
             gerentePassword.placeholder = gerente ? 'Déjalo vacío para conservar la actual' : '';
             gerentePasswordAyuda.hidden = !gerente;
+            campoPasswordGerente.style.display = gerente ? '' : 'none';
+            avisoPasswordTemporalGerente.hidden = Boolean(gerente);
             document.getElementById('boton-ver-password-gerente').setAttribute('aria-label', 'Mostrar contraseña');
             document.getElementById('boton-ver-password-gerente').setAttribute('aria-pressed', 'false');
             document.querySelector('#boton-ver-password-gerente i').className = 'fa-solid fa-eye';
@@ -1285,14 +1316,69 @@
         gerentesConfirmacionModal.addEventListener('click', evento => {
             if (evento.target === gerentesConfirmacionModal) cerrarConfirmacionDesactivacionGerente(false);
         });
+        const mostrarAvisoCorreoNoEnviadoGerente = (idGerente, nombreGerente) => {
+            gerentePendienteReenvioId = idGerente;
+            document.getElementById('nombre-correo-no-enviado-gerente').textContent = nombreGerente;
+            errorCorreoNoEnviadoGerente.textContent = '';
+            errorCorreoNoEnviadoGerente.hidden = true;
+            botonReenviarCorreoGerente.disabled = false;
+            abrirModalGerente(
+                gerentesCorreoNoEnviadoModal,
+                document.getElementById('boton-nuevo-gerente'),
+                botonReenviarCorreoGerente
+            );
+        };
+
+        const cerrarAvisoCorreoNoEnviadoGerente = () => {
+            gerentePendienteReenvioId = null;
+            cerrarModalGerente(gerentesCorreoNoEnviadoModal);
+        };
+
+        document.getElementById('boton-cerrar-correo-no-enviado-gerente').addEventListener('click', cerrarAvisoCorreoNoEnviadoGerente);
+        document.getElementById('boton-omitir-reenvio-gerente').addEventListener('click', cerrarAvisoCorreoNoEnviadoGerente);
+        gerentesCorreoNoEnviadoModal.addEventListener('click', evento => {
+            if (evento.target === gerentesCorreoNoEnviadoModal) cerrarAvisoCorreoNoEnviadoGerente();
+        });
+        botonReenviarCorreoGerente.addEventListener('click', async () => {
+            if (!gerentePendienteReenvioId) return;
+            botonReenviarCorreoGerente.disabled = true;
+            errorCorreoNoEnviadoGerente.hidden = true;
+
+            try {
+                const respuesta = await fetch('../../api/gerentes/reenviar_acceso.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ id: String(gerentePendienteReenvioId) })
+                });
+                const datos = await respuesta.json();
+
+                if (datos.success === true) {
+                    cerrarAvisoCorreoNoEnviadoGerente();
+                    mostrarToastGerentes(datos.message || 'Correo reenviado correctamente');
+                    return;
+                }
+
+                errorCorreoNoEnviadoGerente.textContent = datos.message || 'No se pudo reenviar el correo.';
+            } catch (error) {
+                console.error('No se pudo reenviar el correo del gerente:', error);
+                errorCorreoNoEnviadoGerente.textContent = 'No se pudo comunicar con el servidor. Intenta nuevamente.';
+            }
+
+            errorCorreoNoEnviadoGerente.hidden = false;
+            botonReenviarCorreoGerente.disabled = false;
+        });
+
         document.addEventListener('keydown', evento => {
             const modalActivo = !gerentesModal.hidden
                 ? gerentesModal
-                : !gerentesConfirmacionModal.hidden ? gerentesConfirmacionModal : null;
+                : !gerentesConfirmacionModal.hidden
+                    ? gerentesConfirmacionModal
+                    : !gerentesCorreoNoEnviadoModal.hidden ? gerentesCorreoNoEnviadoModal : null;
             if (!modalActivo) return;
             if (evento.key === 'Escape') {
                 evento.preventDefault();
                 if (modalActivo === gerentesModal) limpiarFormulario();
+                else if (modalActivo === gerentesCorreoNoEnviadoModal) cerrarAvisoCorreoNoEnviadoGerente();
                 else cerrarConfirmacionDesactivacionGerente(false);
                 return;
             }
@@ -1338,11 +1424,21 @@
                 const datos = await respuesta.json();
 
                 if (datos.success === true) {
+                    const nombreGerente = document.getElementById('gerente-nombre').value.trim();
                     limpiarFormulario();
                     const listadoActualizado = await cargarGerentes();
+
+                    if (datos.correo_enviado === false && datos.id) {
+                        mostrarAvisoCorreoNoEnviadoGerente(Number(datos.id), nombreGerente);
+                        return;
+                    }
+
+                    const mensajeExito = id === ''
+                        ? 'Gerente creado. Le enviamos su contraseña temporal por correo.'
+                        : 'Gerente guardado correctamente';
                     mostrarToastGerentes(
                         listadoActualizado
-                            ? 'Gerente guardado correctamente'
+                            ? mensajeExito
                             : 'Gerente guardado, pero no se pudo actualizar el listado.',
                         !listadoActualizado
                     );

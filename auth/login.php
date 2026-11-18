@@ -89,7 +89,9 @@ try {
     require_once __DIR__ . '/../config/database.php';
 
     $consulta = $conexion->prepare(
-        'SELECT id, nombre, usuario, password_hash, rol_id, sucursal_id, activo
+        'SELECT id, nombre, usuario, password_hash, rol_id, sucursal_id, activo,
+                debe_cambiar_password,
+                (password_expira IS NOT NULL AND password_expira < NOW()) AS temporal_vencida
          FROM usuarios
          WHERE usuario = :usuario
          LIMIT 1'
@@ -127,6 +129,31 @@ try {
         dirname(dirname($_SERVER['SCRIPT_NAME'] ?? '/auth/login.php')),
         '/\\'
     );
+
+    // Primer inicio de sesión con contraseña temporal: no se crea la sesión del panel
+    // hasta que el usuario elija su propia contraseña.
+    if ((int) $usuarioEncontrado['debe_cambiar_password'] === 1) {
+        if ((int) $usuarioEncontrado['temporal_vencida'] === 1) {
+            responderJson([
+                'success' => false,
+                'message' => 'Tu contraseña temporal venció. Pide que te reenvíen el acceso o usa "¿Olvidaste tu contraseña?".'
+            ], 403);
+        }
+
+        session_regenerate_id(true);
+        $_SESSION = [
+            'cambio_password_pendiente' => [
+                'user_id' => (int) $usuarioEncontrado['id'],
+                'desde' => time()
+            ],
+            'csrf_cambio_password' => bin2hex(random_bytes(32))
+        ];
+
+        responderJson([
+            'success' => true,
+            'redirect' => $rutaProyecto . '/src/inicio_sesion/cambiar_password.php'
+        ]);
+    }
     $redirecciones = [
         1 => $rutaProyecto . '/src/admin/admin.html',
         2 => $rutaProyecto . '/src/gerente/gerente.html',

@@ -132,7 +132,12 @@ try {
     }
 
     $conexion->prepare(
-        'UPDATE usuarios SET password_hash = :password_hash WHERE id = :id'
+        // Si tenía una contraseña temporal pendiente, el restablecimiento la reemplaza.
+        'UPDATE usuarios
+         SET password_hash = :password_hash,
+             debe_cambiar_password = 0,
+             password_expira = NULL
+         WHERE id = :id'
     )->execute([
         'password_hash' => password_hash($password, PASSWORD_DEFAULT),
         'id' => (int) $reset['usuario_id']
