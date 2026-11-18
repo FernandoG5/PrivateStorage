@@ -15,6 +15,7 @@
         'Ingresa tu contraseña': 'Enter your password',
         'Mostrar contraseña': 'Show password',
         'Ocultar contraseña': 'Hide password',
+        'ACTIVIDAD': 'ACTIVITY',
         '¿Olvidaste tu contraseña?': 'Forgot your password?',
         'El usuario y la contraseña son obligatorios.': 'Username and password are required.',
         'Usuario o contraseña incorrectos.': 'Incorrect username or password.',
@@ -508,3 +509,4 @@
         subtree: true
     });
 })();
+
