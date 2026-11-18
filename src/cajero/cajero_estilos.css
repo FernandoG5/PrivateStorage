@@ -173,6 +173,8 @@ select:focus-visible {
 }
 
 .header {
+    position: relative;
+    z-index: 20;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -552,6 +554,34 @@ select:focus-visible {
     color: var(--texto);
     font-size: 13px;
     text-align: center;
+}
+
+.cantidad-control input {
+    width: 48px;
+    min-height: 38px;
+    padding: 4px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    color: var(--texto);
+    background: var(--superficie-control);
+    font: inherit;
+    font-size: 13px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.cantidad-control input::-webkit-inner-spin-button,
+.cantidad-control input::-webkit-outer-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+}
+
+.cantidad-control input:focus {
+    border-color: var(--morado);
+    outline: 3px solid var(--halo);
+    outline-offset: 2px;
 }
 
 .cantidad-control button {
@@ -1474,6 +1504,7 @@ dialog.ticket-resultado::backdrop {
 }
 
 .campana-control {
+    position: relative;
     display: inline-grid;
     width: 41px;
     height: 41px;
@@ -1497,6 +1528,141 @@ dialog.ticket-resultado::backdrop {
     color: currentColor;
     cursor: inherit;
     font-size: 1.15rem;
+}
+
+.notificaciones-cajero {
+    position: relative;
+}
+
+.indicador-notificaciones-cajero {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: grid;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    place-items: center;
+    border: 2px solid var(--superficie);
+    border-radius: 999px;
+    color: #fff;
+    background: var(--rojo);
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.indicador-notificaciones-cajero[hidden],
+.panel-notificaciones-cajero[hidden] {
+    display: none;
+}
+
+.panel-notificaciones-cajero {
+    position: absolute;
+    z-index: 120;
+    top: calc(100% + 12px);
+    right: 0;
+    width: min(360px, calc(100vw - 32px));
+    max-height: min(440px, calc(100vh - 100px));
+    overflow: auto;
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    color: var(--texto);
+    background: var(--superficie-elevada);
+    box-shadow: var(--sombra-elevada);
+}
+
+.notificaciones-cajero-cabecera {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--borde);
+    background: var(--superficie-elevada);
+}
+
+.notificaciones-cajero-cabecera h2 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.cerrar-notificaciones-cajero {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    border: 0;
+    border-radius: 8px;
+    color: var(--texto-secundario);
+    background: transparent;
+}
+
+.cerrar-notificaciones-cajero:hover {
+    color: var(--texto);
+    background: var(--morado-claro);
+}
+
+.lista-notificaciones-cajero {
+    display: grid;
+}
+
+.notificacion-cajero {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 10px;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.notificacion-cajero:last-child {
+    border-bottom: 0;
+}
+
+.notificacion-cajero.sin-leer {
+    background: var(--morado-claro);
+}
+
+.notificacion-cajero-icono {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border-radius: 9px;
+    color: var(--morado);
+    background: var(--superficie);
+}
+
+.notificacion-cajero-stock-bajo .notificacion-cajero-icono {
+    color: var(--rojo);
+}
+
+.notificacion-cajero h3 {
+    margin: 0 0 4px;
+    font-size: 12px;
+}
+
+.notificacion-cajero p {
+    margin: 0;
+    color: var(--texto-secundario);
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.notificacion-cajero time {
+    display: block;
+    margin-top: 5px;
+    color: var(--texto-secundario);
+    font-size: 10px;
+}
+
+.notificaciones-cajero-vacias {
+    margin: 0;
+    padding: 24px 16px;
+    color: var(--texto-secundario);
+    font-size: 13px;
+    text-align: center;
 }
 
 .etiqueta-panel {
