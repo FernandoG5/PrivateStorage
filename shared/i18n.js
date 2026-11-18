@@ -271,6 +271,7 @@
         'Nombre completo': 'Full name',
         'Nueva contraseña': 'New password',
         'Teléfono': 'Phone',
+        'Email': 'Email',
         'Dirección': 'Address'
         ,'ADMINISTRACIÓN DE SEDE': 'BRANCH ADMINISTRATION'
         ,'ADMINISTRACIÓN DE SEDES': 'BRANCH ADMINISTRATION'
@@ -279,6 +280,11 @@
         ,'ADMINISTRACIÓN DE PERSONAL': 'STAFF ADMINISTRATION'
         ,'PERSONAL DE CAJA': 'CASHIER STAFF'
         ,'Mi sucursal': 'My branch'
+        ,'Eliminar del catálogo': 'Remove from catalog'
+        ,'Esta acción no se puede deshacer.': 'This action cannot be undone.'
+        ,'Poco stock': 'Low stock'
+        ,' con stock bajo': ' low-stock products'
+        ,'Navegación del administrador': 'Administrator navigation'
         ,'FICHA DE SUCURSAL': 'BRANCH DETAILS'
         ,'Datos de la sucursal': 'Branch details'
         ,'Registrar caja': 'Register cash register'
@@ -292,6 +298,27 @@
         ,'Aún no hay ventas en esta sucursal.': 'There are no sales at this branch yet.'
         ,'Historial de ventas': 'Sales history'
         ,'Folio': 'Receipt'
+        ,'Activar cajero': 'Activate cashier',
+        'Desactivar cajero': 'Deactivate cashier',
+        'Cambiar tema': 'Change theme',
+        'Abrir notificaciones': 'Open notifications',
+        'Cerrar detalle de venta': 'Close sale details',
+        'Cerrar formulario de gerente': 'Close manager form',
+        'Cancelar desactivación': 'Cancel deactivation',
+        'Cancelar eliminación': 'Cancel deletion',
+        'Gerentes por página': 'Managers per page',
+        'Productos por página': 'Products per page',
+        'Sucursales por página': 'Branches per page',
+        'Paginación de ventas': 'Sales pagination',
+        'Email': 'Email'
+        ,'No hay gerentes que coincidan con la búsqueda': 'No managers match the search'
+        ,'No hay gerentes que mostrar': 'There are no managers to display'
+        ,'Gerente desactivado correctamente': 'Manager deactivated successfully'
+        ,'Gerente guardado correctamente': 'Manager saved successfully'
+        ,'No se pudo desactivar el gerente.': 'Could not deactivate the manager.'
+        ,'No se pudo guardar el gerente.': 'Could not save the manager.'
+        ,'No se pudo comunicar con el servidor. Intenta nuevamente.': 'Could not communicate with the server. Please try again.'
+        ,'No se pudo cargar la paginación': 'Could not load pagination'
         ,'Caja': 'Cash register'
         ,'Fecha de creación': 'Created'
         ,'Agregar cajero': 'Add cashier'
@@ -300,6 +327,8 @@
         ,'Editar cajero': 'Edit cashier'
         ,'Buscar por nombre o usuario': 'Search by name or username'
         ,'Buscar productos': 'Search products'
+        ,'Buscar productos por nombre o código...': 'Search products by name or code...'
+        ,'Buscar productos por nombre o código': 'Search products by name or code'
         ,'Buscar en el inventario': 'Search inventory'
         ,'Activos': 'Active'
         ,'Inactivos': 'Inactive'
