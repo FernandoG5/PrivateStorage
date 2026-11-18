@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="admin_estilos.css?v=20261103">
-    <link rel="stylesheet" href="admin_vistas.css?v=20261103">
+    <link rel="stylesheet" href="admin_vistas.css?v=20261118-graficas">
     <link rel="stylesheet" href="../../shared/panel-base.css?v=20261103">
 </head>
 
@@ -145,6 +145,62 @@
                     </div>
                 </div>
             </div>
+
+            <section class="dashboard-ventas" aria-labelledby="titulo-graficas-ventas">
+                <header class="dashboard-ventas-cabecera">
+                    <div>
+                        <p class="etiqueta-seccion">RENDIMIENTO</p>
+                        <h2 id="titulo-graficas-ventas">Análisis de ventas</h2>
+                        <p class="dashboard-ventas-fecha" id="dashboard-ventas-fecha">Cargando periodo...</p>
+                    </div>
+                    <div class="dashboard-ventas-periodos" role="group" aria-label="Periodo de ventas">
+                        <button type="button" data-dashboard-periodo="hoy" aria-pressed="false">Hoy</button>
+                        <button type="button" data-dashboard-periodo="semana" aria-pressed="false">Esta semana</button>
+                        <button type="button" data-dashboard-periodo="mes" class="activo" aria-pressed="true">Este mes</button>
+                    </div>
+                </header>
+                <p class="dashboard-ventas-error" id="dashboard-ventas-error" role="alert" hidden></p>
+                <div class="dashboard-ventas-resumen" aria-live="polite">
+                    <article>
+                        <span><i class="fa-solid fa-sack-dollar" aria-hidden="true"></i> Venta total</span>
+                        <strong id="dashboard-ventas-total">—</strong>
+                    </article>
+                    <article>
+                        <span><i class="fa-solid fa-receipt" aria-hidden="true"></i> Ventas realizadas</span>
+                        <strong id="dashboard-ventas-cantidad">—</strong>
+                    </article>
+                    <article>
+                        <span><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Promedio por venta</span>
+                        <strong id="dashboard-ventas-promedio">—</strong>
+                    </article>
+                </div>
+                <div class="dashboard-graficas-grid">
+                    <article class="dashboard-grafica-panel">
+                        <div class="dashboard-grafica-titulo">
+                            <h3 id="dashboard-titulo-grafica">Ventas por día del mes</h3>
+                            <span>Importe vendido</span>
+                        </div>
+                        <div id="dashboard-grafica-ventas" class="dashboard-grafica-barras" role="img" aria-label="Gráfica de ventas"></div>
+                        <p class="dashboard-grafica-vacia" id="dashboard-grafica-vacia" hidden>No hay ventas en este periodo.</p>
+                    </article>
+                    <article class="dashboard-grafica-panel">
+                        <div class="dashboard-grafica-titulo">
+                            <h3>Ventas por método de pago</h3>
+                            <span>Distribución del periodo</span>
+                        </div>
+                        <div class="dashboard-metodos">
+                            <div id="dashboard-grafica-metodos" class="dashboard-dona" role="img" aria-label="Distribución de ventas por método de pago">
+                                <span>
+                                    <strong id="dashboard-metodos-cantidad">0</strong>
+                                    <small>ventas</small>
+                                </span>
+                            </div>
+                            <div id="dashboard-leyenda-metodos" class="dashboard-metodos-leyenda"></div>
+                        </div>
+                        <p class="dashboard-grafica-vacia" id="dashboard-metodos-vacio" hidden>No hay ventas en este periodo.</p>
+                    </article>
+                </div>
+            </section>
 
             <div class="dashboard-grid">
                 <div class="dashboard-columna dashboard-columna-principal">
@@ -597,6 +653,61 @@
                                 <button class="boton-secundario" id="boton-cancelar-sucursal" type="button">Cancelar</button>
                             </div>
                         </form>
+                        <section class="gestion-cajas oculto" id="gestion-cajas-sucursal" aria-label="Gestión de cajas">
+                            <p class="gestion-cajas-sucursal-nombre" id="nombre-sucursal-cajas"></p>
+                            <div class="gestion-cajas-encabezado">
+                                <div>
+                                    <h3>Cajas de la sucursal</h3>
+                                    <p>Asigna cada caja a un cajero activo de esta sucursal.</p>
+                                </div>
+                                <button class="boton-guardar boton-nuevo" id="boton-nueva-caja" type="button">
+                                    <i class="fa-solid fa-plus" aria-hidden="true"></i> Nueva caja
+                                </button>
+                            </div>
+                            <p class="cajas-error" id="cajas-error" role="alert" hidden></p>
+                            <div class="tabla-contenedor cajas-tabla-contenedor">
+                                <table class="tabla-cajas">
+                                    <thead>
+                                        <tr>
+                                            <th>Caja</th>
+                                            <th>Cajero asignado</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="lista-cajas"></tbody>
+                                </table>
+                                <p class="tabla-vacia oculto" id="tabla-cajas-vacia">Aún no hay cajas registradas.</p>
+                            </div>
+                            <form class="formulario formulario-caja oculto" id="formulario-caja">
+                                <h3 id="titulo-formulario-caja">Nueva caja</h3>
+                                <input id="caja-id" type="hidden">
+                                <div class="campos-caja">
+                                    <div class="campo">
+                                        <label for="caja-nombre">Nombre de la caja</label>
+                                        <input id="caja-nombre" type="text" maxlength="80" required>
+                                    </div>
+                                    <div class="campo">
+                                        <label for="caja-cajero">Cajero asignado</label>
+                                        <select id="caja-cajero">
+                                            <option value="">Sin asignar</option>
+                                        </select>
+                                    </div>
+                                    <div class="campo">
+                                        <label for="caja-estado">Estado</label>
+                                        <select id="caja-estado">
+                                            <option value="activa">Activa</option>
+                                            <option value="inactiva">Inactiva</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p class="inventario-modal-error" id="error-formulario-caja" role="alert" aria-live="assertive" hidden></p>
+                                <div class="acciones-formulario">
+                                    <button class="boton-guardar" type="submit"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Guardar caja</button>
+                                    <button class="boton-secundario" id="boton-cancelar-caja" type="button">Cancelar</button>
+                                </div>
+                            </form>
+                        </section>
                     </section>
                 </div>
                 <div class="inventario-modal-overlay sucursales-modal" id="modal-confirmar-eliminacion-sucursal" hidden>
@@ -811,6 +922,12 @@
         let resolverConfirmacionGerente = null;
         let temporizadorToastGerentes;
         const formularioSucursal = document.getElementById('formulario-sucursal');
+        const gestionCajasSucursal = document.getElementById('gestion-cajas-sucursal');
+        const formularioCaja = document.getElementById('formulario-caja');
+        const listaCajas = document.getElementById('lista-cajas');
+        const tablaCajasVacia = document.getElementById('tabla-cajas-vacia');
+        const cajasError = document.getElementById('cajas-error');
+        const errorFormularioCaja = document.getElementById('error-formulario-caja');
         const listaSucursales = document.getElementById('lista-sucursales');
         const tablaSucursalesVacia = document.getElementById('tabla-sucursales-vacia');
         const totalSucursales = document.getElementById('total-sucursales');
@@ -836,6 +953,9 @@
         const botonTema = document.getElementById('boton-tema');
         const botonCerrarSesion = document.getElementById('boton-cerrar-sesion');
         let sucursales = [];
+        let cajas = [];
+        let cajerosDisponibles = [];
+        let sucursalCajasActual = null;
 
         const establecerTema = temaOscuro => {
             document.documentElement.dataset.tema = temaOscuro ? 'oscuro' : '';
@@ -1442,15 +1562,26 @@
 
         const limpiarFormularioSucursal = () => {
             formularioSucursal.reset();
+            formularioCaja.reset();
             document.getElementById('sucursal-id').value = '';
             document.getElementById('sucursal-estado').value = 'activa';
+            document.getElementById('caja-id').value = '';
+            document.getElementById('caja-estado').value = 'activa';
             errorFormularioSucursal.textContent = '';
             errorFormularioSucursal.hidden = true;
+            errorFormularioCaja.textContent = '';
+            errorFormularioCaja.hidden = true;
             formularioSucursal.classList.add('oculto');
+            formularioCaja.classList.add('oculto');
+            gestionCajasSucursal.classList.add('oculto');
+            document.getElementById('titulo-modal-sucursal').textContent = 'Agregar sucursal';
+            sucursalCajasActual = null;
             cerrarModalSucursal(sucursalesModal);
         };
 
         const mostrarFormularioSucursal = (sucursal = null, activador = document.activeElement) => {
+            gestionCajasSucursal.classList.add('oculto');
+            formularioCaja.classList.add('oculto');
             errorFormularioSucursal.textContent = '';
             errorFormularioSucursal.hidden = true;
             document.getElementById('titulo-modal-sucursal').textContent = sucursal ? 'Editar sucursal' : 'Agregar sucursal';
@@ -1483,6 +1614,7 @@
                         <td class="sucursal-col-telefono">${escaparHtml(sucursal.telefono)}</td>
                         <td class="sucursal-col-estado"><span class="${estadoActiva ? 'estado-activo' : 'estado-inactivo'}">${estadoActiva ? 'Activa' : 'Inactiva'}</span></td>
                         <td class="acciones-tabla sucursal-col-acciones">
+                            <button class="boton-icono" type="button" data-accion-sucursal="cajas" data-id="${id}" title="Gestionar cajas" aria-label="Gestionar cajas de ${escaparHtml(sucursal.nombre)}"><i class="fa-solid fa-cash-register" aria-hidden="true"></i></button>
                             <button class="boton-icono" type="button" data-accion-sucursal="editar" data-id="${id}" title="Editar" aria-label="Editar"><i class="fa-solid fa-pen" aria-hidden="true"></i></button>
                             <button class="boton-icono boton-eliminar" type="button" data-accion-sucursal="eliminar" data-id="${id}" title="Eliminar" aria-label="Eliminar"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>
                         </td>
@@ -1623,11 +1755,158 @@
             }
         });
 
+        const renderizarCajas = () => {
+            listaCajas.innerHTML = cajas.map(caja => {
+                const cajero = caja.cajero_nombre
+                    ? `${caja.cajero_nombre}${Number(caja.cajero_activo) === 1 ? '' : ' (inactivo)'}`
+                    : 'Sin asignar';
+                const estadoActivo = caja.estado === 'activa';
+                return `
+                    <tr>
+                        <td><strong>${escaparHtml(caja.nombre)}</strong></td>
+                        <td>${escaparHtml(cajero)}</td>
+                        <td><span class="${estadoActivo ? 'estado-activo' : 'estado-inactivo'}">${estadoActivo ? 'Activa' : 'Inactiva'}</span></td>
+                        <td class="acciones-tabla">
+                            <button class="boton-icono" type="button" data-accion-caja="editar" data-id="${Number(caja.id)}" title="Editar caja" aria-label="Editar caja ${escaparHtml(caja.nombre)}"><i class="fa-solid fa-pen" aria-hidden="true"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            tablaCajasVacia.textContent = cajerosDisponibles.length
+                ? 'Aún no hay cajas registradas.'
+                : 'No hay cajeros activos en esta sucursal. Puedes crear una caja y asignar un cajero más tarde.';
+            tablaCajasVacia.classList.toggle('oculto', cajas.length > 0);
+        };
+
+        const cargarCajasSucursal = async sucursalId => {
+            cajasError.hidden = true;
+            const respuesta = await fetch(`../../api/cajas/listar.php?sucursal_id=${encodeURIComponent(sucursalId)}`);
+            const datos = await respuesta.json();
+            if (datos.success !== true) {
+                throw new Error(datos.message || 'No se pudieron cargar las cajas.');
+            }
+            cajas = Array.isArray(datos.cajas) ? datos.cajas : [];
+            cajerosDisponibles = Array.isArray(datos.cajeros) ? datos.cajeros : [];
+            renderizarCajas();
+        };
+
+        const mostrarGestionCajas = async (sucursal, activador) => {
+            formularioSucursal.classList.add('oculto');
+            gestionCajasSucursal.classList.remove('oculto');
+            formularioCaja.classList.add('oculto');
+            sucursalCajasActual = sucursal;
+            document.getElementById('titulo-modal-sucursal').textContent = 'Cajas de la sucursal';
+            document.getElementById('nombre-sucursal-cajas').textContent = sucursal.nombre;
+            cajasError.hidden = true;
+            abrirModalSucursal(
+                sucursalesModal,
+                activador,
+                document.getElementById('boton-nueva-caja')
+            );
+            try {
+                await cargarCajasSucursal(sucursal.id);
+            } catch (error) {
+                console.error('No se pudieron cargar las cajas:', error);
+                cajasError.textContent = error.message || 'No se pudieron cargar las cajas.';
+                cajasError.hidden = false;
+                cajas = [];
+                cajerosDisponibles = [];
+                renderizarCajas();
+            }
+        };
+
+        const llenarSelectorCajeros = (cajeroSeleccionado, caja) => {
+            const selector = document.getElementById('caja-cajero');
+            const cajerosActivos = cajerosDisponibles.map(cajero =>
+                `<option value="${Number(cajero.id)}">${escaparHtml(cajero.nombre)} (${escaparHtml(cajero.usuario)})</option>`
+            ).join('');
+            const asignadoInactivo = caja?.cajero_id
+                && !cajerosDisponibles.some(cajeroDisponible => String(cajeroDisponible.id) === String(caja.cajero_id))
+                ? `<option value="${Number(caja.cajero_id)}" disabled>${escaparHtml(caja.cajero_nombre)} (${escaparHtml(caja.cajero_usuario)}) — inactivo</option>`
+                : '';
+            selector.innerHTML = '<option value="">Sin asignar</option>' + cajerosActivos + asignadoInactivo;
+            selector.value = cajerosDisponibles.some(cajero => String(cajero.id) === String(cajeroSeleccionado))
+                ? String(cajeroSeleccionado)
+                : caja?.cajero_id && String(caja.cajero_id) === String(cajeroSeleccionado)
+                    ? String(cajeroSeleccionado)
+                    : '';
+        };
+
+        const mostrarFormularioCaja = caja => {
+            errorFormularioCaja.textContent = '';
+            errorFormularioCaja.hidden = true;
+            document.getElementById('titulo-formulario-caja').textContent = caja ? 'Editar caja' : 'Nueva caja';
+            document.getElementById('caja-id').value = caja ? caja.id : '';
+            document.getElementById('caja-nombre').value = caja ? caja.nombre : '';
+            document.getElementById('caja-estado').value = caja ? caja.estado : 'activa';
+            llenarSelectorCajeros(caja?.cajero_id ?? '', caja);
+            formularioCaja.classList.remove('oculto');
+            document.getElementById('caja-nombre').focus();
+        };
+
+        const cancelarFormularioCaja = () => {
+            formularioCaja.reset();
+            document.getElementById('caja-id').value = '';
+            document.getElementById('caja-estado').value = 'activa';
+            errorFormularioCaja.textContent = '';
+            errorFormularioCaja.hidden = true;
+            formularioCaja.classList.add('oculto');
+            document.getElementById('boton-nueva-caja').focus();
+        };
+
+        document.getElementById('boton-nueva-caja').addEventListener('click', () => mostrarFormularioCaja(null));
+        document.getElementById('boton-cancelar-caja').addEventListener('click', cancelarFormularioCaja);
+        listaCajas.addEventListener('click', evento => {
+            const boton = evento.target.closest('button[data-accion-caja="editar"]');
+            if (!boton) return;
+            const caja = cajas.find(item => Number(item.id) === Number(boton.dataset.id));
+            if (caja) mostrarFormularioCaja(caja);
+        });
+
+        formularioCaja.addEventListener('submit', async evento => {
+            evento.preventDefault();
+            if (!sucursalCajasActual) return;
+
+            const datosFormulario = new URLSearchParams({
+                id: document.getElementById('caja-id').value,
+                sucursal_id: String(sucursalCajasActual.id),
+                nombre: document.getElementById('caja-nombre').value,
+                cajero_id: document.getElementById('caja-cajero').value,
+                estado: document.getElementById('caja-estado').value
+            });
+
+            try {
+                const respuesta = await fetch('../../api/cajas/guardar.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: datosFormulario
+                });
+                const datos = await respuesta.json();
+                if (datos.success !== true) {
+                    errorFormularioCaja.textContent = datos.message || 'No se pudo guardar la caja.';
+                    errorFormularioCaja.hidden = false;
+                    return;
+                }
+                await cargarCajasSucursal(sucursalCajasActual.id);
+                cancelarFormularioCaja();
+                mostrarToastSucursales('Caja guardada correctamente');
+            } catch (error) {
+                console.error('No se pudo guardar la caja:', error);
+                errorFormularioCaja.textContent = 'No se pudo comunicar con el servidor. Intenta nuevamente.';
+                errorFormularioCaja.hidden = false;
+            }
+        });
+
         listaSucursales.addEventListener('click', async evento => {
             const boton = evento.target.closest('button[data-accion-sucursal]');
             if (!boton) return;
             const id = Number(boton.dataset.id);
             const sucursal = sucursales.find(item => Number(item.id) === id);
+
+            if (boton.dataset.accionSucursal === 'cajas' && sucursal) {
+                await mostrarGestionCajas(sucursal, boton);
+                return;
+            }
 
             if (boton.dataset.accionSucursal === 'editar' && sucursal) {
                 mostrarFormularioSucursal(sucursal, boton);
@@ -1669,10 +1948,10 @@
 
         inicializarDatos();
     </script>
-    <script src="admin_dashboard.js?v=20261115" defer></script>
+    <script src="admin_dashboard.js?v=20261118-dashboard-graficas" defer></script>
     <script src="admin_inventario.js?v=20261115" defer></script>
     <script src="admin_ventas.js?v=20261115" defer></script>
     <script src="admin_visual.js?v=20261115" defer></script>
-    <script src="../../shared/i18n.js?v=20261115" defer></script>
+    <script src="../../shared/i18n.js?v=20261118-merge" defer></script>
 </body>
 </html>
