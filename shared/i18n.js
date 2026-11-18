@@ -524,7 +524,11 @@
                             textosOriginales.set(nodo, nodo.nodeValue);
                         }
                     } else {
-                        textosOriginales.set(nodo, nodo.nodeValue);
+                        const original = textosOriginales.get(nodo);
+                        const esperadoEn = traducirDesdeEspanol(original, 'en');
+                        if (nodo.nodeValue !== original && nodo.nodeValue !== esperadoEn) {
+                            textosOriginales.set(nodo, nodo.nodeValue);
+                        }
                     }
 
                     const textoTraducido = traducirDesdeEspanol(textosOriginales.get(nodo), idioma);
@@ -548,7 +552,11 @@
                             originales.set(atributo, valor);
                         }
                     } else {
-                        originales.set(atributo, valor);
+                        const original = originales.get(atributo);
+                        const esperadoEn = traducirDesdeEspanol(original, 'en');
+                        if (valor !== original && valor !== esperadoEn) {
+                            originales.set(atributo, valor);
+                        }
                     }
 
                     const valorTraducido = traducirDesdeEspanol(originales.get(atributo), idioma);
