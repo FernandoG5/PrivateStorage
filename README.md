@@ -24,6 +24,16 @@ Desarrollo de una aplicación web dedicada al comercio de productos electrónico
 
 <img width="1452" height="917" alt="image" src="https://github.com/user-attachments/assets/b050e337-d4e5-42cd-baf5-313c0e7c603e" />#Dashboard Administrador General
 
+---
+
+<img width="2377" height="1290" alt="Gerente private storage" src="https://github.com/user-attachments/assets/7eb474ee-ce69-49e7-99f1-0e9dc8430fea" />#Dashboard Gerente Sucursal
+
+---
+Es importante para nosotros brindar un diseño agradable y fácil de usar, listo para tomar el siguiente paso en tu negocio.
+
+<img width="2374" height="1284" alt="image" src="https://github.com/user-attachments/assets/ffbeb2b9-ec2f-4f68-8630-f5dab8f546a9" />#Dashboard Cajero/Punto de Venta
+
+
 ## Tecnologías y Herramientas
 
 | Categoría | Herramienta / Tecnología |
