@@ -298,7 +298,7 @@ $csrf = htmlspecialchars($_SESSION['csrf_cambio_password'], ENT_QUOTES, 'UTF-8')
             }
         });
     </script>
-    <script src="../../shared/i18n.js?v=20261118" defer></script>
+    <script src="../../shared/i18n.js?v=20261123" defer></script>
 </body>
 
 </html>
