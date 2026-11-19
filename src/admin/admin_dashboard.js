@@ -276,6 +276,9 @@
         });
     });
 
-    cargarDashboard();
-    window.addEventListener('private-storage-language-changed', cargarDashboard);
+   cargarDashboard();
+    window.addEventListener('private-storage-language-changed', () => {
+        const periodoActivo = document.querySelector('[data-dashboard-periodo].activo')?.dataset.dashboardPeriodo || 'mes';
+        cargarDashboard(periodoActivo);
+    });
 })();
