@@ -1,5 +1,6 @@
 (() => {
     const traducciones = {
+        // Autenticación, recuperación y primer acceso
         'Inicio de sesión': 'Log in',
         'Iniciar sesión': 'Log in',
         'Iniciar Sesión': 'Log In',
@@ -70,6 +71,8 @@
         'Solicitar un enlace nuevo': 'Request a new link',
         'El enlace no es válido o ya expiró. Solicita uno nuevo.': 'The link is invalid or has expired. Request a new one.',
         'Las contraseñas no coinciden.': 'The passwords do not match.',
+
+        // Términos de uso y aviso de privacidad
         'Términos y privacidad': 'Terms and privacy',
         'Términos de uso y aviso de privacidad': 'Terms of use and privacy notice',
         'Términos de uso': 'Terms of use',
@@ -107,6 +110,8 @@
         'Cambios a este aviso': 'Changes to this notice',
         'Cualquier cambio a estos términos o a este aviso de privacidad se publicará en esta misma página.': 'Any changes to these terms or to this privacy notice will be published on this page.',
         'Última actualización: 18 de noviembre de 2026.': 'Last updated: November 18, 2026.',
+
+        // Tema, idioma y navegación general
         'Tema oscuro': 'Dark theme',
         'Tema claro': 'Light theme',
         'Modo oscuro': 'Dark mode',
@@ -154,11 +159,14 @@
         'No se pudo cerrar la sesión. Intenta nuevamente.': 'Could not log out. Please try again.',
         'No se pudo comunicar con el servidor.': 'Could not communicate with the server.',
         'No se pudo comunicar con el servidor. Intenta nuevamente.': 'Could not communicate with the server. Please try again.',
+
+        // Dashboard, gráficas y notificaciones
         'RESUMEN DEL SISTEMA': 'SYSTEM SUMMARY',
         'Vistazo general': 'Overview',
         'ACTIVIDAD': 'ACTIVITY',
         'CENTRO DE ACTIVIDAD': 'ACTIVITY CENTER',
         'RENDIMIENTO': 'PERFORMANCE',
+        'AVISO': 'NOTICE',
         'Notificaciones de inventario': 'Inventory notifications',
         'Notificaciones': 'Notifications',
         'Abrir notificaciones': 'Open notifications',
@@ -207,6 +215,8 @@
         'Consultar ventas': 'View sales',
         'Abrir sucursales': 'Open branches',
         'Administrar gerentes': 'Manage managers',
+
+        // Inventario y productos
         'PRODUCTOS Y EXISTENCIAS': 'PRODUCTS AND STOCK',
         'Control de inventario': 'Inventory control',
         'Consulta de productos por sucursal y categoría.': 'Browse products by branch and category.',
@@ -285,10 +295,13 @@
         'No se pudo desactivar el producto.': 'Could not deactivate the product.',
         'No se pudo actualizar el stock.': 'Could not update stock.',
         'Se guardaron los datos, pero no se pudo actualizar la existencia.': 'The details were saved, but stock could not be updated.',
+        'La respuesta del inventario no contiene productos.': 'The inventory response does not contain products.',
         'No se pudieron cargar los productos.': 'Products could not be loaded.',
         'No se pudieron cargar las categorías.': 'Categories could not be loaded.',
         'No se pudo cargar el inventario.': 'Inventory could not be loaded.',
         'No se pudo actualizar el inventario.': 'Could not update inventory.',
+
+        // Ventas y punto de venta
         'REGISTRO Y SEGUIMIENTO': 'RECORDS AND TRACKING',
         'HISTORIAL': 'HISTORY',
         'COMPROBANTE': 'RECEIPT',
@@ -366,6 +379,8 @@
         'Detalle': 'Details',
         'ventas': 'sales',
         'venta': 'sale',
+
+        // Sucursales, cajas, gerentes y cajeros
         'ADMINISTRACIÓN DE SEDES': 'BRANCH ADMINISTRATION',
         'ADMINISTRACIÓN DE SEDE': 'BRANCH ADMINISTRATION',
         'ADMINISTRACION DE SEDES': 'BRANCH ADMINISTRATION',
@@ -391,6 +406,7 @@
         'No se pudieron cargar las sucursales.': 'Branches could not be loaded.',
         'No se pudieron cargar las sucursales. Revisa tu conexión e intenta nuevamente.': 'Branches could not be loaded. Check your connection and try again.',
         'Esta acción no se puede deshacer.': 'This action cannot be undone.',
+        '? Esta acción no se puede deshacer.': '? This action cannot be undone.',
         'FICHA DE SUCURSAL': 'BRANCH DETAILS',
         'Datos de la sucursal': 'Branch details',
         'Información, cajas y ventas': 'Branch, cash registers and sales information',
@@ -400,6 +416,7 @@
         'Asigna cada caja a un cajero activo de esta sucursal.': 'Assign each cash register to an active cashier at this branch.',
         'Nueva caja': 'New cash register',
         'Editar caja': 'Edit cash register',
+        'Cajero asignado': 'Assigned cashier',
         'Sin asignar': 'Unassigned',
         'Registrar caja': 'Register cash register',
         'Consultar cajas': 'View cash registers',
@@ -435,7 +452,9 @@
         'No hay gerentes que coincidan con la búsqueda': 'No managers match the search',
         'No hay gerentes que mostrar': 'There are no managers to display',
         'Gerente desactivado correctamente': 'Manager deactivated successfully',
+        'Gerente desactivado, pero no se pudo actualizar el listado.': 'Manager deactivated, but the list could not be updated.',
         'Gerente guardado correctamente': 'Manager saved successfully',
+        'Gerente guardado, pero no se pudo actualizar el listado.': 'Manager saved, but the list could not be updated.',
         'No se pudo desactivar el gerente.': 'Could not deactivate the manager.',
         'No se pudo guardar el gerente.': 'Could not save the manager.',
         'No se pudieron cargar los gerentes.': 'Managers could not be loaded.',
@@ -474,6 +493,8 @@
         'No se pudieron cargar los cajeros.': 'Cashiers could not be loaded.',
         'No se pudo editar el cajero.': 'Could not edit the cashier.',
         'Sus ventas anteriores se conservarán.': 'Their previous sales will be kept.',
+
+        // Campos, estados, modales y paginación
         'Nombre completo': 'Full name',
         'Teléfono': 'Phone',
         'Dirección': 'Address',
@@ -506,15 +527,19 @@
         'inactivo': 'inactive',
         'inactivas': 'inactive',
         'inactiva': 'inactive',
+        '— inactivo': '— inactive',
         'No disponible': 'Unavailable',
         'CONFIRMACIÓN': 'CONFIRMATION',
         'CONFIRMAR ACCIÓN': 'CONFIRM ACTION',
+        '¿Desactivar a': 'Deactivate',
         '¿Continuar?': 'Continue?',
         'Desactivar': 'Deactivate',
         'Activar': 'Activate',
         'Cancelar': 'Cancel',
         'Confirmar': 'Confirm',
         'Cerrar': 'Close',
+        'Cerrar aviso': 'Close notice',
+        'Cerrar ventana': 'Close window',
         'Cerrar confirmación': 'Close confirmation',
         'Cancelar desactivación': 'Cancel deactivation',
         'Cancelar eliminación': 'Cancel deletion',
@@ -547,6 +572,9 @@
         'Mostrando': 'Showing',
         'Mostrar': 'Show',
         'por página': 'per page',
+        'productos': 'products',
+        'gerentes': 'managers',
+        'sucursales': 'branches',
         'No se pudo cargar la paginación': 'Could not load pagination',
         'No se pudo cargar el contexto.': 'The context could not be loaded.',
         'No se pudo recordar el tamaño de página en este navegador.': 'Could not remember the page size in this browser.',
@@ -629,8 +657,6 @@
                         if (nodo.nodeValue !== esperado) {
                             textosOriginales.set(nodo, nodo.nodeValue);
                         }
-                    } else {
-                        textosOriginales.set(nodo, nodo.nodeValue);
                     }
 
                     const textoTraducido = traducirDesdeEspanol(textosOriginales.get(nodo), idioma);
@@ -654,8 +680,6 @@
                         if (valor !== esperado) {
                             originales.set(atributo, valor);
                         }
-                    } else {
-                        originales.set(atributo, valor);
                     }
 
                     const valorTraducido = traducirDesdeEspanol(originales.get(atributo), idioma);
