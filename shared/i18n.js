@@ -7,6 +7,24 @@
         'Restablecer contraseña': 'Reset password',
         'Nueva contraseña': 'New password',
         'Confirmar contraseña': 'Confirm password',
+        'Crea tu contraseña': 'Create your password',
+        'Crear contraseña': 'Create password',
+        'Primer inicio de sesión': 'First login',
+        'Por tu seguridad, reemplaza la contraseña temporal por una que solo tú conozcas.': 'For your security, replace the temporary password with one that only you know.',
+        'Debe tener al menos 8 caracteres y ser distinta a la temporal.': 'It must have at least 8 characters and be different from the temporary one.',
+        'He leído y acepto los ': 'I have read and accept the ',
+        'términos de uso y el aviso de privacidad': 'terms of use and privacy notice',
+        'Guardar y entrar': 'Save and continue',
+        'Debes aceptar los términos de uso y el aviso de privacidad para continuar.': 'You must accept the terms of use and privacy notice to continue.',
+        'Contraseña guardada.': 'Password saved.',
+        'Entrando al sistema...': 'Signing in...',
+        'No se pudo guardar la contraseña.': 'The password could not be saved.',
+        '¡Listo! Tu contraseña se guardó correctamente.': 'Done! Your password was saved successfully.',
+        'Tu sesión expiró. Inicia sesión de nuevo con tu contraseña temporal.': 'Your session expired. Log in again with your temporary password.',
+        'La solicitud no es válida. Recarga la página.': 'The request is not valid. Reload the page.',
+        'Tu contraseña temporal ya no es válida. Inicia sesión de nuevo o pide que te reenvíen el acceso.': 'Your temporary password is no longer valid. Log in again or ask for your access to be resent.',
+        'La nueva contraseña debe ser distinta a la contraseña temporal.': 'The new password must be different from the temporary password.',
+        'Tu contraseña se actualizó. Inicia sesión de nuevo.': 'Your password was updated. Log in again.',
         'Sistema de gestión': 'Management system',
         'Accede con tus credenciales para continuar.': 'Sign in with your credentials to continue.',
         'Ingresa tus datos para acceder al sistema.': 'Enter your details to access the system.',
@@ -33,14 +51,15 @@
         'No se pudo iniciar sesión.': 'Could not log in.',
         'No se pudo conectar con el servidor. Verifica que Apache esté iniciado y vuelve a intentar.': 'Could not connect to the server. Make sure Apache is running and try again.',
         'Ocurrió un error inesperado. Consulta la consola para más detalles.': 'An unexpected error occurred. Check the console for details.',
-        'Tema oscuro': 'Dark theme',
-        'Tema claro': 'Light theme',
-        'Activar modo oscuro': 'Enable dark mode',
-        'Activar modo claro': 'Enable light mode',
+        'El servidor respondió con un formato inválido. Consulta la consola para más detalles.': 'The server returned an invalid format. Check the console for details.',
+        'El servidor devolvió una respuesta no válida.': 'The server returned an invalid response.',
         'Te enviaremos un enlace para elegir una nueva contraseña.': 'We will send you a link to choose a new password.',
         'Escribe el correo electrónico registrado en tu cuenta.': 'Enter the email address registered to your account.',
+        'Escribe un correo electrónico válido.': 'Enter a valid email address.',
         'Correo electrónico': 'Email address',
+        'nombre@correo.com': 'name@email.com',
         'Enviar enlace': 'Send link',
+        '← Volver al inicio de sesión': '← Back to log in',
         'Volver a iniciar sesión': 'Back to log in',
         'Elige una contraseña nueva para tu cuenta.': 'Choose a new password for your account.',
         'Debe tener al menos 8 caracteres.': 'It must contain at least 8 characters.',
@@ -49,65 +68,141 @@
         'Repite tu nueva contraseña': 'Repeat your new password',
         'Guardar contraseña': 'Save password',
         'Solicitar un enlace nuevo': 'Request a new link',
+        'El enlace no es válido o ya expiró. Solicita uno nuevo.': 'The link is invalid or has expired. Request a new one.',
+        'Las contraseñas no coinciden.': 'The passwords do not match.',
+        'Términos y privacidad': 'Terms and privacy',
+        'Términos de uso y aviso de privacidad': 'Terms of use and privacy notice',
+        'Términos de uso': 'Terms of use',
+        'Aviso de privacidad': 'Privacy notice',
+        'Índice del documento': 'Table of contents',
+        '1. Uso del sistema': '1. Use of the system',
+        'PrivateStorage es un sistema destinado a la gestión de productos, inventarios, sucursales y ventas. El usuario se compromete a utilizarlo únicamente para las actividades autorizadas.': 'PrivateStorage is a system for managing products, inventory, branches and sales. Users agree to use it only for authorized activities.',
+        '2. Responsabilidad del usuario': '2. User responsibility',
+        'El usuario es responsable del uso de su cuenta y de mantener la confidencialidad de sus credenciales. No debe compartir su contraseña con otras personas.': 'Users are responsible for the use of their account and for keeping their credentials confidential. They must not share their password with anyone else.',
+        '3. Uso adecuado de la información': '3. Proper use of information',
+        'La información registrada en el sistema debe ser verdadera y utilizarse únicamente para los fines correspondientes a las actividades de la empresa.': 'Information recorded in the system must be truthful and used only for purposes related to the company\'s activities.',
+        '4. Seguridad': '4. Security',
+        'El usuario debe informar sobre cualquier actividad sospechosa o acceso no autorizado a su cuenta.': 'Users must report any suspicious activity or unauthorized access to their account.',
+        'Responsable de tus datos personales': 'Data controller',
+        'PrivateStorage Soluciones Tecnológicas, S.A. de C.V.': 'PrivateStorage Soluciones Tecnológicas, S.A. de C.V.',
+        ', con domicilio en Av. México 245, Col. Centro, C.P. 28200, Manzanillo, Colima, México, es responsable del tratamiento de los datos personales que nos proporcionas como persona usuaria de PrivateStorage, conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.': ', located at Av. México 245, Col. Centro, C.P. 28200, Manzanillo, Colima, Mexico, is responsible for processing the personal data you provide as a PrivateStorage user, in accordance with the Federal Law on the Protection of Personal Data Held by Private Parties.',
+        'Datos que recabamos': 'Data we collect',
+        'Nombre completo.': 'Full name.',
+        'Usuario de acceso.': 'Login username.',
+        'Correo electrónico.': 'Email address.',
+        'Puesto (gerente o cajero) y sucursal asignada.': 'Position (manager or cashier) and assigned branch.',
+        'Registros de actividad en el sistema, como ventas, movimientos de inventario y fechas de acceso.': 'Activity records in the system, such as sales, inventory movements and login dates.',
+        'No recabamos datos personales sensibles.': 'We do not collect sensitive personal data.',
+        'Para qué usamos tus datos': 'How we use your data',
+        'Crear y administrar tu cuenta de acceso a PrivateStorage.': 'To create and manage your PrivateStorage account.',
+        'Enviarte tus datos de acceso, contraseñas temporales y avisos de seguridad, como el restablecimiento de contraseña.': 'To send you your login details, temporary passwords and security notices, such as password resets.',
+        'Registrar las operaciones de venta e inventario que realizas en tu sucursal.': 'To record the sales and inventory operations you perform at your branch.',
+        'Mantener la seguridad del sistema y llevar un control de las operaciones realizadas.': 'To keep the system secure and maintain a record of the operations performed.',
+        'Transferencias': 'Transfers',
+        'Tus datos no se comparten con terceros. Solo los conocen los proveedores de alojamiento web y de correo electrónico que prestan el servicio a PrivateStorage, y únicamente para ese fin, o las autoridades competentes cuando la ley lo exija.': 'Your data is not shared with third parties. It is only accessible to the web hosting and email providers that serve PrivateStorage, solely for that purpose, or to the competent authorities when required by law.',
+        'Tus derechos (ARCO)': 'Your rights (ARCO)',
+        'Puedes acceder a tus datos, rectificarlos, cancelarlos u oponerte a su uso, así como revocar tu consentimiento, enviando una solicitud a ': 'You can access, rectify or cancel your data, or object to its use, and you can also withdraw your consent, by sending a request to ',
+        'Puedes acceder a tus datos, rectificarlos, cancelarlos u oponerte a su uso, así como revocar tu consentimiento, enviando una solicitud a': 'You can access, rectify or cancel your data, or object to its use, and you can also withdraw your consent, by sending a request to',
+        '. Incluye tu nombre, tu usuario, una descripción clara de lo que solicitas y una copia de una identificación oficial. Te responderemos en un plazo máximo de 20 días hábiles.': '. Include your name, your username, a clear description of your request and a copy of an official ID. We will reply within 20 business days at most.',
+        'Cambios a este aviso': 'Changes to this notice',
+        'Cualquier cambio a estos términos o a este aviso de privacidad se publicará en esta misma página.': 'Any changes to these terms or to this privacy notice will be published on this page.',
+        'Última actualización: 18 de noviembre de 2026.': 'Last updated: November 18, 2026.',
+        'Tema oscuro': 'Dark theme',
+        'Tema claro': 'Light theme',
+        'Modo oscuro': 'Dark mode',
+        'Modo claro': 'Light mode',
+        'Activar modo oscuro': 'Enable dark mode',
+        'Activar modo claro': 'Enable light mode',
+        'Cambiar tema': 'Change theme',
         'Cambiar idioma': 'Change language',
         'Cambiar idioma a inglés': 'Change language to English',
         'Cambiar idioma a español': 'Change language to Spanish',
-        'Panel del gerente': 'Manager panel',
+        'PrivateStorage - Panel': 'PrivateStorage - Panel',
+        'Private Storage, panel del gerente': 'Private Storage, manager panel',
+        'Private Storage, panel': 'Private Storage, panel',
+        'Navegación del administrador': 'Administrator navigation',
         'Menú del gerente': 'Manager menu',
-        'Cargando gerente...': 'Loading manager...',
-        'Cargando sucursal...': 'Loading branch...',
+        'Menú del cajero': 'Cashier menu',
+        'Abrir menú': 'Open menu',
+        'Cerrar menú': 'Close menu',
+        'Buscar en el panel': 'Search panel',
+        'Panel del gerente': 'Manager panel',
         'PANEL DE CONTROL': 'CONTROL PANEL',
+        'NAVEGACIÓN': 'NAVIGATION',
+        'Accesos rápidos': 'Quick access',
         'Actualizar datos': 'Refresh data',
+        'Datos actualizados correctamente.': 'Data updated successfully.',
+        'Módulo conectado. Los datos corresponden a tu sucursal.': 'Module connected. The data belongs to your branch.',
         'Inicio': 'Home',
+        'Dashboard': 'Dashboard',
         'Productos': 'Products',
         'Sucursal': 'Branch',
         'Sucursales': 'Branches',
         'Cajeros': 'Cashiers',
+        'Cajas': 'Cash registers',
+        'Gerentes': 'Managers',
+        'Ventas': 'Sales',
+        'Venta': 'Sale',
+        'VENTA': 'SALE',
+        'Inventario': 'Inventory',
+        'INVENTARIO': 'INVENTORY',
         'Administrador': 'Administrator',
         'Cajero': 'Cashier',
         'Gerente': 'Manager',
         'Bienvenido, ': 'Welcome, ',
-        'Cargando': 'Loading',
-        'Cargando inventario…': 'Loading inventory…',
-        'Cargando ventas…': 'Loading sales…',
         'Cerrar sesión': 'Log out',
-        'Información, cajas y ventas': 'Branch, cash registers and sales information',
-        'Cargando inventario...': 'Loading inventory...',
-        'Cargando cajeros...': 'Loading cashiers...',
-        'Selecciona Productos o Sucursal.': 'Select Products or Branch.',
-        'INVENTARIO': 'INVENTORY',
-        'Agregar producto': 'Add product',
-        'Buscar...': 'Search...',
-        'Buscar por nombre o código': 'Search by name or code',
-        'Buscar por nombre o código...': 'Search by name or code...',
-        'Filtrar productos': 'Filter products',
-        'Todos': 'All',
-        'Stock bajo': 'Low stock',
-        'Código': 'Code',
-        'Nombre': 'Name',
-        'Precio unitario': 'Unit price',
-        'Precio de venta': 'Sale price',
-        'Precio': 'Price',
-        'Existencias': 'Stock',
-        'Existencias iniciales': 'Initial stock',
-        'Existencias totales': 'Total stock',
-        'Nueva existencia total': 'New total stock',
-        'Mínimo': 'Minimum',
-        'Stock mínimo': 'Minimum stock',
-        'Valor stock': 'Stock value',
-        'Acciones': 'Actions',
-        'Guardar producto': 'Save product',
-        'Guardar cambios': 'Save changes',
-        'Editar producto': 'Edit product',
-        'Eliminar producto': 'Delete product',
-        'Actualizar existencias': 'Update stock',
+        'No se pudo cerrar la sesión. Intenta nuevamente.': 'Could not log out. Please try again.',
+        'No se pudo comunicar con el servidor.': 'Could not communicate with the server.',
+        'No se pudo comunicar con el servidor. Intenta nuevamente.': 'Could not communicate with the server. Please try again.',
+        'RESUMEN DEL SISTEMA': 'SYSTEM SUMMARY',
+        'Vistazo general': 'Overview',
+        'ACTIVIDAD': 'ACTIVITY',
+        'CENTRO DE ACTIVIDAD': 'ACTIVITY CENTER',
+        'RENDIMIENTO': 'PERFORMANCE',
+        'Notificaciones de inventario': 'Inventory notifications',
+        'Notificaciones': 'Notifications',
+        'Abrir notificaciones': 'Open notifications',
+        'Cerrar notificaciones': 'Close notifications',
+        'No hay alertas de stock bajo.': 'There are no low-stock alerts.',
+        'No hay notificaciones de inventario.': 'There are no inventory notifications.',
+        'No se pudieron cargar las alertas de inventario.': 'Inventory alerts could not be loaded.',
+        'Productos activos': 'Active products',
+        'Total de productos': 'Total products',
+        'Total de sucursales': 'Total branches',
+        'Total de gerentes': 'Total managers',
         'Productos con stock bajo': 'Products with low stock',
         'Productos con poco stock': 'Products with low stock',
+        'No hay productos con stock bajo.': 'There are no low-stock products.',
+        'Stock bajo: ': 'Low stock: ',
+        'Producto agregado: ': 'Product added: ',
+        'Se agregó stock: ': 'Stock added: ',
+        ' unidades restantes.': ' units remaining.',
+        ' unidades disponibles en el inventario.': ' units available in inventory.',
+        ' de umbral ': ' of threshold ',
+        'Restante': 'Remaining',
+        'restante': 'remaining',
         'Últimas ventas': 'Latest sales',
-        'RENDIMIENTO': 'PERFORMANCE',
         'Top sucursales por ventas': 'Top branches by sales',
-        'NAVEGACIÓN': 'NAVIGATION',
-        'Accesos rápidos': 'Quick access',
+        'Análisis de ventas': 'Sales analysis',
+        'Cargando periodo...': 'Loading period...',
+        'Periodo de ventas': 'Sales period',
+        'El periodo seleccionado no es válido.': 'The selected period is not valid.',
+        'Esta semana': 'This week',
+        'Venta total': 'Total sales',
+        'Ventas realizadas': 'Completed sales',
+        'Promedio por venta': 'Average per sale',
+        'Ventas por hora': 'Sales by hour',
+        'Ventas por día de la semana': 'Sales by day of the week',
+        'Ventas por día del mes': 'Sales by day of the month',
+        'Importe vendido': 'Amount sold',
+        'Gráfica de ventas': 'Sales chart',
+        'Ventas por método de pago': 'Sales by payment method',
+        'Distribución del periodo': 'Period breakdown',
+        'Distribución de ventas por método de pago': 'Sales breakdown by payment method',
+        'No hay ventas registradas en este periodo.': 'No sales have been recorded in this period.',
+        'No se pudieron cargar las gráficas de ventas.': 'Sales charts could not be loaded.',
+        'No se pudo cargar el dashboard.': 'Dashboard could not be loaded.',
+        'Aún no hay ventas registradas.': 'No sales have been recorded yet.',
         'Ver inventario': 'View inventory',
         'Consultar ventas': 'View sales',
         'Abrir sucursales': 'Open branches',
@@ -115,18 +210,92 @@
         'PRODUCTOS Y EXISTENCIAS': 'PRODUCTS AND STOCK',
         'Control de inventario': 'Inventory control',
         'Consulta de productos por sucursal y categoría.': 'Browse products by branch and category.',
+        'Completa los datos del producto y sus existencias.': 'Fill in the product details and stock.',
+        'CONTROL DE EXISTENCIAS': 'STOCK CONTROL',
+        'Existencias disponibles. Vista de solo lectura para el cajero.': 'Available stock. Read-only view for the cashier.',
+        'Agregar producto': 'Add product',
+        'Editar producto': 'Edit product',
+        'Modificar producto': 'Modify product',
+        'Eliminar producto': 'Delete product',
+        'Desactivar producto': 'Deactivate product',
+        'Eliminar producto del catálogo': 'Remove product from catalog',
+        'Eliminar del catálogo': 'Remove from catalog',
+        'Consultar productos': 'View products',
+        'Guardar producto': 'Save product',
+        'Guardar cambios': 'Save changes',
+        'Actualizar existencias': 'Update stock',
+        'La nueva cantidad reemplaza el total actual.': 'The new quantity replaces the current total.',
+        'Se desactivará para conservar sus registros de ventas.': 'It will be deactivated to preserve its sales records.',
         'Filtrar por sucursal': 'Filter by branch',
         'Filtrar por categoría': 'Filter by category',
+        'Filtrar productos': 'Filter products',
         'Todas las sucursales': 'All branches',
+        'Todas las categorías': 'All categories',
+        'Categorías de productos': 'Product categories',
         'Selecciona una categoría': 'Select a category',
         'Selecciona una sucursal': 'Select a branch',
-        'Nombre del producto': 'Product name',
+        'Selecciona un producto': 'Select a product',
         'No. Sucursal': 'Branch no.',
-        'Mostrar': 'Show',
-        'por página': 'per page',
+        'Nombre del producto': 'Product name',
+        'Código': 'Code',
+        'Nombre': 'Name',
+        'Categoría': 'Category',
+        'Categorías': 'Categories',
+        'CATEGORÍA': 'CATEGORY',
+        'Sin categoría': 'Uncategorized',
+        'Precio unitario': 'Unit price',
+        'Precio de venta': 'Sale price',
+        'Precio vendido': 'Sale price',
+        'Precio': 'Price',
+        'Existencias iniciales': 'Initial stock',
+        'Existencias totales': 'Total stock',
+        'Nueva existencia total': 'New total stock',
+        'Existencias': 'Stock',
+        'Stock mínimo': 'Minimum stock',
+        'Mínimo': 'Minimum',
+        'Valor stock': 'Stock value',
+        'Stock bajo': 'Low stock',
+        'Poco stock': 'Low stock',
+        'con stock bajo': 'low-stock products',
+        'Imagen (JPG, PNG o WEBP, máximo 2 MB)': 'Image (JPG, PNG or WEBP, maximum 2 MB)',
+        'La imagen debe ser JPG, PNG o WEBP y pesar máximo 2 MB.': 'The image must be JPG, PNG or WEBP and at most 2 MB.',
+        'Vista previa de la imagen del producto': 'Product image preview',
+        'Buscar productos por nombre o código...': 'Search products by name or code...',
+        'Buscar productos por nombre o código': 'Search products by name or code',
+        'Buscar por nombre o código...': 'Search by name or code...',
+        'Buscar por nombre o código': 'Search by name or code',
+        'Buscar productos': 'Search products',
+        'Buscar en el inventario': 'Search inventory',
+        'Buscar...': 'Search...',
+        'No hay productos que coincidan con los filtros.': 'No products match the filters.',
+        'No hay productos que coincidan con los filtros': 'No products match the filters',
+        'No se encontraron productos con esos filtros.': 'No products found with those filters.',
+        'No se encontraron productos.': 'No products found.',
+        'Aún no hay productos en esta categoría.': 'There are no products in this category yet.',
+        'Aún no hay productos registrados.': 'No products have been registered yet.',
+        'Aún no hay productos en el inventario.': 'No products are in the inventory yet.',
+        'Aún no hay categorías registradas.': 'No categories have been registered yet.',
+        'Producto guardado correctamente.': 'Product saved successfully.',
+        'Producto agregado correctamente.': 'Product added successfully.',
+        'Producto modificado correctamente.': 'Product updated successfully.',
+        'Producto desactivado correctamente.': 'Product deactivated successfully.',
+        'No se pudo guardar el producto.': 'Could not save the product.',
+        'No se pudo agregar el producto.': 'Could not add the product.',
+        'No se pudo modificar el producto.': 'Could not modify the product.',
+        'No se pudo desactivar el producto.': 'Could not deactivate the product.',
+        'No se pudo actualizar el stock.': 'Could not update stock.',
+        'Se guardaron los datos, pero no se pudo actualizar la existencia.': 'The details were saved, but stock could not be updated.',
+        'No se pudieron cargar los productos.': 'Products could not be loaded.',
+        'No se pudieron cargar las categorías.': 'Categories could not be loaded.',
+        'No se pudo cargar el inventario.': 'Inventory could not be loaded.',
+        'No se pudo actualizar el inventario.': 'Could not update inventory.',
         'REGISTRO Y SEGUIMIENTO': 'RECORDS AND TRACKING',
+        'HISTORIAL': 'HISTORY',
+        'COMPROBANTE': 'RECEIPT',
         'Consulta de ventas': 'Sales overview',
+        'Historial de ventas': 'Sales history',
         'Historial de ventas y detalle de tickets registrados.': 'Sales history and registered receipt details.',
+        'Resumen del periodo': 'Period summary',
         'Total vendido': 'Total sold',
         'Número de ventas': 'Number of sales',
         'Ticket promedio': 'Average receipt',
@@ -148,434 +317,369 @@
         'Fecha desde': 'Start date',
         'Fecha hasta': 'End date',
         'Filtrar ventas por sucursal': 'Filter sales by branch',
-        'Ventas por página': 'Sales per page',
         'unidades vendidas': 'units sold',
         'Sin ventas en el periodo': 'No sales in the period',
-        'No hay productos con stock bajo.': 'There are no low-stock products.',
-        'Stock bajo: ': 'Low stock: ',
-        ' unidades restantes.': ' units remaining.',
-        ' de umbral ': ' of threshold ',
-        'Restante': 'Remaining',
-        'restante': 'remaining',
-        'Gestión de Gerentes': 'Manager management',
-        'Listado y asignación de gerentes por tienda.': 'List and assign managers by store.',
-        'Buscar gerente': 'Search manager',
-        'Nombre o usuario': 'Name or username',
-        'Sucursal asignada': 'Assigned branch',
-        'No se pudieron cargar los gerentes.': 'Managers could not be loaded.',
-        'No se pudieron cargar los gerentes. Revisa tu conexión e intenta nuevamente.': 'Managers could not be loaded. Check your connection and try again.',
-        'No hay sucursales que mostrar': 'There are no branches to display',
-        'No hay sucursales que coincidan con la búsqueda': 'No branches match the search',
-        'Activa': 'Active',
-        'Inactiva': 'Inactive',
-        'activo': 'active',
-        'activos': 'active',
-        'activa': 'active',
-        'activas': 'active',
-        'inactivo': 'inactive',
-        'inactivos': 'inactive',
-        'inactiva': 'inactive',
-        'inactivas': 'inactive',
-        'Todas': 'All',
-        'Gestión de Sucursales': 'Branch management',
-        'Administra las sedes y su información de contacto.': 'Manage branches and their contact information.',
-        'Estado': 'Status',
-        'Filtrar': 'Filter',
-        'ADMINISTRACIÓN DE SEDES': 'BRANCH ADMINISTRATION',
-        'Gestión de Sucursales': 'Branch management',
-        'Administra las sedes y su información de contacto.': 'Manage branches and their contact information.',
-        'Agregar sucursal': 'Add branch',
-        'Activas': 'Active',
-        'Inactivas': 'Inactive',
-        'Buscar sucursal': 'Search branch',
-        'Nombre o dirección': 'Name or address',
-        'Aún no hay sucursales registradas': 'No branches have been registered yet',
-        'Guardar sucursal': 'Save branch',
-        'Nombre de sucursal': 'Branch name',
-        'Imagen (JPG, PNG o WEBP, máximo 2 MB)': 'Image (JPG, PNG or WEBP, maximum 2 MB)',
-        'Vista previa de la imagen del producto': 'Product image preview',
-        'Productos activos': 'Active products',
-        'Total de productos': 'Total products',
-        'Total de sucursales': 'Total branches',
-        'Total de gerentes': 'Total managers',
-        'Vistazo general': 'Overview',
-        'RESUMEN DEL SISTEMA': 'SYSTEM SUMMARY',
-        'CENTRO DE ACTIVIDAD': 'ACTIVITY CENTER',
-        'Notificaciones': 'Notifications',
-        'No hay alertas de stock bajo.': 'There are no low-stock alerts.',
-        'Ventas': 'Sales',
+        'No hay ventas en este periodo.': 'There are no sales in this period.',
+        'No hay ventas en este periodo': 'There are no sales in this period',
+        'No se pudieron cargar las ventas.': 'Sales could not be loaded.',
+        'Detalle de venta': 'Sale details',
+        'Ver detalle': 'View details',
+        'Cerrar detalle de venta': 'Close sale details',
+        'Cargando detalle de venta…': 'Loading sale details…',
+        'No se pudo cargar el detalle de la venta.': 'Could not load the sale details.',
+        'Esta venta no tiene productos en el detalle.': 'This sale has no products in its details.',
         'PUNTO DE VENTA': 'POINT OF SALE',
-        'Venta': 'Sale',
-        'VENTA': 'SALE',
         'Punto de venta': 'Point of sale',
         'Registra una compra y actualiza las existencias.': 'Record a purchase and update stock.',
-        'Categorías': 'Categories',
         'PRODUCTOS': 'PRODUCTS',
         'Venta actual': 'Current sale',
         'Carrito': 'Cart',
         'Agrega productos para comenzar la venta.': 'Add products to start the sale.',
         'Subtotal': 'Subtotal',
         'Total': 'Total',
+        'Total pagado': 'Total paid',
         'Método de pago': 'Payment method',
         'Efectivo': 'Cash',
         'Tarjeta': 'Card',
         'Transferencia': 'Transfer',
         'Confirmar venta': 'Confirm sale',
-        'CONTROL DE EXISTENCIAS': 'STOCK CONTROL',
-        'Inventario': 'Inventory',
-        'Existencias disponibles. Vista de solo lectura para el cajero.': 'Available stock. Read-only view for the cashier.',
-        'Categoría': 'Category',
-        'Todas las categorías': 'All categories',
-        'Producto': 'Product',
-        'Cantidad': 'Quantity',
+        'CONFIRMAR VENTA': 'CONFIRM SALE',
+        '¿Confirmar la venta?': 'Confirm the sale?',
+        'Venta confirmada': 'Sale confirmed',
+        'VENTA CONFIRMADA': 'SALE CONFIRMED',
+        'Venta registrada': 'Sale recorded',
+        'No se pudo confirmar la venta.': 'Could not confirm the sale.',
+        'La venta se confirmó, pero no se pudo actualizar el inventario en pantalla.': 'The sale was confirmed, but the inventory on screen could not be updated.',
+        'Imprimir ticket': 'Print receipt',
+        'Cerrar ticket': 'Close receipt',
+        'Aumentar cantidad': 'Increase quantity',
+        'Disminuir cantidad': 'Decrease quantity',
         'Disponibilidad': 'Availability',
         'Disponible': 'Available',
         'Agotado': 'Out of stock',
-        'Estado': 'Status',
-        'Cancelar': 'Cancel',
-        'Confirmar': 'Confirm',
-        'Cerrar': 'Close',
-        '¿Confirmar la venta?': 'Confirm the sale?',
-        'CONFIRMAR VENTA': 'CONFIRM SALE',
-        'Venta confirmada': 'Sale confirmed',
-        'VENTA CONFIRMADA': 'SALE CONFIRMED',
-        'Total pagado': 'Total paid',
-        'Anterior': 'Previous',
-        'Siguiente': 'Next',
-        'Filas por página': 'Rows per page',
-        'Mostrando': 'Showing',
-        'Activo': 'Active',
-        'Inactivo': 'Inactive',
-        'No hay productos que coincidan con los filtros.': 'No products match the filters.',
-        'No se pudieron cargar los productos.': 'Products could not be loaded.',
-        'No se pudieron cargar los cajeros.': 'Cashiers could not be loaded.',
-        'No se pudo cargar el inventario.': 'Inventory could not be loaded.',
-        'No se pudieron cargar las ventas.': 'Sales could not be loaded.',
-        'No hay ventas en este periodo.': 'There are no sales in this period.',
-        'No se pudo cerrar la sesión. Intenta nuevamente.': 'Could not log out. Please try again.',
-        'No se pudo comunicar con el servidor.': 'Could not communicate with the server.',
-        'No se pudo actualizar el inventario.': 'Could not update inventory.',
-        'Cargando ventas…': 'Loading sales…',
+        'Artículos': 'Items',
+        'Cantidad': 'Quantity',
+        'Importe': 'Amount',
+        'Folio': 'Receipt',
+        'Fecha': 'Date',
         'Detalles': 'Details',
         'Detalle': 'Details',
-        'Fecha': 'Date',
-        'Importe': 'Amount',
-        'Dashboard': 'Dashboard',
-        'Gerentes': 'Managers',
+        'ventas': 'sales',
+        'venta': 'sale',
+        'ADMINISTRACIÓN DE SEDES': 'BRANCH ADMINISTRATION',
+        'ADMINISTRACIÓN DE SEDE': 'BRANCH ADMINISTRATION',
+        'ADMINISTRACION DE SEDES': 'BRANCH ADMINISTRATION',
+        'ADMINISTRACION DE SEDE': 'BRANCH ADMINISTRATION',
+        'Gestión de Sucursales': 'Branch management',
+        'Administra las sedes y su información de contacto.': 'Manage branches and their contact information.',
+        'Resumen de sucursales': 'Branches summary',
+        'Agregar sucursal': 'Add branch',
+        'Editar sucursal': 'Edit branch',
+        'Guardar sucursal': 'Save branch',
+        'Eliminar sucursal': 'Delete branch',
+        'Cerrar formulario de sucursal': 'Close branch form',
+        'Nombre de sucursal': 'Branch name',
+        'Buscar sucursal': 'Search branch',
+        'Nombre o dirección': 'Name or address',
+        'Aún no hay sucursales registradas': 'No branches have been registered yet',
+        'No hay sucursales que mostrar': 'There are no branches to display',
+        'No hay sucursales que coincidan con la búsqueda': 'No branches match the search',
+        'Sucursal guardada correctamente': 'Branch saved successfully',
+        'Sucursal eliminada correctamente': 'Branch deleted successfully',
+        'No se pudo guardar la sucursal.': 'Could not save the branch.',
+        'No se pudo eliminar la sucursal.': 'Could not delete the branch.',
+        'No se pudieron cargar las sucursales.': 'Branches could not be loaded.',
+        'No se pudieron cargar las sucursales. Revisa tu conexión e intenta nuevamente.': 'Branches could not be loaded. Check your connection and try again.',
+        'Esta acción no se puede deshacer.': 'This action cannot be undone.',
+        'FICHA DE SUCURSAL': 'BRANCH DETAILS',
+        'Datos de la sucursal': 'Branch details',
+        'Información, cajas y ventas': 'Branch, cash registers and sales information',
+        'Mi sucursal': 'My branch',
+        'Gestión de cajas': 'Cash register management',
+        'Gestionar cajas': 'Manage cash registers',
+        'Asigna cada caja a un cajero activo de esta sucursal.': 'Assign each cash register to an active cashier at this branch.',
+        'Nueva caja': 'New cash register',
+        'Editar caja': 'Edit cash register',
+        'Sin asignar': 'Unassigned',
+        'Registrar caja': 'Register cash register',
+        'Consultar cajas': 'View cash registers',
+        'Desactivar caja': 'Deactivate cash register',
+        'Cajas de la sucursal': 'Branch cash registers',
+        'Nombre de la caja': 'Cash register name',
+        'Guardar caja': 'Save cash register',
+        'Selecciona una caja': 'Select a cash register',
+        'Caja': 'Cash register',
+        'Caja guardada correctamente': 'Cash register saved successfully',
+        'No se pudo guardar la caja.': 'Could not save the cash register.',
+        'No se pudieron cargar las cajas.': 'Cash registers could not be loaded.',
+        'No hay cajeros activos en esta sucursal. Puedes crear una caja y asignar un cajero más tarde.': 'There are no active cashiers at this branch. You can create a cash register and assign a cashier later.',
+        'Aún no hay cajas registradas.': 'No cash registers have been added yet.',
+        'Aún no hay ventas en esta sucursal.': 'There are no sales at this branch yet.',
+        'El registro de cajas estará disponible próximamente.': 'Cash register management will be available soon.',
+        'Gestión de Gerentes': 'Manager management',
+        'Listado y asignación de gerentes por tienda.': 'List and assign managers by store.',
+        'Resumen de gerentes': 'Managers summary',
+        'Buscar gerente': 'Search manager',
+        'Nombre o usuario': 'Name or username',
+        'Sucursal asignada': 'Assigned branch',
+        'Sin sucursal': 'No branch',
         'Agregar gerente': 'Add manager',
         'Guardar gerente': 'Save manager',
         'Desactivar gerente': 'Deactivate manager',
         'Editar gerente': 'Edit manager',
-        'CONFIRMACIÓN': 'CONFIRMATION',
-        'No disponible': 'Unavailable',
-        'Nombre completo': 'Full name',
-        'Nueva contraseña': 'New password',
-        'Teléfono': 'Phone',
-        'Email': 'Email',
-        'Dirección': 'Address'
-        ,'ADMINISTRACIÓN DE SEDE': 'BRANCH ADMINISTRATION'
-        ,'ADMINISTRACIÓN DE SEDES': 'BRANCH ADMINISTRATION'
-        ,'ADMINISTRACION DE SEDE': 'BRANCH ADMINISTRATION'
-        ,'ADMINISTRACION DE SEDES': 'BRANCH ADMINISTRATION'
-        ,'ADMINISTRACIÓN DE PERSONAL': 'STAFF ADMINISTRATION'
-        ,'PERSONAL DE CAJA': 'CASHIER STAFF'
-        ,'Mi sucursal': 'My branch'
-        ,'Eliminar del catálogo': 'Remove from catalog'
-        ,'Esta acción no se puede deshacer.': 'This action cannot be undone.'
-        ,'Poco stock': 'Low stock'
-        ,' con stock bajo': ' low-stock products'
-        ,'Navegación del administrador': 'Administrator navigation'
-        ,'FICHA DE SUCURSAL': 'BRANCH DETAILS'
-        ,'Datos de la sucursal': 'Branch details'
-        ,'Registrar caja': 'Register cash register'
-        ,'Consultar cajas': 'View cash registers'
-        ,'Desactivar caja': 'Deactivate cash register'
-        ,'Cajas': 'Cash registers'
-        ,'Cajas de la sucursal': 'Branch cash registers'
-        ,'Nombre de la caja': 'Cash register name'
-        ,'Guardar caja': 'Save cash register'
-        ,'Aún no hay cajas registradas.': 'No cash registers have been added yet.'
-        ,'Aún no hay ventas en esta sucursal.': 'There are no sales at this branch yet.'
-        ,'Historial de ventas': 'Sales history'
-        ,'Folio': 'Receipt'
-        ,'Activar cajero': 'Activate cashier',
-        'Desactivar cajero': 'Deactivate cashier',
-        'Cambiar tema': 'Change theme',
-        'Abrir notificaciones': 'Open notifications',
-        'Cerrar detalle de venta': 'Close sale details',
         'Cerrar formulario de gerente': 'Close manager form',
+        'Se generará una contraseña temporal y se enviará al correo del gerente junto con su usuario.': 'A temporary password will be generated and sent to the manager\'s email along with their username.',
+        'Gerente creado. Le enviamos su contraseña temporal por correo.': 'Manager created. We sent their temporary password by email.',
+        'No hay gerentes registrados.': 'No managers have been registered.',
+        'Aún no hay gerentes registrados': 'No managers have been registered yet',
+        'No hay gerentes que coincidan con la búsqueda': 'No managers match the search',
+        'No hay gerentes que mostrar': 'There are no managers to display',
+        'Gerente desactivado correctamente': 'Manager deactivated successfully',
+        'Gerente guardado correctamente': 'Manager saved successfully',
+        'No se pudo desactivar el gerente.': 'Could not deactivate the manager.',
+        'No se pudo guardar el gerente.': 'Could not save the manager.',
+        'No se pudieron cargar los gerentes.': 'Managers could not be loaded.',
+        'No se pudieron cargar los gerentes. Revisa tu conexión e intenta nuevamente.': 'Managers could not be loaded. Check your connection and try again.',
+        '? El registro y sus referencias se conservarán; el gerente ya no podrá acceder.': '? The record and its references will be kept; the manager will no longer be able to log in.',
+        ': la cuenta se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. Puedes intentarlo de nuevo; se generará una contraseña temporal nueva.': ': the account was created successfully, but we could not send the email with their temporary password. You can try again; a new temporary password will be generated.',
+        'ADMINISTRACIÓN DE PERSONAL': 'STAFF ADMINISTRATION',
+        'PERSONAL DE CAJA': 'CASHIER STAFF',
+        'Agregar cajero': 'Add cashier',
+        'Crear cajero': 'Create cashier',
+        'Consultar cajeros': 'View cashiers',
+        'Editar cajero': 'Edit cashier',
+        'Guardar cajero': 'Save cashier',
+        'Activar cajero': 'Activate cashier',
+        'Desactivar cajero': 'Deactivate cashier',
+        'Filtrar cajeros': 'Filter cashiers',
+        'Buscar por nombre o usuario': 'Search by name or username',
+        'Se generará una contraseña temporal y se enviará al correo del cajero junto con su usuario.': 'A temporary password will be generated and sent to the cashier\'s email along with their username.',
+        'El cajero se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. ¿Quieres intentarlo de nuevo? Se generará una contraseña temporal nueva.': 'The cashier was created successfully, but we could not send the email with their temporary password. Would you like to try again? A new temporary password will be generated.',
+        'No se pudo enviar el correo': 'Could not send email',
+        'Reenviar correo': 'Resend email',
+        'Correo reenviado correctamente.': 'Email resent successfully.',
+        'Correo reenviado correctamente': 'Email resent successfully',
+        'No se pudo reenviar el correo.': 'Could not resend the email.',
+        'No se pudo comunicar con el servidor. ¿Quieres intentarlo otra vez?': 'Could not communicate with the server. Would you like to try again?',
+        'Cajero creado, pero no recibió su correo de acceso.': 'Cashier created, but did not receive their login email.',
+        'No se pudo crear el cajero.': 'Could not create the cashier.',
+        'Cajero creado correctamente.': 'Cashier created successfully.',
+        'Cajero editado correctamente.': 'Cashier updated successfully.',
+        'Cajero activado correctamente.': 'Cashier activated successfully.',
+        'Cajero desactivado correctamente.': 'Cashier deactivated successfully.',
+        'No se pudo activar el cajero.': 'Could not activate the cashier.',
+        'No se pudo desactivar el cajero.': 'Could not deactivate the cashier.',
+        'No hay cajeros que coincidan con los filtros.': 'No cashiers match the filters.',
+        'Aún no hay cajeros registrados.': 'No cashiers have been registered yet.',
+        'No se pudieron cargar los cajeros.': 'Cashiers could not be loaded.',
+        'No se pudo editar el cajero.': 'Could not edit the cashier.',
+        'Sus ventas anteriores se conservarán.': 'Their previous sales will be kept.',
+        'Nombre completo': 'Full name',
+        'Teléfono': 'Phone',
+        'Dirección': 'Address',
+        'Email': 'Email',
+        'Correo': 'Email',
+        'Usuario': 'Username',
+        'Contraseña': 'Password',
+        'Déjalo vacío para conservar la actual': 'Leave blank to keep the current one',
+        'Fecha de creación': 'Created',
+        'Acciones': 'Actions',
+        'Editar': 'Edit',
+        'Eliminar': 'Delete',
+        'Estado': 'Status',
+        'Filtrar': 'Filter',
+        'Todas': 'All',
+        'Todos': 'All',
+        'Activas': 'Active',
+        'Inactivas': 'Inactive',
+        'Activos': 'Active',
+        'Inactivos': 'Inactive',
+        'Activa': 'Active',
+        'Inactiva': 'Inactive',
+        'Activo': 'Active',
+        'Inactivo': 'Inactive',
+        'activos': 'active',
+        'activo': 'active',
+        'activas': 'active',
+        'activa': 'active',
+        'inactivos': 'inactive',
+        'inactivo': 'inactive',
+        'inactivas': 'inactive',
+        'inactiva': 'inactive',
+        'No disponible': 'Unavailable',
+        'CONFIRMACIÓN': 'CONFIRMATION',
+        'CONFIRMAR ACCIÓN': 'CONFIRM ACTION',
+        '¿Continuar?': 'Continue?',
+        'Desactivar': 'Deactivate',
+        'Activar': 'Activate',
+        'Cancelar': 'Cancel',
+        'Confirmar': 'Confirm',
+        'Cerrar': 'Close',
+        'Cerrar confirmación': 'Close confirmation',
         'Cancelar desactivación': 'Cancel deactivation',
         'Cancelar eliminación': 'Cancel deletion',
+        'Resultados de búsqueda': 'Search results',
+        'BÚSQUEDA': 'SEARCH',
+        'Selecciona Productos o Sucursal.': 'Select Products or Branch.',
+        'Cargando inventario…': 'Loading inventory…',
+        'Cargando ventas…': 'Loading sales…',
+        'Cargando inventario...': 'Loading inventory...',
+        'Cargando cajeros...': 'Loading cashiers...',
+        'Cargando gerente...': 'Loading manager...',
+        'Cargando sucursal...': 'Loading branch...',
+        'Cargando': 'Loading',
+        'Ventas por página': 'Sales per page',
         'Gerentes por página': 'Managers per page',
         'Productos por página': 'Products per page',
         'Sucursales por página': 'Branches per page',
         'Paginación de ventas': 'Sales pagination',
-        'Email': 'Email'
-        ,'No hay gerentes que coincidan con la búsqueda': 'No managers match the search'
-        ,'No hay gerentes que mostrar': 'There are no managers to display'
-        ,'Gerente desactivado correctamente': 'Manager deactivated successfully'
-        ,'Gerente guardado correctamente': 'Manager saved successfully'
-        ,'No se pudo desactivar el gerente.': 'Could not deactivate the manager.'
-        ,'No se pudo guardar el gerente.': 'Could not save the manager.'
-        ,'No se pudo comunicar con el servidor. Intenta nuevamente.': 'Could not communicate with the server. Please try again.'
-        ,'No se pudo cargar la paginación': 'Could not load pagination'
-        ,'Caja': 'Cash register'
-        ,'Fecha de creación': 'Created'
-        ,'Agregar cajero': 'Add cashier'
-        ,'Crear cajero': 'Create cashier'
-        ,'Consultar cajeros': 'View cashiers'
-        ,'Editar cajero': 'Edit cashier'
-        ,'Buscar por nombre o usuario': 'Search by name or username'
-        ,'Buscar productos': 'Search products'
-        ,'Buscar productos por nombre o código...': 'Search products by name or code...'
-        ,'Buscar productos por nombre o código': 'Search products by name or code'
-        ,'Buscar en el inventario': 'Search inventory'
-        ,'Activos': 'Active'
-        ,'Inactivos': 'Inactive'
-        ,'Total': 'Total'
-        ,'Filtrar cajeros': 'Filter cashiers'
-        ,'Déjalo vacío para conservar la actual': 'Leave blank to keep the current one'
-        ,'Guardar cajero': 'Save cashier'
-        ,'No hay cajeros que coincidan con los filtros.': 'No cashiers match the filters.'
-        ,'Aún no hay cajeros registrados.': 'No cashiers have been registered yet.'
-        ,'Aún no hay productos registrados.': 'No products have been registered yet.'
-        ,'Aún no hay productos en el inventario.': 'No products are in the inventory yet.'
-        ,'No se encontraron productos.': 'No products found.'
-        ,'No se encontraron productos con esos filtros.': 'No products found with those filters.'
-        ,'Resultados de búsqueda': 'Search results'
-        ,'BÚSQUEDA': 'SEARCH'
-        ,'CATEGORÍA': 'CATEGORY'
-        ,'Categoría': 'Category'
-        ,'Sin categoría': 'Uncategorized'
-        ,'Selecciona una caja': 'Select a cash register'
-        ,'Selecciona un producto': 'Select a product'
-        ,'Eliminar producto del catálogo': 'Remove product from catalog'
-        ,'Se desactivará para conservar sus registros de ventas.': 'It will be deactivated to preserve its sales records.'
-        ,'El registro de cajas estará disponible próximamente.': 'Cash register management will be available soon.'
-        ,'CONFIRMAR ACCIÓN': 'CONFIRM ACTION'
-        ,'¿Continuar?': 'Continue?'
-        ,'Desactivar producto': 'Deactivate product'
-        ,'Desactivar': 'Deactivate'
-        ,'Activar': 'Activate'
-        ,'¿Desactivar ': 'Deactivate '
-        ,' del catálogo?': ' from the catalog?'
-        ,'Datos actualizados correctamente.': 'Data updated successfully.'
-        ,'No se pudo recordar el tamaño de página en este navegador.': 'Could not remember the page size in this browser.'
-        ,'No se pudo guardar la preferencia de tema.': 'Could not save the theme preference.'
-        ,'No se pudo editar el cajero.': 'Could not edit the cashier.'
-        ,'No se pudo guardar la preferencia de idioma.': 'Could not save the language preference.'
-        ,'Cerrar confirmación': 'Close confirmation'
-        ,'Cerrar formulario de sucursal': 'Close branch form'
-        ,'Página anterior': 'Previous page'
-        ,'Página siguiente': 'Next page'
-        ,'Página ': 'Page '
-        ,'Filas por página': 'Rows per page'
-        ,'Mostrando ': 'Showing '
-        ,'No hay ventas en este periodo': 'There are no sales in this period'
-        ,'No hay ventas en este periodo.': 'There are no sales in this period.'
-        ,'No se pudieron cargar las sucursales.': 'Branches could not be loaded.'
-        ,'No se pudo cargar el contexto.': 'The context could not be loaded.'
-        ,'No se pudo confirmar la venta.': 'Could not confirm the sale.'
-        ,'La venta se confirmó, pero no se pudo actualizar el inventario en pantalla.': 'The sale was confirmed, but the inventory on screen could not be updated.'
-        ,'No se pudo guardar la cantidad de filas por página.': 'Could not save the number of rows per page.'
-        ,'No se pudieron cargar las categorías.': 'Categories could not be loaded.'
-        ,'Aún no hay categorías registradas.': 'No categories have been registered yet.'
-        ,'No se encontraron productos con esos filtros.': 'No products found with those filters.'
-        ,'¿Confirmar esta venta por ': 'Confirm this sale for '
-        ,'¿Confirmar la venta?': 'Confirm the sale?'
-        ,'CONFIRMAR VENTA': 'CONFIRM SALE'
-        ,'Venta confirmada': 'Sale confirmed'
-        ,'VENTA CONFIRMADA': 'SALE CONFIRMED'
-        ,'Total pagado': 'Total paid'
-        ,'Cargando detalle de venta…': 'Loading sale details…'
-        ,'No se pudo cargar el detalle de la venta.': 'Could not load the sale details.'
-        ,'Esta venta no tiene productos en el detalle.': 'This sale has no products in its details.'
-        ,'Método de pago': 'Payment method'
-        ,'Cerrar ticket': 'Close receipt'
-        ,'Aumentar cantidad': 'Increase quantity'
-        ,'Disminuir cantidad': 'Decrease quantity'
-        ,'Eliminar producto': 'Remove product'
-        ,'Disponibilidad': 'Availability'
-        ,'Disponible': 'Available'
-        ,'Agotado': 'Out of stock'
-        ,'Venta registrada': 'Sale recorded'
-        ,'No disponible': 'Unavailable'
-        ,'Contraseña': 'Password'
-        ,'Usuario': 'Username'
-        ,'Correo': 'Email'
-        ,'No se encontraron productos.': 'No products found.'
-        ,'Aún no hay productos en esta categoría.': 'There are no products in this category yet.'
-        ,'No hay sucursales que coincidan con la búsqueda': 'No branches match the search'
-        ,'No hay gerentes registrados.': 'No managers have been registered.'
-        ,'Aún no hay gerentes registrados': 'No managers have been registered yet'
-        ,'No se pudieron cargar las sucursales. Revisa tu conexión e intenta nuevamente.': 'Branches could not be loaded. Check your connection and try again.'
-        ,'No se pudo cargar la paginación': 'Could not load pagination'
-        ,'No se pudieron cargar las ventas.': 'Sales could not be loaded.'
-        ,'No se pudieron cargar las alertas de inventario.': 'Inventory alerts could not be loaded.'
-        ,'Aún no hay ventas registradas.': 'No sales have been recorded yet.'
-        ,'El servidor devolvió una respuesta no válida.': 'The server returned an invalid response.'
-        ,'Escribe un correo electrónico válido.': 'Enter a valid email address.'
-        ,'El enlace no es válido o ya expiró. Solicita uno nuevo.': 'The link is invalid or has expired. Request a new one.'
-        ,'Las contraseñas no coinciden.': 'The passwords do not match.'
-        ,'El usuario y la contraseña son obligatorios.': 'Username and password are required.'
-        ,'Módulo conectado. Los datos corresponden a tu sucursal.': 'Module connected. The data belongs to your branch.'
-        ,'Abrir menú': 'Open menu'
-        ,'Cerrar menú': 'Close menu'
-        ,'Paginación del inventario': 'Inventory pagination'
-        ,'Paginación de sucursales': 'Branch pagination'
-        ,'Paginación de gerentes': 'Manager pagination'
-        ,'Artículos': 'Items'
-        ,'El servidor respondió con un formato inválido. Consulta la consola para más detalles.': 'The server returned an invalid format. Check the console for details.'
-
-        // Inicio de sesión
-        ,'Ingresa tu usuario': 'Enter your username'
-        ,'Tu contraseña temporal venció. Pide que te reenvíen el acceso o usa "¿Olvidaste tu contraseña?".': 'Your temporary password has expired. Ask for your access to be resent or use "Forgot your password?".'
-
-        // Alta de usuarios con contraseña temporal
-        ,'Se generará una contraseña temporal y se enviará al correo del gerente junto con su usuario.': 'A temporary password will be generated and sent to the manager\'s email along with their username.'
-        ,'Se generará una contraseña temporal y se enviará al correo del cajero junto con su usuario.': 'A temporary password will be generated and sent to the cashier\'s email along with their username.'
-        ,'Gerente creado. Le enviamos su contraseña temporal por correo.': 'Manager created. We emailed them their temporary password.'
-        ,'Gerente creado, pero no se pudo enviar el correo con su contraseña temporal.': 'Manager created, but the email with their temporary password could not be sent.'
-        ,'Cajero creado. Le enviamos su contraseña temporal por correo.': 'Cashier created. We emailed them their temporary password.'
-        ,'Cajero creado, pero no se pudo enviar el correo con su contraseña temporal.': 'Cashier created, but the email with their temporary password could not be sent.'
-        ,'Cajero creado, pero no recibió su correo de acceso.': 'Cashier created, but they did not receive their access email.'
-        ,'No se pudo enviar el correo': 'The email could not be sent'
-        ,': la cuenta se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. Puedes intentarlo de nuevo; se generará una contraseña temporal nueva.': ': the account was created successfully, but we could not send the email with their temporary password. You can try again; a new temporary password will be generated.'
-        ,'El cajero se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. ¿Quieres intentarlo de nuevo? Se generará una contraseña temporal nueva.': 'The cashier was created successfully, but we could not send the email with their temporary password. Do you want to try again? A new temporary password will be generated.'
-        ,'¿Quieres intentarlo otra vez?': 'Do you want to try again?'
-        ,'No se pudo comunicar con el servidor.': 'Could not communicate with the server.'
-        ,'Reenviar correo': 'Resend email'
-        ,'Cerrar aviso': 'Close notice'
-        ,'AVISO': 'NOTICE'
-        ,'Correo reenviado con una nueva contraseña temporal.': 'Email resent with a new temporary password.'
-        ,'Correo reenviado correctamente.': 'Email resent successfully.'
-        ,'Correo reenviado correctamente': 'Email resent successfully'
-        ,'No se pudo reenviar el correo.': 'The email could not be resent.'
-        ,'No se pudo enviar el correo. Intenta de nuevo en unos minutos.': 'The email could not be sent. Try again in a few minutes.'
-        ,'No se pudo reenviar el acceso.': 'Access could not be resent.'
-        ,'El gerente está inactivo. Actívalo antes de reenviar el acceso.': 'The manager is inactive. Activate them before resending access.'
-        ,'El cajero está inactivo. Actívalo antes de reenviar el acceso.': 'The cashier is inactive. Activate them before resending access.'
-        ,'Este gerente ya activó su cuenta. Si olvidó su contraseña, puede usar "¿Olvidaste tu contraseña?".': 'This manager has already activated their account. If they forgot their password, they can use "Forgot your password?".'
-        ,'Este cajero ya activó su cuenta. Si olvidó su contraseña, puede usar "¿Olvidaste tu contraseña?".': 'This cashier has already activated their account. If they forgot their password, they can use "Forgot your password?".'
-        ,'El gerente no tiene un correo electrónico válido.': 'The manager does not have a valid email address.'
-        ,'El cajero no tiene un correo electrónico válido.': 'The cashier does not have a valid email address.'
-        ,'El gerente no existe.': 'The manager does not exist.'
-        ,'No se encontró el cajero.': 'The cashier was not found.'
-
-        // Cambio obligatorio de contraseña
-        ,'Crea tu contraseña': 'Create your password'
-        ,'Crear contraseña': 'Create password'
-        ,'Primer inicio de sesión': 'First login'
-        ,'Por tu seguridad, reemplaza la contraseña temporal por una que solo tú conozcas.': 'For your security, replace the temporary password with one that only you know.'
-        ,'Debe tener al menos 8 caracteres y ser distinta a la temporal.': 'It must have at least 8 characters and be different from the temporary one.'
-        ,'He leído y acepto los ': 'I have read and accept the '
-        ,'términos de uso y el aviso de privacidad': 'terms of use and privacy notice'
-        ,'Guardar y entrar': 'Save and continue'
-        ,'Volver al inicio de sesión': 'Back to log in'
-        ,'Debes aceptar los términos de uso y el aviso de privacidad para continuar.': 'You must accept the terms of use and privacy notice to continue.'
-        ,'Contraseña guardada.': 'Password saved.'
-        ,'Entrando al sistema...': 'Signing in...'
-        ,'No se pudo guardar la contraseña.': 'The password could not be saved.'
-        ,'¡Listo! Tu contraseña se guardó correctamente.': 'Done! Your password was saved successfully.'
-        ,'Tu sesión expiró. Inicia sesión de nuevo con tu contraseña temporal.': 'Your session expired. Log in again with your temporary password.'
-        ,'La solicitud no es válida. Recarga la página.': 'The request is not valid. Reload the page.'
-        ,'Tu contraseña temporal ya no es válida. Inicia sesión de nuevo o pide que te reenvíen el acceso.': 'Your temporary password is no longer valid. Log in again or ask for your access to be resent.'
-        ,'La nueva contraseña debe ser distinta a la contraseña temporal.': 'The new password must be different from the temporary password.'
-        ,'Tu contraseña se actualizó. Inicia sesión de nuevo.': 'Your password was updated. Log in again.'
-
-        // Términos de uso y aviso de privacidad
-        ,'Términos y privacidad': 'Terms and privacy'
-        ,'Términos de uso y aviso de privacidad': 'Terms of use and privacy notice'
-        ,'Términos de uso': 'Terms of use'
-        ,'Aviso de privacidad': 'Privacy notice'
-        ,'Índice del documento': 'Table of contents'
-        ,'1. Uso del sistema': '1. Use of the system'
-        ,'PrivateStorage es un sistema destinado a la gestión de productos, inventarios, sucursales y ventas. El usuario se compromete a utilizarlo únicamente para las actividades autorizadas.': 'PrivateStorage is a system for managing products, inventory, branches and sales. Users agree to use it only for authorized activities.'
-        ,'2. Responsabilidad del usuario': '2. User responsibility'
-        ,'El usuario es responsable del uso de su cuenta y de mantener la confidencialidad de sus credenciales. No debe compartir su contraseña con otras personas.': 'Users are responsible for the use of their account and for keeping their credentials confidential. They must not share their password with anyone else.'
-        ,'3. Uso adecuado de la información': '3. Proper use of information'
-        ,'La información registrada en el sistema debe ser verdadera y utilizarse únicamente para los fines correspondientes a las actividades de la empresa.': 'Information recorded in the system must be truthful and used only for purposes related to the company\'s activities.'
-        ,'4. Seguridad': '4. Security'
-        ,'El usuario debe informar sobre cualquier actividad sospechosa o acceso no autorizado a su cuenta.': 'Users must report any suspicious activity or unauthorized access to their account.'
-        ,'Responsable de tus datos personales': 'Data controller'
-        ,', con domicilio en Av. México 245, Col. Centro, C.P. 28200, Manzanillo, Colima, México, es responsable del tratamiento de los datos personales que nos proporcionas como persona usuaria de PrivateStorage, conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.': ', located at Av. México 245, Col. Centro, C.P. 28200, Manzanillo, Colima, Mexico, is responsible for processing the personal data you provide as a PrivateStorage user, in accordance with the Federal Law on the Protection of Personal Data Held by Private Parties.'
-        ,'Datos que recabamos': 'Data we collect'
-        ,'Nombre completo.': 'Full name.'
-        ,'Usuario de acceso.': 'Login username.'
-        ,'Correo electrónico.': 'Email address.'
-        ,'Puesto (gerente o cajero) y sucursal asignada.': 'Position (manager or cashier) and assigned branch.'
-        ,'Registros de actividad en el sistema, como ventas, movimientos de inventario y fechas de acceso.': 'Activity records in the system, such as sales, inventory movements and login dates.'
-        ,'No recabamos datos personales sensibles.': 'We do not collect sensitive personal data.'
-        ,'Para qué usamos tus datos': 'How we use your data'
-        ,'Crear y administrar tu cuenta de acceso a PrivateStorage.': 'To create and manage your PrivateStorage account.'
-        ,'Enviarte tus datos de acceso, contraseñas temporales y avisos de seguridad, como el restablecimiento de contraseña.': 'To send you your login details, temporary passwords and security notices, such as password resets.'
-        ,'Registrar las operaciones de venta e inventario que realizas en tu sucursal.': 'To record the sales and inventory operations you perform at your branch.'
-        ,'Mantener la seguridad del sistema y llevar un control de las operaciones realizadas.': 'To keep the system secure and maintain a record of the operations performed.'
-        ,'Transferencias': 'Transfers'
-        ,'Tus datos no se comparten con terceros. Solo los conocen los proveedores de alojamiento web y de correo electrónico que prestan el servicio a PrivateStorage, y únicamente para ese fin, o las autoridades competentes cuando la ley lo exija.': 'Your data is not shared with third parties. It is only accessible to the web hosting and email providers that serve PrivateStorage, solely for that purpose, or to the competent authorities when required by law.'
-        ,'Tus derechos (ARCO)': 'Your rights (ARCO)'
-        ,'Puedes acceder a tus datos, rectificarlos, cancelarlos u oponerte a su uso, así como revocar tu consentimiento, enviando una solicitud a ': 'You can access, rectify or cancel your data, or object to its use, and you can also withdraw your consent, by sending a request to '
-        ,'. Incluye tu nombre, tu usuario, una descripción clara de lo que solicitas y una copia de una identificación oficial. Te responderemos en un plazo máximo de 20 días hábiles.': '. Include your name, your username, a clear description of your request and a copy of an official ID. We will reply within 20 business days at most.'
-        ,'Cambios a este aviso': 'Changes to this notice'
-        ,'Cualquier cambio a estos términos o a este aviso de privacidad se publicará en esta misma página.': 'Any changes to these terms or to this privacy notice will be published on this page.'
-        ,'Última actualización: 18 de noviembre de 2026.': 'Last updated: November 18, 2026.'
-        ,'← Volver al inicio de sesión': '← Back to log in'
+        'Paginación del inventario': 'Inventory pagination',
+        'Paginación de sucursales': 'Branch pagination',
+        'Paginación de gerentes': 'Manager pagination',
+        'Filas por página': 'Rows per page',
+        'Filas': 'Rows',
+        'Página anterior': 'Previous page',
+        'Página siguiente': 'Next page',
+        'Anterior': 'Previous',
+        'Siguiente': 'Next',
+        'Página ': 'Page ',
+        'Mostrando ': 'Showing ',
+        'Mostrando': 'Showing',
+        'Mostrar': 'Show',
+        'por página': 'per page',
+        'No se pudo cargar la paginación': 'Could not load pagination',
+        'No se pudo cargar el contexto.': 'The context could not be loaded.',
+        'No se pudo recordar el tamaño de página en este navegador.': 'Could not remember the page size in this browser.',
+        'No se pudo guardar la preferencia de tema.': 'Could not save the theme preference.',
+        'No se pudo guardar la preferencia de idioma.': 'Could not save the language preference.',
+        'No se pudo guardar la cantidad de filas por página.': 'Could not save the number of rows per page.'
     };
+
+    const escaparRegex = texto => texto.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regexTraducciones = new RegExp(
+        Object.keys(traducciones)
+            .sort((a, b) => b.length - a.length)
+            .map(escaparRegex)
+            .join('|'),
+        'g'
+    );
+
+    const reglasDinamicas = [
+        [/^¿Confirmar esta venta por (.+)\?$/, 'Confirm this sale for $1?'],
+        [/^¿Activar a (.+)\?$/, 'Activate $1?'],
+        [/^¿Desactivar a (.+)\?$/, 'Deactivate $1?'],
+        [/^¿Desactivar “(.+)” del catálogo\?$/, 'Deactivate “$1” from the catalog?'],
+        [/^¿Eliminar definitivamente la sucursal\s*$/, 'Permanently delete branch '],
+        [/^Gestionar cajas de (.+)$/, 'Manage cash registers for $1'],
+        [/^Editar caja (.+)$/, 'Edit cash register $1'],
+        [/^Ver detalle de la venta (.+)$/, 'View sale details for $1'],
+        [/^Agregar (.+)$/, 'Add $1'],
+        [/^Cantidad de (.+)$/, 'Quantity of $1'],
+        [/^Abrir notificaciones, (\d+) sin leer$/, 'Open notifications, $1 unread'],
+        [/^Existencia actual: (\d+)$/, 'Current stock: $1'],
+        [/^(\d+) · Poco stock$/, '$1 · Low stock'],
+        [/^(\d+) disponibles$/, '$1 available'],
+        [/^Quedan (\d+) unidades; el mínimo es (\d+)\.$/, '$1 units remaining; the minimum is $2.'],
+        [/^Existencias actualizadas \((\d+) -> (\d+)\)\.$/, 'Stock updated ($1 -> $2).'],
+        [/^Distribución de (\d+) ventas por método de pago\.$/, 'Distribution of $1 sales by payment method.'],
+        [/^Total vendido: (.+) en (\d+) ventas\.$/, 'Total sold: $1 across $2 sales.'],
+        [/^Completa el campo (.+)\.$/, 'Fill in the $1 field.'],
+        [/^Revisa el valor del campo (.+)\.$/, 'Check the value of the $1 field.'],
+        [/^(\d+) producto(s?)$/, (_, n, s) => `${n} ${s ? 'products' : 'product'}`],
+        [/(\b\d+\s*-\s*\d+\s+)de(\s+[\d,]+)/g, '$1of$2']
+    ];
 
     const atributos = ['aria-label', 'aria-valuetext', 'placeholder', 'title'];
     const textosOriginales = new WeakMap();
     const atributosOriginales = new WeakMap();
     const tituloOriginal = document.title;
+
     const traducirDesdeEspanol = (texto, idioma) => {
-        if (idioma === 'es') return texto;
-        return Object.entries(traducciones)
-            .sort((a, b) => b[0].length - a[0].length)
-            .reduce((resultado, [origen, destino]) => resultado.split(origen).join(destino), texto);
+        if (idioma === 'es' || !texto) return texto;
+        const recortado = texto.trim();
+        for (const [patron, reemplazo] of reglasDinamicas) {
+            if (patron instanceof RegExp && !patron.global && patron.test(recortado)) {
+                const traducido = recortado.replace(patron, reemplazo);
+                return texto.replace(recortado, traducido);
+            }
+        }
+        let resultado = texto.replace(regexTraducciones, coincidencia => traducciones[coincidencia] ?? coincidencia);
+        resultado = resultado.replace(/(\b\d+\s*-\s*\d+\s+)de(\s+[\d,]+)/g, '$1of$2');
+        return resultado;
     };
 
     let traduciendo = false;
     const traducirInterfaz = idioma => {
         if (traduciendo) return;
         traduciendo = true;
-        if (document.documentElement.lang !== idioma) document.documentElement.lang = idioma;
-        const tituloTraducido = traducirDesdeEspanol(tituloOriginal, idioma);
-        if (document.title !== tituloTraducido) document.title = tituloTraducido;
-        const recorrido = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-        let nodo;
-        while ((nodo = recorrido.nextNode())) {
-            if (nodo.parentElement && !['SCRIPT', 'STYLE'].includes(nodo.parentElement.tagName)) {
-                if (!textosOriginales.has(nodo)) textosOriginales.set(nodo, nodo.nodeValue);
-                const textoTraducido = traducirDesdeEspanol(textosOriginales.get(nodo), idioma);
-                if (nodo.nodeValue !== textoTraducido) nodo.nodeValue = textoTraducido;
+
+        try {
+            if (document.documentElement.lang !== idioma) document.documentElement.lang = idioma;
+            const tituloTraducido = traducirDesdeEspanol(tituloOriginal, idioma);
+            if (document.title !== tituloTraducido) document.title = tituloTraducido;
+
+            const recorrido = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+            let nodo;
+            while ((nodo = recorrido.nextNode())) {
+                if (nodo.parentElement && !['SCRIPT', 'STYLE'].includes(nodo.parentElement.tagName)) {
+                    if (!textosOriginales.has(nodo)) {
+                        textosOriginales.set(nodo, nodo.nodeValue);
+                    } else if (idioma === 'en') {
+                        const esperado = traducirDesdeEspanol(textosOriginales.get(nodo), 'en');
+                        if (nodo.nodeValue !== esperado) {
+                            textosOriginales.set(nodo, nodo.nodeValue);
+                        }
+                    } else {
+                        textosOriginales.set(nodo, nodo.nodeValue);
+                    }
+
+                    const textoTraducido = traducirDesdeEspanol(textosOriginales.get(nodo), idioma);
+                    if (nodo.nodeValue !== textoTraducido) nodo.nodeValue = textoTraducido;
+                }
             }
-        }
-        document.querySelectorAll('*').forEach(elemento => {
-            if (!atributosOriginales.has(elemento)) atributosOriginales.set(elemento, new Map());
-            const originales = atributosOriginales.get(elemento);
-            atributos.forEach(atributo => {
-                const valor = elemento.getAttribute(atributo);
-                if (valor) {
-                    if (!originales.has(atributo)) originales.set(atributo, valor);
+
+            document.querySelectorAll('*').forEach(elemento => {
+                if (elemento.id === 'boton-idioma') return;
+                if (!atributosOriginales.has(elemento)) atributosOriginales.set(elemento, new Map());
+                const originales = atributosOriginales.get(elemento);
+
+                atributos.forEach(atributo => {
+                    const valor = elemento.getAttribute(atributo);
+                    if (!valor) return;
+
+                    if (!originales.has(atributo)) {
+                        originales.set(atributo, valor);
+                    } else if (idioma === 'en') {
+                        const esperado = traducirDesdeEspanol(originales.get(atributo), 'en');
+                        if (valor !== esperado) {
+                            originales.set(atributo, valor);
+                        }
+                    } else {
+                        originales.set(atributo, valor);
+                    }
+
                     const valorTraducido = traducirDesdeEspanol(originales.get(atributo), idioma);
                     if (valor !== valorTraducido) elemento.setAttribute(atributo, valorTraducido);
-                }
+                });
             });
-        });
-        const boton = document.getElementById('boton-idioma');
-        if (boton) {
-            const etiqueta = idioma === 'en' ? 'Change language to Spanish' : 'Cambiar idioma a inglés';
-            const textoBoton = idioma === 'en' ? 'EN' : 'ES';
-            if (boton.textContent !== textoBoton) boton.textContent = textoBoton;
-            if (boton.getAttribute('aria-label') !== etiqueta) boton.setAttribute('aria-label', etiqueta);
-            if (boton.title !== etiqueta) boton.title = etiqueta;
+
+            const boton = document.getElementById('boton-idioma');
+            if (boton) {
+                const etiqueta = idioma === 'en' ? 'Change language to Spanish' : 'Cambiar idioma a inglés';
+                const textoBoton = idioma === 'en' ? 'EN' : 'ES';
+                if (boton.textContent !== textoBoton) boton.textContent = textoBoton;
+                if (boton.getAttribute('aria-label') !== etiqueta) boton.setAttribute('aria-label', etiqueta);
+                if (boton.title !== etiqueta) boton.title = etiqueta;
+            }
+        } finally {
+            traduciendo = false;
         }
-        traduciendo = false;
     };
 
     let idiomaActual = 'es';
     try {
         idiomaActual = localStorage.getItem('private-storage-idioma') === 'en' ? 'en' : 'es';
-    } catch (error) {
+    } catch {
         idiomaActual = 'es';
     }
 
@@ -599,6 +703,9 @@
 
     new MutationObserver(() => traducirInterfaz(idiomaActual)).observe(document.body, {
         childList: true,
-        subtree: true
+        subtree: true,
+        characterData: true,
+        attributes: true,
+        attributeFilter: atributos
     });
 })();
