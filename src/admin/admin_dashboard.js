@@ -16,6 +16,10 @@
         "'": '&#039;'
     }[caracter]));
 
+    const obtenerLocale = () => (
+        localStorage.getItem('private-storage-idioma') === 'en' ? 'en-US' : 'es-MX'
+    );
+
     const moneda = new Intl.NumberFormat('es-MX', {
         style: 'currency',
         currency: 'MXN'
@@ -24,8 +28,7 @@
     const formatearFecha = fecha => {
         const valor = new Date(String(fecha).replace(' ', 'T'));
         if (Number.isNaN(valor.getTime())) return String(fecha);
-        const idioma = localStorage.getItem('private-storage-idioma') === 'en' ? 'en-US' : 'es-MX';
-        return new Intl.DateTimeFormat(idioma, {
+        return new Intl.DateTimeFormat(obtenerLocale(), {
             dateStyle: 'short',
             timeStyle: 'short'
         }).format(valor);
@@ -108,6 +111,7 @@
         const resumen = datos.resumen_ventas;
         const intervalos = datos.intervalos_ventas;
         const periodo = datos.periodo;
+        const locale = obtenerLocale();
         const dinero = valor => moneda.format(Number(valor) || 0);
 
         document.getElementById('dashboard-ventas-total').textContent = dinero(resumen.total);
@@ -116,7 +120,7 @@
 
         const formatoFecha = fecha => {
             const [anio, mes, dia] = fecha.split('-').map(Number);
-            return new Intl.DateTimeFormat('es-MX', {
+            return new Intl.DateTimeFormat(locale, {
                 day: 'numeric',
                 month: 'short',
                 timeZone: 'UTC'
@@ -139,7 +143,7 @@
             const cantidad = Number(intervalo.cantidad) || 0;
             const alto = maximo > 0 ? Math.max(total / maximo * 100, total > 0 ? 3 : 0) : 0;
             const etiqueta = periodo === 'semana'
-                ? new Intl.DateTimeFormat('es-MX', { weekday: 'short', timeZone: 'UTC' }).format(
+                ? new Intl.DateTimeFormat(locale, { weekday: 'short', timeZone: 'UTC' }).format(
                     new Date(`${intervalo.fecha}T12:00:00Z`)
                 )
                 : intervalo.etiqueta;
@@ -213,11 +217,14 @@
     };
 
     const cargarDashboard = async (periodo = 'mes') => {
+        const periodoValido = typeof periodo === 'string' && ['hoy', 'semana', 'mes'].includes(periodo)
+            ? periodo
+            : 'mes';
         const solicitud = ++solicitudDashboard;
         document.getElementById('dashboard-ventas-error').hidden = true;
         try {
             const respuesta = await fetch(
-                `../../api/admin/dashboard.php?periodo=${encodeURIComponent(periodo)}`,
+                `../../api/admin/dashboard.php?periodo=${encodeURIComponent(periodoValido)}`,
                 { cache: 'no-store' }
             );
             const datos = await respuesta.json();
@@ -275,6 +282,13 @@
             cargarDashboard(boton.dataset.dashboardPeriodo);
         });
     });
+
+    cargarDashboard();
+    window.addEventListener('private-storage-language-changed', () => {
+        const periodoActivo = document.querySelector('[data-dashboard-periodo].activo')?.dataset.dashboardPeriodo || 'mes';
+        cargarDashboard(periodoActivo);
+    });
+})();
 
     cargarDashboard();
     window.addEventListener('private-storage-language-changed', cargarDashboard);
