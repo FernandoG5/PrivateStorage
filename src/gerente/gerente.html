@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="estilos.css?v=20261103">
-    <link rel="stylesheet" href="../../shared/panel-base.css?v=20261103">
+    <link rel="stylesheet" href="estilos.css?v=20261118-graficas">
+    <link rel="stylesheet" href="../../shared/panel-base.css?v=20261118-toast">
 
 </head>
 
@@ -184,9 +184,61 @@
                 aria-live="polite"
             ></p>
 
-            <p id="mensaje-inicio" class="mensaje-inicio tarjeta-vacia">
-                Selecciona Productos o Sucursal.
-            </p>
+            <section id="panel-rendimiento-ventas" class="panel-rendimiento-ventas" aria-labelledby="titulo-rendimiento-ventas">
+                <header class="rendimiento-ventas-encabezado">
+                    <div>
+                        <p class="etiqueta-panel">RENDIMIENTO DE LA SUCURSAL</p>
+                        <h2 id="titulo-rendimiento-ventas">Ventas</h2>
+                        <p class="rendimiento-ventas-fecha" id="rendimiento-ventas-fecha">Cargando resumen...</p>
+                    </div>
+                    <div class="rendimiento-ventas-periodos" role="group" aria-label="Periodo de ventas">
+                        <button type="button" class="activo" data-periodo-ventas="hoy" aria-pressed="true">Hoy</button>
+                        <button type="button" data-periodo-ventas="semana" aria-pressed="false">Esta semana</button>
+                        <button type="button" data-periodo-ventas="mes" aria-pressed="false">Este mes</button>
+                    </div>
+                </header>
+                <p class="rendimiento-ventas-error" id="rendimiento-ventas-error" role="alert" hidden></p>
+                <div class="rendimiento-ventas-resumen" aria-live="polite">
+                    <article class="rendimiento-ventas-metrica">
+                        <span><i class="fa-solid fa-sack-dollar" aria-hidden="true"></i> Venta total</span>
+                        <strong id="total-ventas-periodo">—</strong>
+                    </article>
+                    <article class="rendimiento-ventas-metrica">
+                        <span><i class="fa-solid fa-receipt" aria-hidden="true"></i> Ventas realizadas</span>
+                        <strong id="cantidad-ventas-periodo">—</strong>
+                    </article>
+                    <article class="rendimiento-ventas-metrica">
+                        <span><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Promedio por venta</span>
+                        <strong id="promedio-ventas-periodo">—</strong>
+                    </article>
+                </div>
+                <div class="rendimiento-graficas-grid">
+                    <div class="rendimiento-grafica-contenedor">
+                        <div class="rendimiento-grafica-titulo">
+                            <h3 id="titulo-grafica-ventas">Ventas por hora</h3>
+                            <span id="unidad-grafica-ventas">Importe vendido</span>
+                        </div>
+                        <div id="grafica-ventas" class="rendimiento-grafica" role="img" aria-label="Gráfica de ventas"></div>
+                        <p class="rendimiento-ventas-vacio" id="rendimiento-ventas-vacio" hidden>No hay ventas registradas en este periodo.</p>
+                    </div>
+                    <div class="rendimiento-grafica-contenedor">
+                        <div class="rendimiento-grafica-titulo">
+                            <h3>Ventas por método de pago</h3>
+                            <span>Distribución del periodo</span>
+                        </div>
+                        <div class="rendimiento-metodos">
+                            <div id="grafica-metodos-pago" class="rendimiento-dona" role="img" aria-label="Distribución de ventas por método de pago">
+                                <span class="rendimiento-dona-centro">
+                                    <strong id="total-metodos-pago">0</strong>
+                                    <small>ventas</small>
+                                </span>
+                            </div>
+                            <div id="leyenda-metodos-pago" class="rendimiento-metodos-leyenda"></div>
+                        </div>
+                        <p class="rendimiento-ventas-vacio" id="rendimiento-metodos-vacio" hidden>No hay ventas para mostrar en este periodo.</p>
+                    </div>
+                </div>
+            </section>
 
             <section id="panel-productos" class="panel" hidden>
 
@@ -584,7 +636,7 @@
                         <dl id="ficha-sucursal-contenido" class="datos-sucursal"></dl>
                         <div class="resumen-sucursal">
                             <div><strong id="resumen-cajeros-sucursal">—</strong><span>Cajeros</span></div>
-                            <div><strong>—</strong><span>Cajas</span></div>
+                            <div><strong id="resumen-cajas-sucursal">—</strong><span>Cajas</span></div>
                         </div>
                         <div class="seccion-subpanel">
                             <div class="encabezado-cajas">
@@ -594,7 +646,19 @@
                                     Registrar caja
                                 </button>
                             </div>
-                            <p class="estado-vacio">Aún no hay cajas registradas.</p>
+                            <div class="tabla-contenedor cajas-sucursal-contenedor">
+                                <table class="tabla-cajas-sucursal">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Caja</th>
+                                            <th scope="col">Cajero asignado</th>
+                                            <th scope="col">Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla-cajas-sucursal"></tbody>
+                                </table>
+                            </div>
+                            <p class="estado-vacio" id="mensaje-cajas-vacio" hidden>Aún no hay cajas registradas.</p>
                         </div>
                     </section>
 
@@ -605,7 +669,23 @@
                                 <h3>Historial de ventas</h3>
                             </div>
                         </div>
-                        <p class="estado-vacio">Aún no hay ventas en esta sucursal.</p>
+                        <p class="estado-cargando-ventas" id="estado-cargando-ventas" role="status">Cargando ventas...</p>
+                        <div class="tabla-contenedor historial-ventas-contenedor">
+                            <table class="tabla-historial-ventas">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Folio</th>
+                                        <th scope="col">Cajero</th>
+                                        <th scope="col">Pago</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Ticket</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-historial-ventas"></tbody>
+                            </table>
+                        </div>
+                        <p class="estado-vacio" id="mensaje-historial-ventas-vacio" hidden>Aún no hay ventas en esta sucursal.</p>
                     </section>
                 </div>
 
@@ -940,16 +1020,37 @@
         </div>
         <form class="formulario formulario-caja-visual" method="dialog">
             <div class="campo">
-                <label>Nombre de la caja
-                    <input class="nombre-caja-visual" name="nombre" maxlength="50" required>
-                </label>
+                <label for="nombre-caja-visual">Nombre de la caja</label>
+                <input id="nombre-caja-visual" class="nombre-caja-visual" name="nombre" maxlength="80" required>
+            </div>
+            <div class="campo">
+                <label for="cajero-caja-visual">Asignar cajero</label>
+                <select id="cajero-caja-visual" name="cajero_id" required>
+                    <option value="">Selecciona un cajero activo</option>
+                </select>
             </div>
             <p class="aviso-caja-visual" role="status" aria-live="polite" hidden></p>
             <div class="acciones">
-                <button type="submit">Guardar caja</button>
+                <button type="submit" id="guardar-caja-visual">Guardar caja</button>
                 <button class="boton-secundario" type="button" data-cerrar-dialogo>Cancelar</button>
             </div>
         </form>
+    </dialog>
+
+    <dialog id="dialogo-ticket-venta" class="modal-panel dialogo-ticket-venta" aria-labelledby="titulo-ticket-venta">
+        <div class="modal-cabecera ticket-venta-acciones">
+            <div>
+                <p class="etiqueta-panel">COMPROBANTE DE VENTA</p>
+                <h2 id="titulo-ticket-venta">Ticket</h2>
+            </div>
+            <div class="ticket-venta-botones">
+                <button type="button" class="boton-nuevo" id="imprimir-ticket-venta"><i class="fa-solid fa-print" aria-hidden="true"></i> Imprimir</button>
+                <button type="button" class="boton-cerrar-modal" data-cerrar-dialogo aria-label="Cerrar ticket">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <div id="contenido-ticket-venta" class="contenido-ticket-venta"></div>
     </dialog>
 
     <dialog id="dialogo-confirmacion" class="modal-panel modal-confirmacion" aria-labelledby="titulo-confirmacion">
@@ -1002,7 +1103,7 @@
             const paneles = document.querySelectorAll('.panel');
             const vistas = document.querySelectorAll('.vista');
             const botonesVista = document.querySelectorAll('[data-vista]');
-            const mensajeInicio = document.getElementById('mensaje-inicio');
+            const panelRendimientoVentas = document.getElementById('panel-rendimiento-ventas');
             const estadoApp = document.getElementById('estado-app');
             const botonTema = document.getElementById('boton-tema');
             const actualizarDatos = document.getElementById('actualizar-datos');
@@ -1024,7 +1125,14 @@
             const dialogoCajero = document.getElementById('dialogo-cajero');
             const dialogoCajaVisual = document.querySelector('.modal-caja-visual');
             const formularioCajaVisual = document.querySelector('.formulario-caja-visual');
+            const selectorCajeroCaja = document.getElementById('cajero-caja-visual');
             const dialogoConfirmacion = document.getElementById('dialogo-confirmacion');
+            let cajasSucursal = [];
+            let cajerosDisponiblesParaCajas = [];
+            let ventasSucursal = [];
+            let ticketVentaEnProceso = false;
+            let periodoRendimientoVentas = 'hoy';
+            let solicitudRendimientoVentas = 0;
             let tamanoPaginaProductos = leerTamanoPagina('private-storage-gerente-productos-page-size');
             let tamanoPaginaCajeros = leerTamanoPagina('private-storage-gerente-cajeros-page-size');
 
@@ -1071,6 +1179,165 @@
                 style: 'currency',
                 currency: 'MXN'
             }).format(Number(valor));
+
+            const formatearFechaCorta = fecha => {
+                const [anio, mes, dia] = fecha.split('-').map(Number);
+                return new Intl.DateTimeFormat('es-MX', {
+                    day: 'numeric',
+                    month: 'short',
+                    timeZone: 'UTC'
+                }).format(new Date(Date.UTC(anio, mes - 1, dia, 12)));
+            };
+
+            const renderizarRendimientoVentas = datos => {
+                const resumen = datos.resumen;
+                const intervalos = datos.intervalos;
+                document.getElementById('total-ventas-periodo').textContent = formatearMoneda(resumen.total);
+                document.getElementById('cantidad-ventas-periodo').textContent = String(resumen.cantidad);
+                document.getElementById('promedio-ventas-periodo').textContent = formatearMoneda(resumen.promedio);
+
+                const desde = formatearFechaCorta(datos.desde);
+                const hasta = formatearFechaCorta(datos.hasta);
+                document.getElementById('rendimiento-ventas-fecha').textContent =
+                    datos.desde === datos.hasta ? desde : `${desde} – ${hasta}`;
+
+                const titulos = {
+                    hoy: 'Ventas por hora',
+                    semana: 'Ventas por día de la semana',
+                    mes: 'Ventas por día del mes'
+                };
+                document.getElementById('titulo-grafica-ventas').textContent = titulos[datos.periodo];
+
+                const maximo = Math.max(...intervalos.map(intervalo => Number(intervalo.total)), 0);
+                const grafica = document.getElementById('grafica-ventas');
+                grafica.innerHTML = intervalos.map((intervalo, indice) => {
+                    const total = Number(intervalo.total);
+                    const cantidad = Number(intervalo.cantidad);
+                    const alto = maximo > 0 ? Math.max(total / maximo * 100, total > 0 ? 3 : 0) : 0;
+                    const etiqueta = datos.periodo === 'semana'
+                        ? new Intl.DateTimeFormat('es-MX', { weekday: 'short', timeZone: 'UTC' }).format(
+                            new Date(`${intervalo.fecha}T12:00:00Z`)
+                        )
+                        : intervalo.etiqueta;
+                    const mostrarEtiqueta = datos.periodo === 'hoy'
+                        ? indice % 4 === 0
+                        : datos.periodo === 'mes'
+                            ? indice % 5 === 0 || indice === intervalos.length - 1
+                            : true;
+                    const descripcion = `${etiqueta}: ${formatearMoneda(total)}, ${cantidad} ${cantidad === 1 ? 'venta' : 'ventas'}`;
+                    return `
+                        <div class="rendimiento-grafica-columna" title="${escaparHtml(descripcion)}" aria-label="${escaparHtml(descripcion)}">
+                            <span class="rendimiento-grafica-valor">${total > 0 ? escaparHtml(formatearMoneda(total)) : ''}</span>
+                            <div class="rendimiento-grafica-barra-contenedor">
+                                <span class="rendimiento-grafica-barra" style="height:${alto}%"></span>
+                            </div>
+                            <span class="rendimiento-grafica-etiqueta">${mostrarEtiqueta ? escaparHtml(etiqueta) : ''}</span>
+                        </div>
+                    `;
+                }).join('');
+                grafica.setAttribute(
+                    'aria-label',
+                    `${titulos[datos.periodo]}. Total vendido: ${formatearMoneda(resumen.total)} en ${resumen.cantidad} ventas.`
+                );
+                document.getElementById('rendimiento-ventas-vacio').hidden = resumen.cantidad > 0;
+
+                const metodosPago = Array.isArray(datos.metodos_pago) ? datos.metodos_pago : [];
+                const coloresMetodo = {
+                    efectivo: '#7040c0',
+                    tarjeta: '#168aad',
+                    transferencia: '#e69b24'
+                };
+                const coloresAlternos = ['#d4668d', '#5676c5', '#4e9b72', '#d47a3c'];
+                const totalMetodos = metodosPago.reduce(
+                    (total, metodo) => total + Math.max(0, Number(metodo.cantidad) || 0),
+                    0
+                );
+                let anguloActual = 0;
+                const segmentos = metodosPago.map((metodo, indice) => {
+                    const cantidad = Math.max(0, Number(metodo.cantidad) || 0);
+                    const anguloFinal = totalMetodos > 0
+                        ? anguloActual + cantidad / totalMetodos * 360
+                        : anguloActual;
+                    const claveMetodo = String(metodo.metodo || '').toLocaleLowerCase('es-MX');
+                    const color = coloresMetodo[claveMetodo] || coloresAlternos[indice % coloresAlternos.length];
+                    const segmento = `${color} ${anguloActual}deg ${anguloFinal}deg`;
+                    anguloActual = anguloFinal;
+                    return { ...metodo, cantidad, color, porcentaje: totalMetodos > 0 ? cantidad / totalMetodos * 100 : 0, segmento };
+                });
+                const donaMetodos = document.getElementById('grafica-metodos-pago');
+                donaMetodos.style.background = totalMetodos > 0
+                    ? `conic-gradient(${segmentos.map(metodo => metodo.segmento).join(', ')})`
+                    : 'conic-gradient(var(--borde) 0deg 360deg)';
+                donaMetodos.setAttribute(
+                    'aria-label',
+                    totalMetodos > 0
+                        ? `Distribución de ${totalMetodos} ventas por método de pago.`
+                        : 'No hay ventas registradas en este periodo.'
+                );
+                document.getElementById('total-metodos-pago').textContent = String(totalMetodos);
+                document.getElementById('leyenda-metodos-pago').innerHTML = segmentos.map(metodo => `
+                    <div class="rendimiento-metodo-fila">
+                        <span class="rendimiento-metodo-nombre">
+                            <i aria-hidden="true" style="--color-metodo:${metodo.color}"></i>
+                            ${escaparHtml(metodo.metodo)}
+                        </span>
+                        <span>${metodo.cantidad} · ${metodo.porcentaje.toFixed(0)}%</span>
+                    </div>
+                `).join('');
+                document.getElementById('rendimiento-metodos-vacio').hidden = totalMetodos > 0;
+            };
+
+            const cargarRendimientoVentas = async periodo => {
+                const solicitud = ++solicitudRendimientoVentas;
+                const error = document.getElementById('rendimiento-ventas-error');
+                error.hidden = true;
+                document.getElementById('rendimiento-ventas-fecha').textContent = 'Cargando resumen...';
+                try {
+                    const respuesta = await fetch(`../../api/gerente/ventas/rendimiento.php?periodo=${encodeURIComponent(periodo)}`);
+                    const datos = await procesarRespuesta(respuesta);
+                    if (!datos || solicitud !== solicitudRendimientoVentas) return false;
+                    if (
+                        datos.success !== true
+                        || !Array.isArray(datos.intervalos)
+                        || !datos.resumen
+                        || !Array.isArray(datos.metodos_pago)
+                    ) {
+                        throw new Error(datos.message || 'No se pudo cargar el rendimiento de ventas.');
+                    }
+                    periodoRendimientoVentas = periodo;
+                    renderizarRendimientoVentas(datos);
+                    return true;
+                } catch (cargaError) {
+                    if (solicitud !== solicitudRendimientoVentas) return false;
+                    console.error('No se pudo cargar el rendimiento de ventas:', cargaError);
+                    error.textContent = cargaError.message || 'No se pudo cargar el rendimiento de ventas.';
+                    error.hidden = false;
+                    document.getElementById('rendimiento-ventas-fecha').textContent = '';
+                    document.getElementById('total-ventas-periodo').textContent = '—';
+                    document.getElementById('cantidad-ventas-periodo').textContent = '—';
+                    document.getElementById('promedio-ventas-periodo').textContent = '—';
+                    document.getElementById('grafica-ventas').replaceChildren();
+                    document.getElementById('rendimiento-ventas-vacio').hidden = true;
+                    document.getElementById('grafica-metodos-pago').style.background =
+                        'conic-gradient(var(--borde) 0deg 360deg)';
+                    document.getElementById('total-metodos-pago').textContent = '—';
+                    document.getElementById('leyenda-metodos-pago').replaceChildren();
+                    document.getElementById('rendimiento-metodos-vacio').hidden = true;
+                    return false;
+                }
+            };
+
+            document.querySelectorAll('[data-periodo-ventas]').forEach(boton => {
+                boton.addEventListener('click', () => {
+                    periodoRendimientoVentas = boton.dataset.periodoVentas;
+                    document.querySelectorAll('[data-periodo-ventas]').forEach(opcion => {
+                        const seleccionado = opcion === boton;
+                        opcion.classList.toggle('activo', seleccionado);
+                        opcion.setAttribute('aria-pressed', String(seleccionado));
+                    });
+                    cargarRendimientoVentas(periodoRendimientoVentas);
+                });
+            });
 
             const miniaturaProducto = producto => producto.imagen
                 ? `<img class="producto-miniatura" src="../../uploads/productos/${escaparHtml(encodeURIComponent(producto.imagen))}" alt="" loading="lazy">`
@@ -1194,6 +1461,129 @@
                 if (datos.success !== true) throw new Error(datos.message || 'No se pudieron cargar los cajeros.');
                 cajeros = Array.isArray(datos.cajeros) ? datos.cajeros : [];
                 renderizarCajeros();
+                return true;
+            };
+
+            const renderizarCajasSucursal = () => {
+                document.getElementById('resumen-cajas-sucursal').textContent = String(cajasSucursal.length);
+                document.getElementById('tabla-cajas-sucursal').innerHTML = cajasSucursal.map(caja => `
+                    <tr>
+                        <td>${escaparHtml(caja.nombre)}</td>
+                        <td>${escaparHtml(caja.cajero_nombre || 'Sin asignar')}</td>
+                        <td><span class="badge-estado ${caja.estado === 'activa' ? 'activo' : 'inactivo'}">${caja.estado === 'activa' ? 'Activa' : 'Inactiva'}</span></td>
+                    </tr>
+                `).join('');
+                document.getElementById('mensaje-cajas-vacio').hidden = cajasSucursal.length > 0;
+            };
+
+            const renderizarHistorialVentas = () => {
+                const tabla = document.getElementById('tabla-historial-ventas');
+                const estado = document.getElementById('estado-cargando-ventas');
+                const vacio = document.getElementById('mensaje-historial-ventas-vacio');
+                estado.hidden = true;
+                tabla.innerHTML = ventasSucursal.map(venta => `
+                    <tr>
+                        <td>${escaparHtml(new Date(String(venta.fecha_venta).replace(' ', 'T')).toLocaleString('es-MX'))}</td>
+                        <td><strong>${escaparHtml(venta.folio)}</strong></td>
+                        <td>${escaparHtml(venta.cajero)}</td>
+                        <td>${escaparHtml(venta.metodo_pago)}</td>
+                        <td>${formatearMoneda(venta.total)}</td>
+                        <td><button class="boton-icono" type="button" data-ver-ticket="${Number(venta.id)}" aria-label="Ver ticket ${escaparHtml(venta.folio)}"><i class="fa-solid fa-receipt" aria-hidden="true"></i></button></td>
+                    </tr>
+                `).join('');
+                vacio.hidden = ventasSucursal.length > 0;
+            };
+
+            const cargarHistorialVentas = async () => {
+                const estado = document.getElementById('estado-cargando-ventas');
+                estado.textContent = 'Cargando ventas...';
+                estado.hidden = false;
+                try {
+                    const respuesta = await fetch('../../api/gerente/ventas/listar.php');
+                    const datos = await procesarRespuesta(respuesta);
+                    if (!datos) return false;
+                    if (datos.success !== true) {
+                        throw new Error(datos.message || 'No se pudieron cargar las ventas.');
+                    }
+                    ventasSucursal = Array.isArray(datos.ventas) ? datos.ventas : [];
+                    renderizarHistorialVentas();
+                    return true;
+                } catch (error) {
+                    console.error('No se pudo cargar el historial de ventas:', error);
+                    ventasSucursal = [];
+                    document.getElementById('tabla-historial-ventas').replaceChildren();
+                    estado.textContent = error.message || 'No se pudieron cargar las ventas.';
+                    estado.hidden = false;
+                    document.getElementById('mensaje-historial-ventas-vacio').hidden = true;
+                    return false;
+                }
+            };
+
+            const mostrarTicketVenta = venta => {
+                const productosTicket = Array.isArray(venta.productos) ? venta.productos : [];
+                document.getElementById('titulo-ticket-venta').textContent = `Ticket ${venta.folio}`;
+                document.getElementById('contenido-ticket-venta').innerHTML = `
+                    <header class="ticket-venta-cabecera">
+                        <strong>${escaparHtml(venta.sucursal)}</strong>
+                        <span>Comprobante de venta</span>
+                    </header>
+                    <dl class="ticket-venta-metadatos">
+                        <div><dt>Folio</dt><dd>${escaparHtml(venta.folio)}</dd></div>
+                        <div><dt>Fecha</dt><dd>${escaparHtml(new Date(String(venta.fecha_venta).replace(' ', 'T')).toLocaleString('es-MX'))}</dd></div>
+                        <div><dt>Cajero</dt><dd>${escaparHtml(venta.cajero)}</dd></div>
+                        <div><dt>Método de pago</dt><dd>${escaparHtml(venta.metodo_pago)}</dd></div>
+                    </dl>
+                    <div class="tabla-contenedor ticket-venta-tabla-contenedor">
+                        <table class="ticket-venta-tabla">
+                            <thead><tr><th>Producto</th><th>Código</th><th>Cant.</th><th>Precio</th><th>Subtotal</th></tr></thead>
+                            <tbody>${productosTicket.map(producto => `
+                                <tr>
+                                    <td>${escaparHtml(producto.producto)}</td>
+                                    <td>${escaparHtml(producto.codigo)}</td>
+                                    <td>${Number(producto.cantidad)}</td>
+                                    <td>${formatearMoneda(producto.precio_unitario)}</td>
+                                    <td>${formatearMoneda(producto.subtotal)}</td>
+                                </tr>
+                            `).join('')}</tbody>
+                        </table>
+                    </div>
+                    ${productosTicket.length ? '' : '<p class="estado-vacio">Esta venta no contiene productos.</p>'}
+                    <p class="ticket-venta-total"><span>Total pagado</span><strong>${formatearMoneda(venta.total)}</strong></p>
+                `;
+                mostrarDialogo(document.getElementById('dialogo-ticket-venta'));
+            };
+
+            document.getElementById('tabla-historial-ventas').addEventListener('click', async evento => {
+                const boton = evento.target.closest('button[data-ver-ticket]');
+                if (!boton || ticketVentaEnProceso) return;
+                ticketVentaEnProceso = true;
+                boton.disabled = true;
+                try {
+                    const respuesta = await fetch(`../../api/gerente/ventas/detalle.php?id=${encodeURIComponent(boton.dataset.verTicket)}`);
+                    const datos = await procesarRespuesta(respuesta);
+                    if (!datos) return;
+                    if (datos.success !== true || !datos.venta) {
+                        throw new Error(datos.message || 'No se pudo cargar el ticket.');
+                    }
+                    mostrarTicketVenta(datos.venta);
+                } catch (error) {
+                    mostrarEstado(error.message || 'No se pudo cargar el ticket.', true);
+                } finally {
+                    ticketVentaEnProceso = false;
+                    boton.disabled = false;
+                }
+            });
+
+            document.getElementById('imprimir-ticket-venta').addEventListener('click', () => window.print());
+
+            const cargarCajasSucursal = async () => {
+                const respuesta = await fetch('../../api/cajas/listar.php');
+                const datos = await procesarRespuesta(respuesta);
+                if (!datos) return false;
+                if (datos.success !== true) throw new Error(datos.message || 'No se pudieron cargar las cajas.');
+                cajasSucursal = Array.isArray(datos.cajas) ? datos.cajas : [];
+                cajerosDisponiblesParaCajas = Array.isArray(datos.cajeros) ? datos.cajeros : [];
+                renderizarCajasSucursal();
                 return true;
             };
 
@@ -1347,7 +1737,7 @@
                 });
 
                 document.getElementById('inicio-cards').hidden = nombre !== 'inicio';
-                mensajeInicio.hidden = nombre !== 'inicio';
+                panelRendimientoVentas.hidden = nombre !== 'inicio';
 
                 document.querySelectorAll('[data-navegacion]').forEach(enlace => {
                     const activo = enlace.dataset.navegacion === nombre;
@@ -1417,17 +1807,54 @@
             });
             document.querySelector('.boton-registrar-caja').addEventListener('click', () => {
                 formularioCajaVisual.reset();
-                dialogoCajaVisual.querySelector('.aviso-caja-visual').hidden = true;
+                const aviso = dialogoCajaVisual.querySelector('.aviso-caja-visual');
+                aviso.hidden = true;
+                aviso.textContent = '';
+                selectorCajeroCaja.innerHTML = '<option value="">Selecciona un cajero activo</option>' +
+                    cajerosDisponiblesParaCajas.map(cajero =>
+                        `<option value="${Number(cajero.id)}">${escaparHtml(cajero.nombre)} (${escaparHtml(cajero.usuario)})</option>`
+                    ).join('');
+                const botonGuardarCaja = document.getElementById('guardar-caja-visual');
+                botonGuardarCaja.disabled = cajerosDisponiblesParaCajas.length === 0;
+                if (cajerosDisponiblesParaCajas.length === 0) {
+                    aviso.textContent = 'Para registrar una caja, primero agrega y activa un cajero en esta sucursal.';
+                    aviso.hidden = false;
+                }
                 mostrarDialogo(dialogoCajaVisual);
             });
-            formularioCajaVisual.addEventListener('submit', evento => {
+            formularioCajaVisual.addEventListener('submit', async evento => {
                 evento.preventDefault();
                 if (!formularioCajaVisual.reportValidity()) return;
 
-                // TODO: conectar al endpoint de cajas
                 const aviso = dialogoCajaVisual.querySelector('.aviso-caja-visual');
-                aviso.textContent = 'El registro de cajas estará disponible próximamente.';
-                aviso.hidden = false;
+                const botonGuardarCaja = document.getElementById('guardar-caja-visual');
+                botonGuardarCaja.disabled = true;
+                aviso.hidden = true;
+                try {
+                    const respuesta = await fetch('../../api/cajas/guardar.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({
+                            sucursal_id: String(sucursalActual.id),
+                            nombre: document.getElementById('nombre-caja-visual').value.trim(),
+                            cajero_id: selectorCajeroCaja.value,
+                            estado: 'activa'
+                        })
+                    });
+                    const datos = await procesarRespuesta(respuesta);
+                    if (!datos) return;
+                    if (datos.success !== true) {
+                        throw new Error(datos.message || 'No se pudo guardar la caja.');
+                    }
+                    await cargarCajasSucursal();
+                    dialogoCajaVisual.close();
+                    mostrarEstado(datos.message || 'Caja guardada correctamente.');
+                } catch (error) {
+                    aviso.textContent = error.message || 'No se pudo comunicar con el servidor. Intenta nuevamente.';
+                    aviso.hidden = false;
+                } finally {
+                    botonGuardarCaja.disabled = cajerosDisponiblesParaCajas.length === 0;
+                }
             });
 
             document.getElementById('buscar-productos').addEventListener('input', () => {
@@ -1677,7 +2104,7 @@
             // Si el correo de bienvenida falla, el cajero ya existe: se ofrece reenviarlo con una contraseña nueva.
             const ofrecerReenvioCorreoCajero = async (idCajero, nombreCajero) => {
                 const botonConfirmar = document.getElementById('confirmar-accion');
-                let mensaje = `El cajero se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. ¿Quieres intentarlo de nuevo? Se generará una contraseña temporal nueva.`;
+                let mensaje = `El cajero ${nombreCajero} se creó correctamente, pero no pudimos enviarle el correo con su contraseña temporal. ¿Quieres intentarlo de nuevo? Se generará una contraseña temporal nueva.`;
 
                 botonConfirmar.classList.remove('boton-peligro');
                 try {
@@ -1814,6 +2241,9 @@
                     if (!contextoCargado) return;
                     await cargarProductos();
                     await cargarCajeros();
+                    await cargarCajasSucursal();
+                    await cargarHistorialVentas();
+                    await cargarRendimientoVentas(periodoRendimientoVentas);
                     mostrarEstado('Datos actualizados correctamente.');
                 } catch (error) {
                     mostrarErroresCarga();
@@ -1829,6 +2259,9 @@
                     if (!contextoCargado) return;
                     await cargarProductos();
                     await cargarCajeros();
+                    await cargarCajasSucursal();
+                    await cargarHistorialVentas();
+                    await cargarRendimientoVentas(periodoRendimientoVentas);
                     mostrarEstado('Módulo conectado. Los datos corresponden a tu sucursal.');
                     mostrarNavegacion('inicio');
                 } catch (error) {
