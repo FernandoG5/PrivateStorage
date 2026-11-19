@@ -239,6 +239,8 @@
         'Filtrar por sucursal': 'Filter by branch',
         'Filtrar por categoría': 'Filter by category',
         'Filtrar productos': 'Filter products',
+        'Productos': 'Products',
+        'Producto': 'Product',
         'Todas las sucursales': 'All branches',
         'Todas las categorías': 'All categories',
         'Categorías de productos': 'Product categories',
